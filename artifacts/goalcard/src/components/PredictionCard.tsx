@@ -229,12 +229,12 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{ fontSize: "130px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
-              color: s1, letterSpacing: "5px", textTransform: "uppercase",
-              textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+              color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
+              textShadow: "0 2px 14px rgba(0,0,0,0.7)",
             }}>{t1?.shortName ?? team1}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(255,255,255,0.65)",
             }}>{team1}</div>
           </div>
 
@@ -246,9 +246,9 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700,
               color: "#ffffff",
-              background: "rgba(0,0,0,0.55)",
-              border: "2px solid rgba(255,255,255,0.4)",
-              borderRadius: "10px", padding: "10px 20px", letterSpacing: "3px",
+              background: "rgba(0,0,0,0.65)",
+              border: "2px solid rgba(255,255,255,0.5)",
+              borderRadius: "10px", padding: "10px 22px", letterSpacing: "3px",
             }}>{labels.vs}</div>
           </div>
 
@@ -261,12 +261,12 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{ fontSize: "130px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
-              color: s2, letterSpacing: "5px", textTransform: "uppercase",
-              textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+              color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
+              textShadow: "0 2px 14px rgba(0,0,0,0.7)",
             }}>{t2?.shortName ?? team2}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-              color: "rgba(255,255,255,0.6)",
+              color: "rgba(255,255,255,0.65)",
             }}>{team2}</div>
           </div>
         </div>
@@ -275,25 +275,23 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         <div style={{
           width: "100%", display: "flex", justifyContent: "center", alignItems: "center",
           padding: "28px 0",
-          background: "rgba(0,0,0,0.50)",
+          background: "rgba(0,0,0,0.62)",
           position: "relative", zIndex: 1, flexShrink: 0,
         }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "20px",
-          }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "145px", fontWeight: 900,
-              color: s1, lineHeight: 1,
-              textShadow: `0 0 40px ${p1}88, 0 4px 8px rgba(0,0,0,0.6)`,
+              color: "#ffffff", lineHeight: 1,
+              textShadow: "0 4px 16px rgba(0,0,0,0.7)",
             }}>{score1}</div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "70px",
-              color: "rgba(255,255,255,0.25)", fontWeight: 300,
+              color: "rgba(255,255,255,0.30)", fontWeight: 300,
             }}>:</div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "145px", fontWeight: 900,
-              color: s2, lineHeight: 1,
-              textShadow: `0 0 40px ${p2}88, 0 4px 8px rgba(0,0,0,0.6)`,
+              color: "#ffffff", lineHeight: 1,
+              textShadow: "0 4px 16px rgba(0,0,0,0.7)",
             }}>{score2}</div>
           </div>
         </div>
@@ -379,44 +377,40 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         }}>{labels.title}</div>
       </div>
 
-      {/* ── TEAM PANELS — side by side, bordered ── */}
+      {/* ── TEAM PANELS — two clearly separated cards with VS between ── */}
       <div style={{
-        display: "flex", width: "920px", marginBottom: "36px",
+        display: "flex", alignItems: "center", width: "940px",
+        marginBottom: "36px", gap: "0",
         position: "relative", zIndex: 1,
       }}>
         {/* Team 1 panel */}
         <div style={{
           flex: 1, display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center",
-          padding: "36px 24px",
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(212,175,55,0.28)",
-          borderRight: "none",
-          borderRadius: "16px 0 0 16px",
-          gap: "12px",
+          padding: "38px 20px",
+          background: "rgba(255,255,255,0.055)",
+          border: "1px solid rgba(212,175,55,0.35)",
+          borderRadius: "16px",
+          gap: "14px",
         }}>
-          <div style={{ fontSize: "96px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+          <div style={{ fontSize: "92px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "42px", fontWeight: 700,
-            color: "#d4af37", letterSpacing: "4px",
+            fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+            color: "#f5e17a", letterSpacing: "4px",
           }}>{t1?.shortName ?? team1}</div>
           <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.4)",
+            fontFamily: "'Poppins', sans-serif", fontSize: "17px",
+            color: "rgba(255,255,255,0.38)",
           }}>{team1}</div>
         </div>
 
-        {/* VS divider panel */}
+        {/* VS label — sits between panels, not a panel itself */}
         <div style={{
-          flexShrink: 0, width: "100px", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center",
-          background: "rgba(212,175,55,0.10)",
-          border: "1px solid rgba(212,175,55,0.28)",
-          borderLeft: "none", borderRight: "none",
+          flexShrink: 0, width: "96px", textAlign: "center",
         }}>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700,
-            color: "#d4af37", letterSpacing: "3px",
+            fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
+            color: "rgba(212,175,55,0.60)", letterSpacing: "3px",
           }}>{labels.vs}</div>
         </div>
 
@@ -424,21 +418,20 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         <div style={{
           flex: 1, display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center",
-          padding: "36px 24px",
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(212,175,55,0.28)",
-          borderLeft: "none",
-          borderRadius: "0 16px 16px 0",
-          gap: "12px",
+          padding: "38px 20px",
+          background: "rgba(255,255,255,0.055)",
+          border: "1px solid rgba(212,175,55,0.35)",
+          borderRadius: "16px",
+          gap: "14px",
         }}>
-          <div style={{ fontSize: "96px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+          <div style={{ fontSize: "92px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "42px", fontWeight: 700,
-            color: "#d4af37", letterSpacing: "4px",
+            fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+            color: "#f5e17a", letterSpacing: "4px",
           }}>{t2?.shortName ?? team2}</div>
           <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.4)",
+            fontFamily: "'Poppins', sans-serif", fontSize: "17px",
+            color: "rgba(255,255,255,0.38)",
           }}>{team2}</div>
         </div>
       </div>
