@@ -1,0 +1,573 @@
+Build a web app called "GoalCard" — 
+A FIFA World Cup 2026 Match Prediction Card Generator.
+
+Tagline: "Predict. Generate. Share. ⚽"
+
+WHAT IT DOES:
+User picks two teams + enters predicted score + 
+their name → app generates a beautiful shareable 
+image card → user downloads as PNG or shares to 
+WhatsApp/Instagram.
+
+Zero AI API needed. Zero backend needed.
+Everything runs in the browser.
+
+=====================================================
+TECH STACK
+=====================================================
+- React + Vite
+- Tailwind CSS
+- html-to-image (npm package) for PNG generation
+- Google Fonts: Oswald (headings) + Poppins (body)
+- No backend, no database, no API keys needed
+
+Install these packages:
+npm install html-to-image
+npm install @fontsource/oswald
+npm install @fontsource/poppins
+
+=====================================================
+THE COMPLETE APP — 3 SCREENS
+=====================================================
+
+-----------------------------------------------------
+SCREEN 1: FORM PAGE
+-----------------------------------------------------
+
+HEADER:
+- Logo: ⚽ GoalCard
+- Tagline: "Predict the score. Share your card."
+- Subtext: "FIFA World Cup 2026 • Free Prediction Cards"
+
+FORM (single clean page, all visible):
+
+--- SECTION 1: Pick Your Match ---
+Label: "Which match are you predicting?"
+
+Two team dropdowns side by side with VS badge:
+[ Team 1 dropdown ]  VS  [ Team 2 dropdown ]
+
+ALL 48 TEAMS (with flag emoji prefix):
+🇲🇽 Mexico, 🇿🇦 South Africa, 🇰🇷 South Korea,
+🇨🇿 Czechia, 🇨🇦 Canada, 🇧🇦 Bosnia & Herzegovina,
+🇧🇪 Belgium, 🇪🇬 Egypt, 🇨🇱 Chile, 🇩🇪 Germany,
+🇷🇸 Serbia, 🇵🇹 Portugal, 🇺🇸 United States,
+🇵🇾 Paraguay, 🇦🇺 Australia, 🇹🇷 Turkey,
+🇲🇦 Morocco, 🇸🇦 Saudi Arabia, 🇮🇶 Iraq,
+🇯🇴 Jordan, 🇦🇷 Argentina, 🇧🇷 Brazil,
+🇫🇷 France, 🇪🇸 Spain, 🇬🇧 England,
+🇳🇱 Netherlands, 🇯🇵 Japan, 🇺🇾 Uruguay,
+🇨🇴 Colombia, 🇨🇭 Switzerland, 🇩🇰 Denmark,
+🇦🇹 Austria, 🇺🇦 Ukraine, 🇵🇱 Poland,
+🇸🇮 Slovenia, 🇸🇳 Senegal, 🇳🇬 Nigeria,
+🇨🇮 Ivory Coast, 🇹🇳 Tunisia, 🇩🇿 Algeria,
+🇳🇿 New Zealand, 🇯🇲 Jamaica, 🇨🇻 Cabo Verde,
+🇭🇳 Honduras, 🇵🇦 Panama, 🇮🇩 Indonesia,
+🇺🇿 Uzbekistan, 🇶🇦 Qatar
+
+Default selection:
+Team 1: 🇺🇸 United States
+Team 2: 🇲🇽 Mexico
+
+--- SECTION 2: Your Prediction ---
+Label: "What's the final score?"
+
+Two number inputs side by side:
+[ Team 1 name ] : [ score ] — [ score ] : [ Team 2 name ]
+
+Score inputs:
+- Large number pickers (0–9)
+- Default: 1 — 0
+- Use + and - buttons for mobile friendliness
+- Also allow direct number typing
+
+--- SECTION 3: Your Name ---
+Label: "Your name on the card"
+Text input, placeholder: "e.g. Ahmed, Sarah, Carlos..."
+Max 20 characters
+Required field
+
+--- SECTION 4: Card Theme ---
+Label: "Choose your card style"
+3 theme options shown as small visual previews:
+
+🌑 Dark Stadium (default)
+🎨 National Colors
+⬜ Clean Modern
+
+Click to select, selected has border highlight
+
+--- SECTION 5: Language ---
+Label: "Card language"
+Dropdown:
+English, العربية (Arabic), Français, Português,
+Español, Deutsch, Türkçe
+
+(Changes the text labels ON the card, not the UI)
+
+--- GENERATE BUTTON ---
+Full width, large:
+"⚽ Generate My Card"
+Color: #e94560 red, white text, bold
+
+-----------------------------------------------------
+SCREEN 2: CARD PREVIEW + DOWNLOAD
+-----------------------------------------------------
+
+TOP BAR:
+← Back button (left) | "Your Card is Ready! 🎉" (center)
+
+THE CARD PREVIEW:
+Show the generated card large and centered.
+The card is a React component (styled div).
+It will be converted to PNG by html-to-image.
+
+--- CARD COMPONENT DESIGN ---
+
+The card must be exactly 1080x1080px 
+(Instagram square format) internally,
+displayed at 360x360px on screen (3x scale for quality).
+
+THEME 1 — DARK STADIUM:
+Background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 100%)
+Top decoration: subtle radial glow (white, 20% opacity)
+  centered at top like stadium lights
+
+Layout from top to bottom:
+- "WORLD CUP 2026 • MATCH PREDICTION" 
+  (small caps, letter-spacing, color: #888, size: 11px)
+  
+- Team 1 flag emoji (large, 60px) — centered left side
+- "VS" badge in center (bold, accent color)  
+- Team 2 flag emoji (large, 60px) — centered right side
+
+- Team 1 name | score : score | Team 2 name
+  (bold white text, score in HUGE font 72px)
+  
+- Thin divider line
+
+- "PREDICTED BY" label (small, grey)
+- [User's Name] (bold, white, 24px)
+
+- Bottom: "⚽ goalcard.app" watermark (small, subtle)
+  Show this for free users only
+
+THEME 2 — NATIONAL COLORS:
+Use this color map for each team:
+Argentina: #74ACDF / #F6B40E
+Australia: #00843D / #FFCD00
+Austria: #ED2939 / white
+Belgium: #000000 / #FAE042
+Brazil: #009C3B / #FFDF00
+Canada: #FF0000 / white
+Chile: #D52B1E / white
+Colombia: #FCD116 / #003087
+Czechia: #D7141A / #11457E
+Egypt: #CE1126 / white
+England: #012169 / white
+France: #002395 / #ED2939
+Germany: #000000 / #FFCE00
+Iraq: #007A3D / white
+Ivory Coast: #F77F00 / white
+Jamaica: #000000 / #FED100
+Japan: #BC002D / white
+Jordan: #007A3D / white
+Mexico: #006847 / #CE1126
+Morocco: #C1272D / #006233
+Netherlands: #FF6600 / white
+New Zealand: #00247D / white
+Nigeria: #008751 / white
+Panama: #DA121A / #002B7F
+Paraguay: #D52B1E / white
+Poland: #DC143C / white
+Portugal: #006600 / #FF0000
+Qatar: #8D1B3D / white
+Saudi Arabia: #006C35 / white
+Senegal: #00853F / #FDEF42
+Serbia: #C6363C / #0C4076
+Slovenia: #003DA5 / #FF0000
+South Africa: #007A4D / #FFB81C
+South Korea: #003478 / #CD2E3A
+Spain: #AA151B / #F1BF00
+Switzerland: #FF0000 / white
+Tunisia: #E70013 / white
+Turkey: #E30A17 / white
+Ukraine: #005BBB / #FFD500
+United States: #002868 / #BF0A30
+Uruguay: #5EB6E4 / white
+Uzbekistan: #1EB53A / #0099B5
+Bosnia: #002395 / #FECC02
+Algeria: #006233 / #D21034
+Indonesia: #CE1126 / white
+Honduras: #0073CF / white
+Cabo Verde: #003893 / #CF2027
+Czechia: #D7141A / #11457E
+Denmark: #C60C30 / white
+Austria: #ED2939 / white
+
+Background: Split vertically
+Left half: Team 1 primary color
+Right half: Team 2 primary color
+White diagonal line in center
+Score in white bold text centered
+Name in white below
+
+THEME 3 — CLEAN MODERN:
+White background
+Dark navy text (#0a0a1a)
+Both flag emojis at top center, small
+Team names in medium weight
+Score in large bold navy
+Thin grey borders
+Very clean, minimal
+Good for LinkedIn/professional sharing
+
+--- CARD TEXT BY LANGUAGE ---
+When language is Arabic:
+- "توقعي للنتيجة" (My Score Prediction)
+- "مقابل" (VS)  
+- "توقع بواسطة" (Predicted by)
+- Use right-to-left direction on Arabic text
+
+When language is French:
+- "Ma Prédiction" (My Prediction)
+- "contre" (VS)
+- "Prédit par" (Predicted by)
+
+When language is Portuguese:
+- "Minha Previsão" (My Prediction)
+- "contra" (VS)
+- "Previsto por" (Predicted by)
+
+When language is Spanish:
+- "Mi Predicción" (My Prediction)
+- "contra" (VS)
+- "Predicho por" (Predicted by)
+
+When German:
+- "Meine Vorhersage" (My Prediction)
+- "gegen" (VS)
+- "Vorhergesagt von" (Predicted by)
+
+When Turkish:
+- "Tahminim" (My Prediction)
+- "karşı" (VS)
+- "Tahmin eden" (Predicted by)
+
+--- ACTION BUTTONS (below card) ---
+
+Row 1:
+[⬇️ Download PNG] — primary button, full width
+Calls html-to-image toPng() on the card component
+Saves as: "goalcard-[team1]-vs-[team2].png"
+
+Row 2: (two buttons side by side)
+[📲 Share] — Web Share API
+If browser supports: opens native share sheet
+If not: shows copy link option
+
+[🔄 New Card] — goes back to form
+
+--- PREMIUM UPSELL BANNER ---
+Show below buttons for free users:
+Box with dashed border:
+"✨ Remove watermark + unlock 2 more themes"
+"One-time payment: $1.99"
+[Upgrade Now] button
+(Link to payment page — can add Stripe later)
+
+--- RELATED MATCHES ---
+Below everything:
+"🗓️ Today's Other Matches"
+Show 3 other matches from today's schedule
+Each is clickable → prefills form with that match
+
+-----------------------------------------------------
+SCREEN 3: SHARE SUCCESS
+-----------------------------------------------------
+Show after sharing:
+"Card shared! 🎉"
+"Challenge your friends to predict this match too!"
+[Make Another Prediction] button
+
+=====================================================
+MATCH DATA (hardcode this)
+=====================================================
+
+Create /src/data/matches.js with key Group Stage matches.
+Include at minimum these matches:
+
+const matches = [
+  // Group Stage - June 11
+  { id: 1, team1: "Mexico", team2: "South Africa", 
+    date: "2026-06-11", time: "3:00 PM ET", group: "A" },
+  { id: 2, team1: "South Korea", team2: "Czechia",
+    date: "2026-06-11", time: "9:00 PM ET", group: "A" },
+  
+  // June 12
+  { id: 3, team1: "Canada", team2: "Bosnia & Herzegovina",
+    date: "2026-06-12", time: "3:00 PM ET", group: "B" },
+  { id: 4, team1: "United States", team2: "Paraguay",
+    date: "2026-06-12", time: "6:00 PM ET", group: "D" },
+  { id: 5, team1: "Belgium", team2: "Egypt",
+    date: "2026-06-12", time: "9:00 PM ET", group: "B" },
+    
+  // Add remaining matches following same format
+  // User can manually add all 104 matches
+];
+
+export default matches;
+
+Add a helper function:
+getTodaysMatches() → returns matches for current date
+getMatchById(id) → returns single match
+
+=====================================================
+TEAM COLOR DATA
+=====================================================
+
+Create /src/data/teams.js:
+
+const teams = [
+  { 
+    name: "United States", 
+    flag: "🇺🇸", 
+    primary: "#002868", 
+    secondary: "#BF0A30",
+    shortName: "USA"
+  },
+  { 
+    name: "Mexico", 
+    flag: "🇲🇽", 
+    primary: "#006847", 
+    secondary: "#CE1126",
+    shortName: "MEX"
+  },
+  // ... all 48 teams following same structure
+];
+
+export default teams;
+export const getTeam = (name) => 
+  teams.find(t => t.name === name);
+
+=====================================================
+HTML-TO-IMAGE IMPLEMENTATION
+=====================================================
+
+In DownloadButton.jsx:
+
+import { toPng } from 'html-to-image';
+import { useRef } from 'react';
+
+const DownloadButton = ({ cardRef, team1, team2 }) => {
+  
+  const handleDownload = async () => {
+    if (!cardRef.current) return;
+    
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 3,  // High quality - 3x resolution
+        width: 1080,
+        height: 1080,
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+        }
+      });
+      
+      const link = document.createElement('a');
+      link.download = `goalcard-${team1}-vs-${team2}.png`;
+      link.href = dataUrl;
+      link.click();
+      
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try again.');
+    }
+  };
+
+  return (
+    <button onClick={handleDownload}>
+      ⬇️ Download PNG
+    </button>
+  );
+};
+
+In CardPreview.jsx:
+const cardRef = useRef(null);
+// Pass cardRef to the card div AND to DownloadButton
+
+=====================================================
+SHARE IMPLEMENTATION
+=====================================================
+
+const handleShare = async () => {
+  // First generate the image
+  const dataUrl = await toPng(cardRef.current, { pixelRatio: 3 });
+  
+  // Convert to blob for sharing
+  const blob = await (await fetch(dataUrl)).blob();
+  const file = new File([blob], 'my-prediction.png', 
+    { type: 'image/png' });
+  
+  if (navigator.share && navigator.canShare({ files: [file] })) {
+    // Native share (works on mobile - WhatsApp, Instagram etc)
+    await navigator.share({
+      title: 'My World Cup Prediction ⚽',
+      text: `I predict ${team1} ${score1}-${score2} ${team2}! 
+             Make your prediction at goalcard.app`,
+      files: [file]
+    });
+  } else {
+    // Fallback: download the image
+    handleDownload();
+    alert('Image downloaded! Share it on WhatsApp or Instagram.');
+  }
+};
+
+=====================================================
+DESIGN SYSTEM
+=====================================================
+
+Colors:
+--bg-dark: #0a0a1a
+--bg-card: #111128
+--accent: #e94560
+--accent-gold: #FFD700
+--text-primary: #ffffff
+--text-muted: #888888
+--border: rgba(255,255,255,0.1)
+
+Card dimensions:
+Internal: 1080x1080px (for download quality)
+Display: 360x360px on screen
+Use CSS transform: scale(0.333) to show preview
+
+Fonts:
+Headings on card: Oswald (bold, sports feel)
+Body: Poppins (clean, modern)
+Import both from Google Fonts
+
+Animation:
+Card preview fades in when generated
+Buttons have hover scale effect (scale 1.02)
+Loading spinner while generating PNG
+
+=====================================================
+FORM VALIDATION
+=====================================================
+
+Before generating card:
+✅ Both teams selected
+✅ Team 1 ≠ Team 2 (show error if same)
+✅ Name entered (not empty)
+✅ Name max 20 characters
+✅ Scores are valid numbers (0-9)
+
+Show inline error messages in red if invalid.
+Scroll to first error automatically.
+
+=====================================================
+VIRAL FEATURES (Important for growth)
+=====================================================
+
+1. CHALLENGE LINK
+After generating, show:
+"Challenge a friend to predict this match!"
+Button: [Copy Challenge Link]
+URL format: goalcard.app?match=USA-MEX&challenge=Ahmed
+When friend opens link, form is prefilled with same match
+Shows: "Ahmed challenged you to predict this match!"
+
+2. CARD COUNTER
+Show on home page:
+"🃏 47,293 cards generated today"
+(Start with a hardcoded number, make it increment 
+locally using localStorage counter)
+
+3. SOCIAL PROOF
+Below form:
+Show 3 sample cards (static images) from different themes
+Caption: "Join thousands predicting today's matches"
+
+=====================================================
+SEO & META TAGS
+=====================================================
+
+In index.html:
+<title>GoalCard — Free World Cup 2026 
+  Prediction Card Generator</title>
+  
+<meta name="description" content="Generate a beautiful 
+  FIFA World Cup 2026 prediction card in seconds. 
+  Pick teams, enter your score, download and share 
+  on WhatsApp and Instagram. Free forever.">
+  
+<meta property="og:title" 
+  content="GoalCard — World Cup Prediction Cards">
+<meta property="og:description" 
+  content="Make your World Cup 2026 prediction card 
+  and share it with friends!">
+<meta name="theme-color" content="#e94560">
+
+Dynamic title when card is ready:
+"My Prediction: USA 2-1 Mexico | GoalCard"
+
+=====================================================
+DOMAIN NOTE
+=====================================================
+
+Build with goalcard.app in mind as the domain.
+Check if goalcard.app or goalcard.com is available.
+Alternatively: predictcard.com or wccard.com
+
+If using watchpartyai.com domain:
+Host this as a subdirectory: watchpartyai.com/predict
+Or keep as separate domain for better branding.
+
+=====================================================
+BUILD ORDER FOR REPLIT AGENT
+=====================================================
+
+Build in this exact order:
+1. Set up React + Vite project structure
+2. Install html-to-image and font packages
+3. Create teams.js data file with all 48 teams
+4. Create matches.js with sample match data
+5. Build MatchSelector component
+6. Build ScoreInput component (with +/- buttons)
+7. Build NameInput and ThemeSelector components
+8. Build CardPreview component for all 3 themes
+9. Implement html-to-image download function
+10. Implement Web Share API
+11. Connect all components in App.jsx
+12. Add form validation
+13. Add viral features (counter, challenge link)
+14. Final styling pass - make it premium
+15. Test download on mobile
+16. Test share on mobile (WhatsApp)
+17. Done ✅
+
+=====================================================
+IMPORTANT NOTES
+=====================================================
+
+1. The card component must use INLINE STYLES 
+   (not Tailwind) for the downloadable area.
+   html-to-image captures inline styles better
+   than Tailwind classes.
+   Use Tailwind only for the page UI outside the card.
+
+2. Flag emojis render differently on Windows vs Mac.
+   As fallback, use country ISO code text (USA, MEX)
+   if emoji rendering looks bad.
+
+3. Test the PNG download on both desktop and mobile.
+   Mobile Chrome and Safari handle it slightly differently.
+
+4. The card ref must point to the exact card div,
+   not a parent wrapper.
+
+5. For Arabic language support, add dir="rtl" 
+   to the card when Arabic is selected.
