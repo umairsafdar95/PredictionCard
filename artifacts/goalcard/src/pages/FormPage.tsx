@@ -30,20 +30,21 @@ const LANGUAGES: { id: Language; label: string }[] = [
 function ScorePicker({ value, onChange, hasError, label }: { value: number; onChange: (v: number) => void; hasError: boolean; label: string }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-      <div style={{ fontSize: "13px", color: "#888", marginBottom: "4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "110px", textAlign: "center" }}>{label}</div>
+      <div style={{ fontSize: "13px", color: "#6b7280", marginBottom: "4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "110px", textAlign: "center", fontWeight: 500 }}>{label}</div>
       <button
         type="button"
         onClick={() => onChange(Math.min(9, value + 1))}
         style={{
           width: "44px", height: "44px",
-          background: "#1a1a3e",
-          border: "1px solid rgba(255,255,255,0.2)",
+          background: "#dcfce7",
+          border: "1px solid #86efac",
           borderRadius: "8px",
-          color: "#fff",
+          color: "#16a34a",
           fontSize: "22px",
           cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontFamily: "'Oswald', sans-serif",
+          fontWeight: 700,
         }}
       >+</button>
       <input
@@ -57,15 +58,16 @@ function ScorePicker({ value, onChange, hasError, label }: { value: number; onCh
         }}
         style={{
           width: "80px", height: "80px",
-          background: "#111128",
-          border: hasError ? "2px solid #e94560" : "2px solid rgba(255,255,255,0.2)",
+          background: "#fff",
+          border: hasError ? "2px solid #dc2626" : "2px solid #16a34a",
           borderRadius: "12px",
-          color: "#fff",
+          color: "#0f172a",
           fontSize: "42px",
           fontFamily: "'Oswald', sans-serif",
           fontWeight: 700,
           textAlign: "center",
           outline: "none",
+          boxShadow: "0 2px 8px rgba(22,163,74,0.12)",
         }}
       />
       <button
@@ -73,14 +75,15 @@ function ScorePicker({ value, onChange, hasError, label }: { value: number; onCh
         onClick={() => onChange(Math.max(0, value - 1))}
         style={{
           width: "44px", height: "44px",
-          background: "#1a1a3e",
-          border: "1px solid rgba(255,255,255,0.2)",
+          background: "#dcfce7",
+          border: "1px solid #86efac",
           borderRadius: "8px",
-          color: "#fff",
+          color: "#16a34a",
           fontSize: "22px",
           cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontFamily: "'Oswald', sans-serif",
+          fontWeight: 700,
         }}
       >−</button>
     </div>
@@ -95,7 +98,6 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const set = <K extends keyof FormState>(field: K, value: FormState[K]) => {
     setFormState((prev) => {
       const next = { ...prev, [field]: value };
-      // Immediate inline same-team check
       if (field === "team1" || field === "team2") {
         const t1 = field === "team1" ? (value as string) : prev.team1;
         const t2 = field === "team2" ? (value as string) : prev.team2;
@@ -138,87 +140,108 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
 
   const selectStyle = (hasError?: boolean): React.CSSProperties => ({
     width: "100%",
-    background: "#111128",
-    border: hasError ? "2px solid #e94560" : "1px solid rgba(255,255,255,0.15)",
+    background: "#fff",
+    border: hasError ? "2px solid #dc2626" : "1.5px solid #d1d5db",
     borderRadius: "10px",
     padding: "14px 12px",
-    color: "#fff",
+    color: "#0f172a",
     fontSize: "15px",
     fontFamily: "'Poppins', sans-serif",
     cursor: "pointer",
     outline: "none",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
   });
 
   const sectionLabel: React.CSSProperties = {
-    fontSize: "12px",
-    color: "#e94560",
-    letterSpacing: "2px",
+    fontSize: "11px",
+    color: "#16a34a",
+    letterSpacing: "2.5px",
     textTransform: "uppercase",
     marginBottom: "6px",
-    fontWeight: 600,
+    fontWeight: 700,
   };
 
   const sectionTitle: React.CSSProperties = {
     fontSize: "19px",
-    fontWeight: 600,
+    fontWeight: 700,
     marginBottom: "18px",
-    color: "#fff",
+    color: "#0f172a",
   };
 
   const errorMsg: React.CSSProperties = {
-    color: "#e94560",
+    color: "#dc2626",
     fontSize: "12px",
     marginTop: "5px",
+    fontWeight: 500,
+  };
+
+  const card: React.CSSProperties = {
+    background: "#fff",
+    borderRadius: "16px",
+    padding: "28px 24px",
+    marginBottom: "20px",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    border: "1px solid #e5e7eb",
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a1a", color: "#fff", fontFamily: "'Poppins', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#f0fdf4", color: "#0f172a", fontFamily: "'Poppins', sans-serif" }}>
       {/* Header */}
       <header style={{
-        background: "linear-gradient(135deg, #111128 0%, #0a0a1a 100%)",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
-        padding: "28px 20px",
+        background: "linear-gradient(135deg, #15803d 0%, #16a34a 50%, #22c55e 100%)",
+        padding: "32px 20px 28px",
         textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ fontSize: "40px", fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "2px", marginBottom: "6px" }}>
-          ⚽ <span style={{ color: "#e94560" }}>Goal</span>Card
-        </div>
-        <div style={{ fontSize: "16px", color: "#ccc", marginBottom: "4px" }}>Predict the score. Share your card.</div>
-        <div style={{ fontSize: "13px", color: "#555" }}>FIFA World Cup 2026 • Free Prediction Cards</div>
         <div style={{
-          display: "inline-block",
-          marginTop: "14px",
-          background: "rgba(233,69,96,0.08)",
-          border: "1px solid rgba(233,69,96,0.25)",
-          borderRadius: "20px",
-          padding: "6px 18px",
-          fontSize: "13px",
-          color: "#e94560",
-        }}>
-          🃏 {(cardCount + 47293).toLocaleString()} cards generated today
+          position: "absolute", inset: 0,
+          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%)",
+        }} />
+        <div style={{ position: "relative" }}>
+          <div style={{ fontSize: "42px", fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "2px", marginBottom: "8px", color: "#fff" }}>
+            ⚽ <span style={{ color: "#fde68a" }}>Goal</span>Card
+          </div>
+          <div style={{ fontSize: "16px", color: "rgba(255,255,255,0.9)", marginBottom: "4px", fontWeight: 500 }}>Predict the score. Share your card.</div>
+          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>FIFA World Cup 2026 • Free Prediction Cards</div>
+          <div style={{
+            display: "inline-block",
+            marginTop: "16px",
+            background: "rgba(255,255,255,0.18)",
+            border: "1px solid rgba(255,255,255,0.35)",
+            borderRadius: "20px",
+            padding: "7px 20px",
+            fontSize: "13px",
+            color: "#fff",
+            fontWeight: 600,
+            backdropFilter: "blur(4px)",
+          }}>
+            🃏 {(cardCount + 47293).toLocaleString()} cards generated today
+          </div>
         </div>
       </header>
 
       {/* Challenge banner */}
       {challengerName && (
         <div style={{
-          background: "linear-gradient(135deg, #e94560 0%, #c43050 100%)",
+          background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
           padding: "14px 20px",
           textAlign: "center",
           fontSize: "15px",
           fontWeight: 600,
+          color: "#fff",
         }}>
           🏆 <strong>{challengerName}</strong> challenged you to predict this match!
         </div>
       )}
 
-      <div style={{ maxWidth: "620px", margin: "0 auto", padding: "36px 20px 60px" }}>
+      <div style={{ maxWidth: "620px", margin: "0 auto", padding: "28px 16px 60px" }}>
 
         {/* STEP 1: Match */}
-        <div style={{ marginBottom: "36px" }}>
+        <div style={card}>
           <div style={sectionLabel}>STEP 1</div>
           <div style={sectionTitle}>Which match are you predicting?</div>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
             <div style={{ flex: 1 }}>
               <select id="team1" value={team1} onChange={(e) => set("team1", e.target.value)} style={selectStyle(!!errors.team1)}>
                 <option value="">Select Team 1</option>
@@ -230,14 +253,12 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             <div style={{
               fontFamily: "'Oswald', sans-serif",
               fontWeight: 700,
-              fontSize: "16px",
-              color: "#e94560",
-              background: "rgba(233,69,96,0.1)",
-              border: "1px solid rgba(233,69,96,0.3)",
+              fontSize: "15px",
+              color: "#fff",
+              background: "#16a34a",
               borderRadius: "8px",
-              padding: "14px 12px",
+              padding: "14px 11px",
               flexShrink: 0,
-              marginTop: "0px",
             }}>VS</div>
 
             <div style={{ flex: 1 }}>
@@ -251,7 +272,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         </div>
 
         {/* STEP 2: Score */}
-        <div style={{ marginBottom: "36px" }}>
+        <div style={card}>
           <div style={sectionLabel}>STEP 2</div>
           <div style={sectionTitle}>What's the final score?</div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "24px" }}>
@@ -261,7 +282,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               hasError={!!errors.score1}
               label={team1 ? `${getTeam(team1)?.flag ?? ""} ${getTeam(team1)?.shortName ?? team1}` : "Team 1"}
             />
-            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "44px", color: "#333", fontWeight: 300, paddingBottom: "28px" }}>:</div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "44px", color: "#d1d5db", fontWeight: 300, paddingBottom: "28px" }}>:</div>
             <ScorePicker
               value={score2}
               onChange={(v) => set("score2", v)}
@@ -272,7 +293,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         </div>
 
         {/* STEP 3: Name */}
-        <div style={{ marginBottom: "36px" }}>
+        <div style={card}>
           <div style={sectionLabel}>STEP 3</div>
           <div style={sectionTitle}>Your name on the card</div>
           <input
@@ -284,25 +305,26 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             onChange={(e) => set("name", e.target.value)}
             style={{
               width: "100%",
-              background: "#111128",
-              border: errors.name ? "2px solid #e94560" : "1px solid rgba(255,255,255,0.15)",
+              background: "#fff",
+              border: errors.name ? "2px solid #dc2626" : "1.5px solid #d1d5db",
               borderRadius: "10px",
               padding: "14px 16px",
-              color: "#fff",
+              color: "#0f172a",
               fontSize: "16px",
               fontFamily: "'Poppins', sans-serif",
               outline: "none",
               boxSizing: "border-box",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
             }}
           />
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "6px" }}>
             {errors.name ? <div style={errorMsg}>{errors.name}</div> : <span />}
-            <div style={{ fontSize: "12px", color: name.length >= 18 ? "#e94560" : "#444" }}>{name.length}/20</div>
+            <div style={{ fontSize: "12px", color: name.length >= 18 ? "#dc2626" : "#9ca3af" }}>{name.length}/20</div>
           </div>
         </div>
 
         {/* STEP 4: Theme */}
-        <div style={{ marginBottom: "36px" }}>
+        <div style={card}>
           <div style={sectionLabel}>STEP 4</div>
           <div style={sectionTitle}>Choose your card style</div>
           <div style={{ display: "flex", gap: "12px" }}>
@@ -314,26 +336,27 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                 style={{
                   flex: 1,
                   padding: "20px 10px",
-                  background: theme === t.id ? "rgba(233,69,96,0.12)" : "#111128",
-                  border: theme === t.id ? "2px solid #e94560" : "1px solid rgba(255,255,255,0.1)",
+                  background: theme === t.id ? "#f0fdf4" : "#fafafa",
+                  border: theme === t.id ? "2px solid #16a34a" : "1.5px solid #e5e7eb",
                   borderRadius: "12px",
                   cursor: "pointer",
-                  color: "#fff",
+                  color: "#0f172a",
                   textAlign: "center",
                   fontFamily: "'Poppins', sans-serif",
                   transition: "all 0.15s",
+                  boxShadow: theme === t.id ? "0 0 0 3px rgba(22,163,74,0.12)" : "none",
                 }}
               >
                 <div style={{ fontSize: "26px", marginBottom: "8px" }}>{t.icon}</div>
-                <div style={{ fontSize: "13px", fontWeight: 600, marginBottom: "3px", color: theme === t.id ? "#e94560" : "#ddd" }}>{t.label}</div>
-                <div style={{ fontSize: "11px", color: "#666" }}>{t.desc}</div>
+                <div style={{ fontSize: "13px", fontWeight: 700, marginBottom: "3px", color: theme === t.id ? "#16a34a" : "#374151" }}>{t.label}</div>
+                <div style={{ fontSize: "11px", color: "#9ca3af" }}>{t.desc}</div>
               </button>
             ))}
           </div>
         </div>
 
         {/* STEP 5: Language */}
-        <div style={{ marginBottom: "44px" }}>
+        <div style={card}>
           <div style={sectionLabel}>STEP 5</div>
           <div style={sectionTitle}>Card language</div>
           <select
@@ -352,7 +375,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           style={{
             width: "100%",
             padding: "20px",
-            background: "#e94560",
+            background: "linear-gradient(135deg, #15803d 0%, #16a34a 100%)",
             border: "none",
             borderRadius: "14px",
             color: "#fff",
@@ -362,11 +385,11 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             letterSpacing: "2px",
             cursor: "pointer",
             textTransform: "uppercase",
-            boxShadow: "0 4px 24px rgba(233,69,96,0.4)",
+            boxShadow: "0 6px 28px rgba(22,163,74,0.40)",
             transition: "transform 0.15s, box-shadow 0.15s",
           }}
-          onMouseOver={(e) => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 6px 32px rgba(233,69,96,0.6)"; }}
-          onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(233,69,96,0.4)"; }}
+          onMouseOver={(e) => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 36px rgba(22,163,74,0.55)"; }}
+          onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(22,163,74,0.40)"; }}
         >
           ⚽ Generate My Card
         </button>
@@ -374,7 +397,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         {/* Today's Matches */}
         {todayMatches.length > 0 && (
           <div style={{ marginTop: "48px" }}>
-            <div style={{ fontSize: "16px", fontWeight: 600, color: "#bbb", marginBottom: "14px" }}>🗓️ Today's Matches</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: "#374151", marginBottom: "14px" }}>🗓️ Today's Matches — Click to prefill</div>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {todayMatches.map((m) => (
                 <button
@@ -385,22 +408,23 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    background: "#111128",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "#fff",
+                    border: "1.5px solid #e5e7eb",
                     borderRadius: "10px",
                     padding: "14px 16px",
                     cursor: "pointer",
-                    color: "#fff",
+                    color: "#0f172a",
                     fontFamily: "'Poppins', sans-serif",
-                    transition: "border-color 0.15s",
+                    transition: "border-color 0.15s, box-shadow 0.15s",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
                   }}
-                  onMouseOver={(e) => { e.currentTarget.style.borderColor = "rgba(233,69,96,0.4)"; }}
-                  onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+                  onMouseOver={(e) => { e.currentTarget.style.borderColor = "#16a34a"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(22,163,74,0.15)"; }}
+                  onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.05)"; }}
                 >
-                  <span style={{ fontSize: "14px" }}>
+                  <span style={{ fontSize: "14px", fontWeight: 500 }}>
                     {getTeam(m.team1)?.flag} {m.team1} vs {getTeam(m.team2)?.flag} {m.team2}
                   </span>
-                  <span style={{ fontSize: "12px", color: "#666" }}>{m.time} · Group {m.group}</span>
+                  <span style={{ fontSize: "12px", color: "#9ca3af", background: "#f3f4f6", borderRadius: "6px", padding: "3px 8px" }}>{m.time} · Group {m.group}</span>
                 </button>
               ))}
             </div>
@@ -408,7 +432,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         )}
 
         {/* Footer */}
-        <div style={{ marginTop: "56px", textAlign: "center", color: "#333", fontSize: "13px" }}>
+        <div style={{ marginTop: "56px", textAlign: "center", color: "#9ca3af", fontSize: "13px" }}>
           <div style={{ marginBottom: "6px" }}>Made with ❤️ for football fans worldwide</div>
           <div>⚽ goalcard.app — Free Forever</div>
         </div>
@@ -418,7 +442,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
-        select option { background: #111128; color: #fff; }
+        select option { background: #fff; color: #0f172a; }
+        select:focus { border-color: #16a34a !important; box-shadow: 0 0 0 3px rgba(22,163,74,0.15); }
+        input:focus { border-color: #16a34a !important; box-shadow: 0 0 0 3px rgba(22,163,74,0.15); }
       `}</style>
     </div>
   );

@@ -6,7 +6,7 @@ export default function ShareSuccessPage({ onMakeAnother }: ShareSuccessPageProp
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#0a0a1a",
+      background: "linear-gradient(160deg, #f0fdf4 0%, #dcfce7 100%)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -15,52 +15,64 @@ export default function ShareSuccessPage({ onMakeAnother }: ShareSuccessPageProp
       padding: "40px 20px",
       textAlign: "center",
     }}>
-      <div style={{ fontSize: "80px", marginBottom: "24px", animation: "bounce 0.6s ease-out" }}>🎉</div>
-
       <div style={{
-        fontFamily: "'Oswald', sans-serif",
-        fontSize: "36px",
-        fontWeight: 700,
-        color: "#fff",
-        letterSpacing: "2px",
-        marginBottom: "12px",
-      }}>Card Shared!</div>
-
-      <div style={{
-        fontSize: "17px",
-        color: "#aaa",
-        maxWidth: "340px",
-        lineHeight: 1.6,
-        marginBottom: "40px",
+        background: "#fff",
+        borderRadius: "24px",
+        padding: "48px 36px",
+        boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+        border: "1px solid #e5e7eb",
+        maxWidth: "380px",
+        width: "100%",
       }}>
-        Challenge your friends to predict this match too! 🏆
+        <div style={{ fontSize: "72px", marginBottom: "20px", animation: "bounce 0.6s ease-out" }}>🎉</div>
+
+        <div style={{
+          fontFamily: "'Oswald', sans-serif",
+          fontSize: "36px",
+          fontWeight: 700,
+          color: "#16a34a",
+          letterSpacing: "2px",
+          marginBottom: "12px",
+        }}>Card Shared!</div>
+
+        <div style={{
+          fontSize: "16px",
+          color: "#6b7280",
+          maxWidth: "300px",
+          lineHeight: 1.6,
+          marginBottom: "32px",
+          margin: "0 auto 32px",
+        }}>
+          Challenge your friends to predict this match too! 🏆
+        </div>
+
+        <button
+          onClick={onMakeAnother}
+          style={{
+            padding: "18px 40px",
+            background: "linear-gradient(135deg, #15803d 0%, #16a34a 100%)",
+            border: "none",
+            borderRadius: "14px",
+            color: "#fff",
+            fontSize: "18px",
+            fontFamily: "'Oswald', sans-serif",
+            fontWeight: 700,
+            letterSpacing: "2px",
+            cursor: "pointer",
+            textTransform: "uppercase",
+            boxShadow: "0 6px 24px rgba(22,163,74,0.40)",
+            transition: "transform 0.2s",
+            width: "100%",
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.transform = "scale(1.04)"; }}
+          onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+        >
+          ⚽ Make Another Prediction
+        </button>
       </div>
 
-      <button
-        onClick={onMakeAnother}
-        style={{
-          padding: "18px 40px",
-          background: "#e94560",
-          border: "none",
-          borderRadius: "14px",
-          color: "#fff",
-          fontSize: "18px",
-          fontFamily: "'Oswald', sans-serif",
-          fontWeight: 700,
-          letterSpacing: "2px",
-          cursor: "pointer",
-          textTransform: "uppercase",
-          boxShadow: "0 4px 24px rgba(233,69,96,0.4)",
-          transition: "transform 0.2s",
-        }}
-        onMouseOver={(e) => { e.currentTarget.style.transform = "scale(1.05)"; }}
-        onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-      >
-        ⚽ Make Another Prediction
-      </button>
-
-      <div style={{ marginTop: "40px", color: "#555", fontSize: "14px" }}>
-        ⚽ goalcard.app
+      <div style={{ marginTop: "32px", color: "#9ca3af", fontSize: "14px" }}>
+        ⚽ goalcard.app — Free Forever
       </div>
 
       <style>{`
