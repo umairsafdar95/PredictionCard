@@ -65,9 +65,8 @@ export default function App() {
 
   const handleGenerate = () => {
     setView("preview");
-    // Update page title dynamically
     const { team1, score1, score2, team2 } = formState;
-    document.title = `My Prediction: ${team1} ${score1}-${score2} ${team2} | GoalCard`;
+    document.title = `My Prediction: ${team1} ${score1}-${score2} ${team2} | PredictionCard`;
     window.scrollTo({ top: 0 });
   };
 
@@ -78,13 +77,13 @@ export default function App() {
 
   const handleBack = () => {
     setView("form");
-    document.title = "GoalCard — Free World Cup 2026 Prediction Card Generator";
+    document.title = "PredictionCard — Free World Cup 2026 Prediction Card Generator";
     window.scrollTo({ top: 0 });
   };
 
   const handleNewCard = () => {
     setView("form");
-    document.title = "GoalCard — Free World Cup 2026 Prediction Card Generator";
+    document.title = "PredictionCard — Free World Cup 2026 Prediction Card Generator";
     window.scrollTo({ top: 0 });
   };
 
@@ -95,7 +94,7 @@ export default function App() {
 
   const handleMakeAnother = () => {
     setView("form");
-    document.title = "GoalCard — Free World Cup 2026 Prediction Card Generator";
+    document.title = "PredictionCard — Free World Cup 2026 Prediction Card Generator";
     window.scrollTo({ top: 0 });
   };
 

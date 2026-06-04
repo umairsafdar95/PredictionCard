@@ -23,147 +23,143 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
     direction: isRTL ? "rtl" : "ltr",
   };
 
-  /* ─────────────────────────────────────────────
-     THEME 1 — NIGHT MATCH (dark, cinematic)
-  ───────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────────
+     THEME 1 — NIGHT MATCH
+     Dark cinematic stadium. All content in flex flow (no backdropFilter).
+  ───────────────────────────────────────────────────────────────── */
   if (theme === "dark") {
-    const accentGreen = "#22c55e";
     return (
       <div ref={cardRef} style={{
         ...baseCard,
-        background: "linear-gradient(170deg, #0d1117 0%, #131c14 55%, #0d1117 100%)",
+        background: "linear-gradient(160deg, #050d14 0%, #0a1a0d 50%, #050d14 100%)",
+        justifyContent: "center",
+        padding: "0 80px",
+        gap: "0",
       }}>
-        {/* Floodlight glow from top */}
+        {/* Decorative: green spotlight from top — absolute, behind everything */}
         <div style={{
           position: "absolute", top: 0, left: "50%",
           transform: "translateX(-50%)",
-          width: "900px", height: "500px",
-          background: "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34,197,94,0.22) 0%, transparent 70%)",
+          width: "1000px", height: "520px",
+          background: "radial-gradient(ellipse 80% 65% at 50% -5%, rgba(34,197,94,0.20) 0%, transparent 100%)",
           pointerEvents: "none",
         }} />
-
-        {/* Pitch lines — decorative arcs */}
+        {/* Decorative: faint pitch arc */}
         <div style={{
-          position: "absolute", bottom: "-200px", left: "50%",
+          position: "absolute", bottom: "-220px", left: "50%",
           transform: "translateX(-50%)",
           width: "1400px", height: "1400px",
-          border: "2px solid rgba(34,197,94,0.08)",
+          border: "2px solid rgba(34,197,94,0.07)",
           borderRadius: "50%",
           pointerEvents: "none",
         }} />
+        {/* Corner label */}
         <div style={{
-          position: "absolute", bottom: "-320px", left: "50%",
-          transform: "translateX(-50%)",
-          width: "1700px", height: "1700px",
-          border: "1px solid rgba(34,197,94,0.05)",
-          borderRadius: "50%",
-          pointerEvents: "none",
-        }} />
+          position: "absolute", top: "44px", left: "48px",
+          fontFamily: "'Oswald', sans-serif", fontSize: "18px",
+          color: "rgba(34,197,94,0.35)", letterSpacing: "3px",
+        }}>FIFA WC 2026</div>
 
-        {/* Top badge area */}
-        <div style={{
-          position: "absolute", top: "52px", left: "0", right: "0",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
-        }}>
-          <div style={{ fontSize: "48px" }}>⚽</div>
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "52px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: "50px", marginBottom: "12px" }}>⚽</div>
           <div style={{
             fontFamily: "'Oswald', sans-serif",
-            fontSize: "22px", letterSpacing: "6px",
-            color: accentGreen, textTransform: "uppercase", fontWeight: 400,
+            fontSize: "22px", letterSpacing: "7px",
+            color: "#22c55e", textTransform: "uppercase", fontWeight: 400,
+            marginBottom: "8px",
           }}>WORLD CUP 2026</div>
           <div style={{
             fontFamily: "'Poppins', sans-serif",
             fontSize: "16px", letterSpacing: "4px",
-            color: "rgba(255,255,255,0.35)", textTransform: "uppercase",
+            color: "rgba(255,255,255,0.3)", textTransform: "uppercase",
           }}>{labels.title}</div>
         </div>
 
-        {/* Teams row */}
+        {/* ── TEAMS ROW ── */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "center",
-          gap: "70px", marginBottom: "36px", position: "relative", zIndex: 1,
+          gap: "50px", marginBottom: "40px",
+          position: "relative", zIndex: 1, width: "100%",
         }}>
           {/* Team 1 */}
-          <div style={{ textAlign: "center", width: "280px" }}>
-            <div style={{ fontSize: "110px", lineHeight: 1, marginBottom: "14px" }}>{t1?.flag ?? "🏳"}</div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div style={{ fontSize: "108px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
             <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "38px", fontWeight: 700,
-              color: "#fff", letterSpacing: "3px", textTransform: "uppercase",
+              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              color: "#ffffff", letterSpacing: "3px",
             }}>{t1?.shortName ?? team1}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-              color: "rgba(255,255,255,0.45)", marginTop: "4px",
+              fontFamily: "'Poppins', sans-serif", fontSize: "18px",
+              color: "rgba(255,255,255,0.4)",
             }}>{team1}</div>
           </div>
 
-          {/* VS badge */}
+          {/* VS */}
           <div style={{
-            display: "flex", flexDirection: "column", alignItems: "center", gap: "0",
-          }}>
-            <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "30px", fontWeight: 700,
-              color: accentGreen, background: "rgba(34,197,94,0.12)",
-              border: "2px solid rgba(34,197,94,0.4)",
-              borderRadius: "10px", padding: "10px 22px", letterSpacing: "4px",
-            }}>{labels.vs}</div>
-          </div>
+            fontFamily: "'Oswald', sans-serif", fontSize: "28px", fontWeight: 700,
+            color: "#22c55e",
+            background: "rgba(34,197,94,0.12)",
+            border: "2px solid rgba(34,197,94,0.4)",
+            borderRadius: "10px", padding: "12px 22px", letterSpacing: "4px",
+            flexShrink: 0,
+          }}>{labels.vs}</div>
 
           {/* Team 2 */}
-          <div style={{ textAlign: "center", width: "280px" }}>
-            <div style={{ fontSize: "110px", lineHeight: 1, marginBottom: "14px" }}>{t2?.flag ?? "🏳"}</div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div style={{ fontSize: "108px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
             <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "38px", fontWeight: 700,
-              color: "#fff", letterSpacing: "3px", textTransform: "uppercase",
+              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              color: "#ffffff", letterSpacing: "3px",
             }}>{t2?.shortName ?? team2}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-              color: "rgba(255,255,255,0.45)", marginTop: "4px",
+              fontFamily: "'Poppins', sans-serif", fontSize: "18px",
+              color: "rgba(255,255,255,0.4)",
             }}>{team2}</div>
           </div>
         </div>
 
-        {/* Score */}
+        {/* ── SCORE ── */}
         <div style={{
           display: "flex", alignItems: "center", gap: "28px",
           marginBottom: "48px", position: "relative", zIndex: 1,
         }}>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "168px", fontWeight: 900,
-            color: "#fff", lineHeight: 1,
-            textShadow: `0 0 60px rgba(34,197,94,0.4), 0 4px 8px rgba(0,0,0,0.6)`,
+            fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900,
+            color: "#ffffff", lineHeight: 1,
+            textShadow: "0 0 70px rgba(34,197,94,0.45)",
           }}>{score1}</div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "80px",
-            color: "rgba(255,255,255,0.2)", fontWeight: 300, lineHeight: 1,
+            color: "rgba(255,255,255,0.15)", fontWeight: 300, lineHeight: 1,
           }}>:</div>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "168px", fontWeight: 900,
-            color: "#fff", lineHeight: 1,
-            textShadow: `0 0 60px rgba(34,197,94,0.4), 0 4px 8px rgba(0,0,0,0.6)`,
+            fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900,
+            color: "#ffffff", lineHeight: 1,
+            textShadow: "0 0 70px rgba(34,197,94,0.45)",
           }}>{score2}</div>
         </div>
 
-        {/* Divider */}
+        {/* ── DIVIDER ── */}
         <div style={{
-          width: "580px", height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(34,197,94,0.4), transparent)",
+          width: "560px", height: "2px",
+          background: "linear-gradient(90deg, transparent, #22c55e, transparent)",
           marginBottom: "44px", position: "relative", zIndex: 1,
         }} />
 
-        {/* Predicted by */}
-        <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+        {/* ── PREDICTED BY ── */}
+        <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.35)", letterSpacing: "5px",
+            color: "rgba(255,255,255,0.3)", letterSpacing: "5px",
             textTransform: "uppercase", marginBottom: "12px",
           }}>{labels.predictedBy}</div>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "60px", fontWeight: 700,
-            color: "#fff", letterSpacing: "2px",
+            fontFamily: "'Oswald', sans-serif", fontSize: "62px", fontWeight: 700,
+            color: "#ffffff", letterSpacing: "2px",
           }}>{name}</div>
         </div>
 
@@ -171,249 +167,255 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         <div style={{
           position: "absolute", bottom: "38px", right: "48px",
           fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-          color: "rgba(255,255,255,0.15)", letterSpacing: "1px",
-        }}>⚽ goalcard.app</div>
-
-        {/* Top-left corner text */}
-        <div style={{
-          position: "absolute", top: "48px", left: "48px",
-          fontFamily: "'Oswald', sans-serif", fontSize: "18px",
-          color: "rgba(34,197,94,0.3)", letterSpacing: "3px",
-        }}>FIFA WC 2026</div>
+          color: "rgba(255,255,255,0.12)", letterSpacing: "1px",
+        }}>⚽ predictioncard.com</div>
       </div>
     );
   }
 
-  /* ─────────────────────────────────────────────
-     THEME 2 — NATIONAL COLORS (clean split)
-  ───────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────────
+     THEME 2 — NATIONAL COLORS
+     Clean 50/50 vertical split. ALL content in flex column flow.
+     NO backdropFilter (breaks html-to-image). Solid colors only.
+  ───────────────────────────────────────────────────────────────── */
   if (theme === "colors") {
-    const p1 = t1?.primary ?? "#1a56db";
-    const p2 = t2?.primary ?? "#dc2626";
-    const s1 = t1?.secondary ?? "rgba(255,255,255,0.85)";
-    const s2 = t2?.secondary ?? "rgba(255,255,255,0.85)";
+    const p1 = t1?.primary ?? "#003087";
+    const p2 = t2?.primary ?? "#ce1126";
+    const s1 = t1?.secondary ?? "#ffffff";
+    const s2 = t2?.secondary ?? "#ffffff";
 
     return (
-      <div ref={cardRef} style={{ ...baseCard, background: "#fff" }}>
-        {/* Left color block — Team 1 */}
-        <div style={{
-          position: "absolute", top: 0, left: 0,
-          width: "50%", height: "100%", background: p1,
-        }} />
-        {/* Right color block — Team 2 */}
-        <div style={{
-          position: "absolute", top: 0, right: 0,
-          width: "50%", height: "100%", background: p2,
-        }} />
-
-        {/* Center divider line */}
+      <div ref={cardRef} style={{
+        ...baseCard,
+        background: `linear-gradient(90deg, ${p1} 50%, ${p2} 50%)`,
+        justifyContent: "space-between",
+        padding: "0",
+      }}>
+        {/* Decorative: center divider line */}
         <div style={{
           position: "absolute", top: 0, left: "50%",
           transform: "translateX(-50%)",
           width: "5px", height: "100%",
-          background: "rgba(255,255,255,0.5)",
-          zIndex: 1,
+          background: "rgba(255,255,255,0.45)",
+          pointerEvents: "none", zIndex: 0,
         }} />
 
-        {/* Top header bar */}
+        {/* ── TOP HEADER STRIP — solid, no blur ── */}
         <div style={{
-          position: "absolute", top: 0, left: 0, right: 0,
-          height: "100px",
-          background: "rgba(0,0,0,0.35)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          zIndex: 2,
-          backdropFilter: "blur(4px)",
+          width: "100%", padding: "44px 40px 40px",
+          background: "rgba(0,0,0,0.52)",
+          textAlign: "center",
+          position: "relative", zIndex: 1,
+          flexShrink: 0,
         }}>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "22px",
-            letterSpacing: "6px", color: "rgba(255,255,255,0.9)",
-            textTransform: "uppercase",
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "22px", letterSpacing: "6px",
+            color: "rgba(255,255,255,0.9)", textTransform: "uppercase",
           }}>WORLD CUP 2026 • {labels.title.toUpperCase()}</div>
         </div>
 
-        {/* Team 1 — left side, flag + short name + full name */}
+        {/* ── TEAMS SIDE BY SIDE — all in normal flow ── */}
         <div style={{
-          position: "absolute", top: "100px", left: 0,
-          width: "50%", height: "calc(100% - 100px)",
-          display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center",
-          paddingBottom: "280px",
-          zIndex: 2,
+          display: "flex", alignItems: "center", width: "100%",
+          flex: 1, position: "relative", zIndex: 1,
         }}>
-          <div style={{ fontSize: "130px", lineHeight: 1, marginBottom: "18px" }}>{t1?.flag ?? "🏳"}</div>
+          {/* Team 1 — left half */}
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "52px", fontWeight: 700,
-            color: s1, letterSpacing: "4px", textTransform: "uppercase",
-            textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-          }}>{t1?.shortName ?? team1}</div>
+            flex: 1, display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", gap: "16px",
+            padding: "0 30px",
+          }}>
+            <div style={{ fontSize: "130px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
+              color: s1, letterSpacing: "5px", textTransform: "uppercase",
+              textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+            }}>{t1?.shortName ?? team1}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "20px",
+              color: "rgba(255,255,255,0.6)",
+            }}>{team1}</div>
+          </div>
+
+          {/* Center VS badge */}
           <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-            color: "rgba(255,255,255,0.65)", marginTop: "6px",
-            textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-          }}>{team1}</div>
+            flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center",
+            gap: "20px", zIndex: 2,
+          }}>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700,
+              color: "#ffffff",
+              background: "rgba(0,0,0,0.55)",
+              border: "2px solid rgba(255,255,255,0.4)",
+              borderRadius: "10px", padding: "10px 20px", letterSpacing: "3px",
+            }}>{labels.vs}</div>
+          </div>
+
+          {/* Team 2 — right half */}
+          <div style={{
+            flex: 1, display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "center", gap: "16px",
+            padding: "0 30px",
+          }}>
+            <div style={{ fontSize: "130px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
+              color: s2, letterSpacing: "5px", textTransform: "uppercase",
+              textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+            }}>{t2?.shortName ?? team2}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "20px",
+              color: "rgba(255,255,255,0.6)",
+            }}>{team2}</div>
+          </div>
         </div>
 
-        {/* Team 2 — right side */}
+        {/* ── SCORE — solid background, NO blur ── */}
         <div style={{
-          position: "absolute", top: "100px", right: 0,
-          width: "50%", height: "calc(100% - 100px)",
-          display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center",
-          paddingBottom: "280px",
-          zIndex: 2,
+          width: "100%", display: "flex", justifyContent: "center", alignItems: "center",
+          padding: "28px 0",
+          background: "rgba(0,0,0,0.50)",
+          position: "relative", zIndex: 1, flexShrink: 0,
         }}>
-          <div style={{ fontSize: "130px", lineHeight: 1, marginBottom: "18px" }}>{t2?.flag ?? "🏳"}</div>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "52px", fontWeight: 700,
-            color: s2, letterSpacing: "4px", textTransform: "uppercase",
-            textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-          }}>{t2?.shortName ?? team2}</div>
-          <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-            color: "rgba(255,255,255,0.65)", marginTop: "6px",
-            textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-          }}>{team2}</div>
+            display: "flex", alignItems: "center", gap: "20px",
+          }}>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "145px", fontWeight: 900,
+              color: s1, lineHeight: 1,
+              textShadow: `0 0 40px ${p1}88, 0 4px 8px rgba(0,0,0,0.6)`,
+            }}>{score1}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "70px",
+              color: "rgba(255,255,255,0.25)", fontWeight: 300,
+            }}>:</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "145px", fontWeight: 900,
+              color: s2, lineHeight: 1,
+              textShadow: `0 0 40px ${p2}88, 0 4px 8px rgba(0,0,0,0.6)`,
+            }}>{score2}</div>
+          </div>
         </div>
 
-        {/* Score panel — floating center card */}
+        {/* ── PREDICTED BY — solid background, NO blur ── */}
         <div style={{
-          position: "absolute",
-          bottom: "220px", left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 3,
+          width: "100%", padding: "44px 40px",
           background: "rgba(0,0,0,0.55)",
-          backdropFilter: "blur(16px)",
-          borderRadius: "20px",
-          border: "2px solid rgba(255,255,255,0.25)",
-          padding: "28px 80px",
-          display: "flex", alignItems: "center", gap: "20px",
-          minWidth: "380px", justifyContent: "center",
-        }}>
-          <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "150px", fontWeight: 900,
-            color: s1, lineHeight: 1,
-            textShadow: `0 0 30px ${p1}`,
-          }}>{score1}</div>
-          <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "70px",
-            color: "rgba(255,255,255,0.3)", fontWeight: 300,
-          }}>:</div>
-          <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "150px", fontWeight: 900,
-            color: s2, lineHeight: 1,
-            textShadow: `0 0 30px ${p2}`,
-          }}>{score2}</div>
-        </div>
-
-        {/* Predicted by — bottom strip */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0,
-          height: "200px",
-          background: "rgba(0,0,0,0.5)",
-          backdropFilter: "blur(8px)",
-          display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", gap: "8px",
-          zIndex: 3,
-          borderTop: "1px solid rgba(255,255,255,0.15)",
+          borderTop: "2px solid rgba(255,255,255,0.15)",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
+          position: "relative", zIndex: 1, flexShrink: 0,
         }}>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.5)", letterSpacing: "5px",
+            color: "rgba(255,255,255,0.45)", letterSpacing: "5px",
             textTransform: "uppercase",
           }}>{labels.predictedBy}</div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
-            color: "#fff", letterSpacing: "2px",
+            color: "#ffffff", letterSpacing: "2px",
           }}>{name}</div>
         </div>
 
         {/* Watermark */}
         <div style={{
-          position: "absolute", bottom: "12px", right: "48px",
-          fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-          color: "rgba(255,255,255,0.2)", zIndex: 4,
-        }}>⚽ goalcard.app</div>
+          position: "absolute", bottom: "14px", right: "48px",
+          fontFamily: "'Poppins', sans-serif", fontSize: "16px",
+          color: "rgba(255,255,255,0.18)", zIndex: 5,
+        }}>⚽ predictioncard.com</div>
       </div>
     );
   }
 
-  /* ─────────────────────────────────────────────
-     THEME 3 — FIFA GOLD (deep navy + gold)
-  ───────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────────
+     THEME 3 — FIFA GOLD
+     Deep FIFA navy with gold trophy accents. All content in flex flow.
+     NO backdropFilter.
+  ───────────────────────────────────────────────────────────────── */
   return (
     <div ref={cardRef} style={{
       ...baseCard,
-      background: "linear-gradient(160deg, #071330 0%, #0b1e45 50%, #071330 100%)",
+      background: "linear-gradient(160deg, #071330 0%, #0d1e4a 50%, #071330 100%)",
+      justifyContent: "center",
+      padding: "0 80px",
+      gap: "0",
     }}>
-      {/* Gold shimmer diagonal stripe */}
+      {/* Decorative: gold shimmer diagonal */}
       <div style={{
-        position: "absolute", top: "-200px", right: "-100px",
-        width: "500px", height: "1500px",
-        background: "linear-gradient(135deg, transparent 0%, rgba(212,175,55,0.06) 50%, transparent 100%)",
+        position: "absolute", top: "-200px", right: "-80px",
+        width: "480px", height: "1600px",
+        background: "linear-gradient(135deg, transparent 0%, rgba(212,175,55,0.07) 50%, transparent 100%)",
         transform: "rotate(-25deg)",
         pointerEvents: "none",
       }} />
-
-      {/* Top gold accent bar */}
+      {/* Decorative: subtle radial glow */}
       <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: "8px",
-        background: "linear-gradient(90deg, #d4af37, #f5e17a, #d4af37)",
+        position: "absolute", top: "30%", left: "50%",
+        transform: "translateX(-50%)",
+        width: "800px", height: "400px",
+        background: "radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.07) 0%, transparent 70%)",
+        pointerEvents: "none",
       }} />
 
-      {/* Header */}
+      {/* ── TOP GOLD BAR ── */}
       <div style={{
-        position: "absolute", top: "52px", left: 0, right: 0,
-        display: "flex", flexDirection: "column", alignItems: "center", gap: "8px",
-      }}>
-        <div style={{ fontSize: "44px" }}>🏆</div>
+        position: "absolute", top: 0, left: 0, right: 0, height: "10px",
+        background: "linear-gradient(90deg, #b8860b, #ffd700, #f5e17a, #ffd700, #b8860b)",
+      }} />
+
+      {/* ── HEADER ── */}
+      <div style={{ textAlign: "center", marginBottom: "48px", position: "relative", zIndex: 1 }}>
+        <div style={{ fontSize: "52px", marginBottom: "12px" }}>🏆</div>
         <div style={{
-          fontFamily: "'Oswald', sans-serif", fontSize: "20px",
-          letterSpacing: "7px", color: "#d4af37",
-          textTransform: "uppercase", fontWeight: 400,
+          fontFamily: "'Oswald', sans-serif",
+          fontSize: "20px", letterSpacing: "8px",
+          color: "#d4af37", textTransform: "uppercase", fontWeight: 400,
+          marginBottom: "8px",
         }}>FIFA WORLD CUP 2026</div>
         <div style={{
-          fontFamily: "'Poppins', sans-serif", fontSize: "15px",
-          letterSpacing: "4px", color: "rgba(255,255,255,0.3)",
-          textTransform: "uppercase",
+          fontFamily: "'Poppins', sans-serif",
+          fontSize: "15px", letterSpacing: "4px",
+          color: "rgba(255,255,255,0.28)", textTransform: "uppercase",
         }}>{labels.title}</div>
       </div>
 
-      {/* Team panels — side by side */}
+      {/* ── TEAM PANELS — side by side, bordered ── */}
       <div style={{
-        display: "flex", alignItems: "stretch", justifyContent: "center",
-        gap: "0", marginBottom: "32px", width: "860px",
+        display: "flex", width: "920px", marginBottom: "36px",
         position: "relative", zIndex: 1,
       }}>
         {/* Team 1 panel */}
         <div style={{
           flex: 1, display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", padding: "40px 30px",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(212,175,55,0.25)",
-          borderRadius: "16px 0 0 16px",
+          alignItems: "center", justifyContent: "center",
+          padding: "36px 24px",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(212,175,55,0.28)",
           borderRight: "none",
+          borderRadius: "16px 0 0 16px",
+          gap: "12px",
         }}>
-          <div style={{ fontSize: "100px", lineHeight: 1, marginBottom: "16px" }}>{t1?.flag ?? "🏳"}</div>
+          <div style={{ fontSize: "96px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "42px", fontWeight: 700,
             color: "#d4af37", letterSpacing: "4px",
           }}>{t1?.shortName ?? team1}</div>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.5)", marginTop: "6px",
+            color: "rgba(255,255,255,0.4)",
           }}>{team1}</div>
         </div>
 
-        {/* VS divider */}
+        {/* VS divider panel */}
         <div style={{
-          display: "flex", flexDirection: "column", alignItems: "center",
-          justifyContent: "center", padding: "0 20px",
-          background: "rgba(212,175,55,0.1)",
-          border: "1px solid rgba(212,175,55,0.25)",
-          minWidth: "90px",
+          flexShrink: 0, width: "100px", display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center",
+          background: "rgba(212,175,55,0.10)",
+          border: "1px solid rgba(212,175,55,0.28)",
+          borderLeft: "none", borderRight: "none",
         }}>
           <div style={{
-            fontFamily: "'Oswald', sans-serif", fontSize: "28px", fontWeight: 700,
+            fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700,
             color: "#d4af37", letterSpacing: "3px",
           }}>{labels.vs}</div>
         </div>
@@ -421,77 +423,79 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         {/* Team 2 panel */}
         <div style={{
           flex: 1, display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", padding: "40px 30px",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(212,175,55,0.25)",
-          borderRadius: "0 16px 16px 0",
+          alignItems: "center", justifyContent: "center",
+          padding: "36px 24px",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(212,175,55,0.28)",
           borderLeft: "none",
+          borderRadius: "0 16px 16px 0",
+          gap: "12px",
         }}>
-          <div style={{ fontSize: "100px", lineHeight: 1, marginBottom: "16px" }}>{t2?.flag ?? "🏳"}</div>
+          <div style={{ fontSize: "96px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "42px", fontWeight: 700,
             color: "#d4af37", letterSpacing: "4px",
           }}>{t2?.shortName ?? team2}</div>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-            color: "rgba(255,255,255,0.5)", marginTop: "6px",
+            color: "rgba(255,255,255,0.4)",
           }}>{team2}</div>
         </div>
       </div>
 
-      {/* Score */}
+      {/* ── SCORE ── */}
       <div style={{
         display: "flex", alignItems: "center", gap: "24px",
-        marginBottom: "44px", position: "relative", zIndex: 1,
+        marginBottom: "40px", position: "relative", zIndex: 1,
       }}>
         <div style={{
-          fontFamily: "'Oswald', sans-serif", fontSize: "170px", fontWeight: 900,
+          fontFamily: "'Oswald', sans-serif", fontSize: "168px", fontWeight: 900,
           color: "#f5e17a", lineHeight: 1,
-          textShadow: "0 0 50px rgba(212,175,55,0.5), 0 4px 12px rgba(0,0,0,0.6)",
+          textShadow: "0 0 60px rgba(212,175,55,0.55), 0 4px 12px rgba(0,0,0,0.7)",
         }}>{score1}</div>
         <div style={{
           fontFamily: "'Oswald', sans-serif", fontSize: "80px",
-          color: "rgba(212,175,55,0.3)", fontWeight: 300,
+          color: "rgba(212,175,55,0.25)", fontWeight: 300,
         }}>:</div>
         <div style={{
-          fontFamily: "'Oswald', sans-serif", fontSize: "170px", fontWeight: 900,
+          fontFamily: "'Oswald', sans-serif", fontSize: "168px", fontWeight: 900,
           color: "#f5e17a", lineHeight: 1,
-          textShadow: "0 0 50px rgba(212,175,55,0.5), 0 4px 12px rgba(0,0,0,0.6)",
+          textShadow: "0 0 60px rgba(212,175,55,0.55), 0 4px 12px rgba(0,0,0,0.7)",
         }}>{score2}</div>
       </div>
 
-      {/* Gold divider */}
+      {/* ── GOLD DIVIDER ── */}
       <div style={{
         width: "560px", height: "1px",
         background: "linear-gradient(90deg, transparent, #d4af37, transparent)",
-        marginBottom: "40px", position: "relative", zIndex: 1,
+        marginBottom: "38px", position: "relative", zIndex: 1,
       }} />
 
-      {/* Predicted by */}
-      <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+      {/* ── PREDICTED BY ── */}
+      <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         <div style={{
           fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-          color: "rgba(212,175,55,0.6)", letterSpacing: "5px",
+          color: "rgba(212,175,55,0.55)", letterSpacing: "5px",
           textTransform: "uppercase", marginBottom: "12px",
         }}>{labels.predictedBy}</div>
         <div style={{
           fontFamily: "'Oswald', sans-serif", fontSize: "60px", fontWeight: 700,
-          color: "#fff", letterSpacing: "2px",
+          color: "#ffffff", letterSpacing: "2px",
         }}>{name}</div>
       </div>
 
-      {/* Bottom gold bar */}
+      {/* ── BOTTOM GOLD BAR ── */}
       <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: "8px",
-        background: "linear-gradient(90deg, #d4af37, #f5e17a, #d4af37)",
+        position: "absolute", bottom: 0, left: 0, right: 0, height: "10px",
+        background: "linear-gradient(90deg, #b8860b, #ffd700, #f5e17a, #ffd700, #b8860b)",
       }} />
 
       {/* Watermark */}
       <div style={{
-        position: "absolute", bottom: "24px", right: "48px",
+        position: "absolute", bottom: "22px", right: "48px",
         fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-        color: "rgba(212,175,55,0.25)", letterSpacing: "1px",
-      }}>⚽ goalcard.app</div>
+        color: "rgba(212,175,55,0.22)", letterSpacing: "1px", zIndex: 1,
+      }}>⚽ predictioncard.com</div>
     </div>
   );
 }

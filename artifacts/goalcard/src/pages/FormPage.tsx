@@ -197,10 +197,10 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         }} />
         <div style={{ position: "relative" }}>
           <div style={{ fontSize: "42px", fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "2px", marginBottom: "8px", color: "#fff" }}>
-            ⚽ <span style={{ color: "#fde68a" }}>Goal</span>Card
+            ⚽ <span style={{ color: "#fde68a" }}>Prediction</span>Card
           </div>
           <div style={{ fontSize: "16px", color: "rgba(255,255,255,0.9)", marginBottom: "4px", fontWeight: 500 }}>Predict the score. Share your card.</div>
-          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>FIFA World Cup 2026 • Free Prediction Cards</div>
+          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)" }}>predictioncard.com • FIFA World Cup 2026</div>
           <div style={{
             display: "inline-block",
             marginTop: "16px",
@@ -431,7 +431,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         {/* Footer */}
         <div style={{ marginTop: "56px", textAlign: "center", color: "#9ca3af", fontSize: "13px" }}>
           <div style={{ marginBottom: "6px" }}>Made with ❤️ for football fans worldwide</div>
-          <div>⚽ goalcard.app — Free Forever</div>
+          <div>⚽ predictioncard.com — Free Forever</div>
         </div>
       </div>
 

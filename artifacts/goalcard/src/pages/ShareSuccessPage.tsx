@@ -72,7 +72,7 @@ export default function ShareSuccessPage({ onMakeAnother }: ShareSuccessPageProp
       </div>
 
       <div style={{ marginTop: "32px", color: "#9ca3af", fontSize: "14px" }}>
-        ⚽ goalcard.app — Free Forever
+        ⚽ predictioncard.com — Free Forever
       </div>
 
       <style>{`

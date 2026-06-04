@@ -66,7 +66,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: "My World Cup Prediction ⚽",
-          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make your own prediction at goalcard.app`,
+          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make your own at predictioncard.com`,
           files: [file],
         });
         onShared();
@@ -147,7 +147,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
           }}
         >← Back</button>
         <div style={{ flex: 1, textAlign: "center", fontFamily: "'Oswald', sans-serif", fontSize: "20px", fontWeight: 700, letterSpacing: "1px", color: "#16a34a" }}>
-          Your Card is Ready! 🎉
+          ⚽ PredictionCard — Your Card is Ready! 🎉
         </div>
         <div style={{ width: "80px" }} />
       </div>
