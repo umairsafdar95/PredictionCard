@@ -12,9 +12,9 @@ interface FormPageProps {
 }
 
 const THEMES: { id: Theme; label: string; icon: string; desc: string }[] = [
-  { id: "dark", label: "Dark Stadium", icon: "🌑", desc: "Bold dark gradient" },
-  { id: "colors", label: "National Colors", icon: "🎨", desc: "Team flag colors" },
-  { id: "modern", label: "Clean Modern", icon: "⬜", desc: "Minimal white style" },
+  { id: "dark", label: "Night Match", icon: "🌙", desc: "Cinematic green glow" },
+  { id: "colors", label: "National Colors", icon: "🎌", desc: "Team colors, split design" },
+  { id: "modern", label: "FIFA Gold", icon: "🏆", desc: "Deep navy & gold trophy" },
 ];
 
 const LANGUAGES: { id: Language; label: string }[] = [
@@ -96,23 +96,20 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const todayMatches = getTodaysMatches().slice(0, 3);
 
   const set = <K extends keyof FormState>(field: K, value: FormState[K]) => {
-    setFormState((prev) => {
-      const next = { ...prev, [field]: value };
-      if (field === "team1" || field === "team2") {
-        const t1 = field === "team1" ? (value as string) : prev.team1;
-        const t2 = field === "team2" ? (value as string) : prev.team2;
-        if (t1 && t2 && t1 === t2) {
-          setErrors((e) => ({ ...e, team2: "Teams must be different" }));
-        } else {
-          setErrors((e) => {
-            const copy = { ...e };
-            delete copy.team2;
-            return copy;
-          });
-        }
+    setFormState((prev) => ({ ...prev, [field]: value }));
+    if (field === "team1" || field === "team2") {
+      const t1 = field === "team1" ? (value as string) : formState.team1;
+      const t2 = field === "team2" ? (value as string) : formState.team2;
+      if (t1 && t2 && t1 === t2) {
+        setErrors((e) => ({ ...e, team2: "Teams must be different" }));
+      } else {
+        setErrors((e) => {
+          const copy = { ...e };
+          delete copy.team2;
+          return copy;
+        });
       }
-      return next;
-    });
+    }
   };
 
   const handleSubmit = () => {
