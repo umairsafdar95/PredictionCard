@@ -92,8 +92,26 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const [errors, setErrors] = useState<Record<string, string>>({});
   const todayMatches = getTodaysMatches().slice(0, 3);
 
-  const set = <K extends keyof FormState>(field: K, value: FormState[K]) =>
-    setFormState((prev) => ({ ...prev, [field]: value }));
+  const set = <K extends keyof FormState>(field: K, value: FormState[K]) => {
+    setFormState((prev) => {
+      const next = { ...prev, [field]: value };
+      // Immediate inline same-team check
+      if (field === "team1" || field === "team2") {
+        const t1 = field === "team1" ? (value as string) : prev.team1;
+        const t2 = field === "team2" ? (value as string) : prev.team2;
+        if (t1 && t2 && t1 === t2) {
+          setErrors((e) => ({ ...e, team2: "Teams must be different" }));
+        } else {
+          setErrors((e) => {
+            const copy = { ...e };
+            delete copy.team2;
+            return copy;
+          });
+        }
+      }
+      return next;
+    });
+  };
 
   const handleSubmit = () => {
     const errs: Record<string, string> = {};

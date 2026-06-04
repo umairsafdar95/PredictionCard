@@ -29,7 +29,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
     if (!cardRef.current) throw new Error("Card not found");
     return toPng(cardRef.current, {
       cacheBust: true,
-      pixelRatio: 1,
+      pixelRatio: 3,
       width: 1080,
       height: 1080,
       style: {
