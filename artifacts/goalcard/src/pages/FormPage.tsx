@@ -71,6 +71,105 @@ const LANGUAGES: { id: Language; label: string; flag: string }[] = [
   { id: "tr", label: "Türkçe", flag: "🇹🇷" },
 ];
 
+const UI_TEXT: Record<Language, {
+  subtitle: string; step1: string; step1sub: string; step2: string; step2sub: string;
+  step3: string; step3sub: string; step4: string; step4sub: string; step5: string;
+  step5sub: string; generate: string; howItWorks: string; about: string; faq: string;
+  team1: string; team2: string; namePlaceholder: string;
+}> = {
+  en: {
+    subtitle: "Predict the score · Download your card · Challenge friends",
+    step1: "Which match?", step1sub: "Pick the two teams",
+    step2: "What's your predicted score?", step2sub: "Set the final score",
+    step3: "Your name on the card", step3sub: 'Shown as "Predicted by [Name]"',
+    step4: "Card style", step4sub: "Choose your design theme",
+    step5: "Card language", step5sub: "Text on the card",
+    generate: "Generate My Card",
+    howItWorks: "How to Make Your World Cup 2026 Prediction Card",
+    about: "The Best Free World Cup Prediction Card Maker",
+    faq: "Frequently Asked Questions",
+    team1: "Team 1", team2: "Team 2", namePlaceholder: "e.g. Ahmed, Sarah, Carlos...",
+  },
+  ar: {
+    subtitle: "توقع النتيجة · نزّل بطاقتك · تحدّ أصدقاءك",
+    step1: "أي مباراة؟", step1sub: "اختر الفريقين",
+    step2: "ما هو توقعك للنتيجة؟", step2sub: "حدد عدد الأهداف",
+    step3: "اسمك على البطاقة", step3sub: "سيظهر كـ «توقع بواسطة [الاسم]»",
+    step4: "تصميم البطاقة", step4sub: "اختر الأسلوب",
+    step5: "لغة البطاقة", step5sub: "النص الذي يظهر على البطاقة",
+    generate: "إنشاء بطاقة توقعي",
+    howItWorks: "كيف تصنع بطاقة توقعاتك لكأس العالم 2026",
+    about: "أفضل مولد بطاقات توقعات مجاني لكأس العالم",
+    faq: "الأسئلة المتكررة",
+    team1: "الفريق 1", team2: "الفريق 2", namePlaceholder: "مثال: أحمد، سارة، كارلوس...",
+  },
+  fr: {
+    subtitle: "Prédis le score · Télécharge ta carte · Défie tes amis",
+    step1: "Quel match ?", step1sub: "Choisis les deux équipes",
+    step2: "Quel est ton score prédit ?", step2sub: "Fixe le score final",
+    step3: "Ton prénom sur la carte", step3sub: "Affiché comme « Prédit par [Prénom] »",
+    step4: "Style de la carte", step4sub: "Choisis ton design",
+    step5: "Langue de la carte", step5sub: "Texte sur la carte",
+    generate: "Générer ma carte de prédiction",
+    howItWorks: "Comment créer ta carte de prédiction Coupe du Monde 2026",
+    about: "Le meilleur générateur gratuit de cartes de prédiction",
+    faq: "Questions fréquentes",
+    team1: "Équipe 1", team2: "Équipe 2", namePlaceholder: "ex. Ahmed, Sarah, Carlos...",
+  },
+  pt: {
+    subtitle: "Preveja o placar · Baixe seu card · Desafie amigos",
+    step1: "Qual partida?", step1sub: "Escolha os dois times",
+    step2: "Qual é o seu placar previsto?", step2sub: "Defina o placar final",
+    step3: "Seu nome no card", step3sub: "Aparecerá como «Previsto por [Nome]»",
+    step4: "Estilo do card", step4sub: "Escolha seu design",
+    step5: "Idioma do card", step5sub: "Texto no card",
+    generate: "Gerar meu card de previsão",
+    howItWorks: "Como criar seu card de previsão da Copa do Mundo 2026",
+    about: "O melhor gerador gratuito de cards de previsão",
+    faq: "Perguntas frequentes",
+    team1: "Time 1", team2: "Time 2", namePlaceholder: "ex. Ahmed, Sarah, Carlos...",
+  },
+  es: {
+    subtitle: "Predice el marcador · Descarga tu tarjeta · Reta a amigos",
+    step1: "¿Qué partido?", step1sub: "Elige los dos equipos",
+    step2: "¿Cuál es tu marcador predicho?", step2sub: "Establece el marcador final",
+    step3: "Tu nombre en la tarjeta", step3sub: "Aparecerá como «Predicho por [Nombre]»",
+    step4: "Estilo de la tarjeta", step4sub: "Elige tu diseño",
+    step5: "Idioma de la tarjeta", step5sub: "Texto en la tarjeta",
+    generate: "Generar mi tarjeta de predicción",
+    howItWorks: "Cómo hacer tu tarjeta de predicción del Mundial 2026",
+    about: "El mejor generador gratuito de tarjetas de predicción",
+    faq: "Preguntas frecuentes",
+    team1: "Equipo 1", team2: "Equipo 2", namePlaceholder: "ej. Ahmed, Sarah, Carlos...",
+  },
+  de: {
+    subtitle: "Tippe das Ergebnis · Lade deine Karte herunter · Fordere Freunde heraus",
+    step1: "Welches Spiel?", step1sub: "Wähle die zwei Teams",
+    step2: "Wie lautet dein Tipp?", step2sub: "Setze das Endergebnis",
+    step3: "Dein Name auf der Karte", step3sub: "Erscheint als \u201eVorhergesagt von [Name]\u201c",
+    step4: "Karten-Design", step4sub: "Wähle deinen Stil",
+    step5: "Kartensprache", step5sub: "Text auf der Karte",
+    generate: "Meine Tipp-Karte erstellen",
+    howItWorks: "So erstellst du deine WM 2026 Tipp-Karte",
+    about: "Der beste kostenlose WM-Tipp-Karten-Generator",
+    faq: "Häufig gestellte Fragen",
+    team1: "Team 1", team2: "Team 2", namePlaceholder: "z.B. Ahmed, Sarah, Carlos...",
+  },
+  tr: {
+    subtitle: "Skoru tahmin et · Kartını indir · Arkadaşlarına meydan oku",
+    step1: "Hangi maç?", step1sub: "İki takımı seç",
+    step2: "Tahmin ettiğin skor nedir?", step2sub: "Final skorunu belirle",
+    step3: "Karttaki adın", step3sub: "«[Ad] tarafından tahmin edildi» olarak görünür",
+    step4: "Kart tasarımı", step4sub: "Stilini seç",
+    step5: "Kart dili", step5sub: "Karttaki metin",
+    generate: "Tahmin kartımı oluştur",
+    howItWorks: "2026 Dünya Kupası Tahmin Kartın Nasıl Yapılır",
+    about: "En iyi ücretsiz Dünya Kupası tahmin kartı oluşturucu",
+    faq: "Sıkça Sorulan Sorular",
+    team1: "Takım 1", team2: "Takım 2", namePlaceholder: "örn. Ahmed, Sarah, Carlos...",
+  },
+};
+
 function ScorePicker({
   value,
   onChange,
@@ -149,6 +248,7 @@ function ScorePicker({
 
 export default function FormPage({ formState, setFormState, onGenerate, challengerName, cardCount }: FormPageProps) {
   const { team1, team2, score1, score2, name, theme, language } = formState;
+  const ui = UI_TEXT[language];
   const [errors, setErrors] = useState<Record<string, string>>({});
   const todayMatches = getTodaysMatches().slice(0, 3);
 
@@ -314,7 +414,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             color: "rgba(255,255,255,0.65)",
             marginBottom: "28px",
             letterSpacing: "0.5px",
-          }}>Predict the score · Download your card · Challenge friends</div>
+          }}>{ui.subtitle}</div>
 
           {/* Stats row */}
           <div style={{
@@ -369,8 +469,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "flex", alignItems: "center", marginBottom: "18px" }}>
             <span style={stepBadge("1")}>1</span>
             <div>
-              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>Which match?</div>
-              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>Pick the two teams</div>
+              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>{ui.step1}</div>
+              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step1sub}</div>
             </div>
           </div>
 
@@ -421,7 +521,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                 title="Select Team 1 for your World Cup prediction"
                 aria-label="Select Team 1"
               >
-                <option value="">Team 1</option>
+                <option value="">{ui.team1}</option>
                 {teams.map((t) => <option key={t.name} value={t.name}>{t.flag} {t.name}</option>)}
               </select>
               {errors.team1 && <div style={errorMsg}>{errors.team1}</div>}
@@ -451,7 +551,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                 title="Select Team 2 for your World Cup prediction"
                 aria-label="Select Team 2"
               >
-                <option value="">Team 2</option>
+                <option value="">{ui.team2}</option>
                 {teams.map((t) => <option key={t.name} value={t.name}>{t.flag} {t.name}</option>)}
               </select>
               {errors.team2 && <div style={errorMsg}>{errors.team2}</div>}
@@ -464,8 +564,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
             <span style={stepBadge("2")}>2</span>
             <div>
-              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>What's your predicted score?</div>
-              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>Set the final score</div>
+              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>{ui.step2}</div>
+              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step2sub}</div>
             </div>
           </div>
 
@@ -508,8 +608,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "flex", alignItems: "center", marginBottom: "18px" }}>
             <span style={stepBadge("3")}>3</span>
             <div>
-              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>Your name on the card</div>
-              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>Shown as "Predicted by [Name]"</div>
+              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>{ui.step3}</div>
+              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step3sub}</div>
             </div>
           </div>
           <input
@@ -517,7 +617,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             type="text"
             value={name}
             maxLength={20}
-            placeholder="e.g. Ahmed, Sarah, Carlos..."
+            placeholder={ui.namePlaceholder}
             onChange={(e) => set("name", e.target.value)}
             style={{
               width: "100%",
@@ -543,8 +643,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "flex", alignItems: "center", marginBottom: "18px" }}>
             <span style={stepBadge("4")}>4</span>
             <div>
-              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>Card style</div>
-              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>Choose your design theme</div>
+              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>{ui.step4}</div>
+              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step4sub}</div>
             </div>
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
@@ -615,8 +715,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "flex", alignItems: "center", marginBottom: "18px" }}>
             <span style={stepBadge("5")}>5</span>
             <div>
-              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>Card language</div>
-              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>Text on the card</div>
+              <div style={{ fontSize: "17px", fontWeight: 700, color: "#0f172a" }}>{ui.step5}</div>
+              <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step5sub}</div>
             </div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
@@ -685,7 +785,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             e.currentTarget.style.boxShadow = "0 8px 32px rgba(22,163,74,0.45), 0 2px 0 rgba(255,255,255,0.1) inset";
           }}
         >
-          ⚽ &nbsp;Generate My Card
+          ⚽ &nbsp;{ui.generate}
         </button>
 
         <div style={{ textAlign: "center", fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>
@@ -699,8 +799,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         >
           <h2 style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
-            color: "#0f172a", marginBottom: "24px", letterSpacing: "1px",
-          }}>How to Make Your World Cup 2026 Prediction Card</h2>
+            color: "rgba(255,255,255,0.90)", marginBottom: "24px", letterSpacing: "1px",
+          }}>{ui.howItWorks}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
               {
@@ -747,8 +847,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         >
           <h2 style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
-            color: "#0f172a", marginBottom: "16px", letterSpacing: "1px",
-          }}>The Best Free World Cup Prediction Card Maker</h2>
+            color: "rgba(255,255,255,0.90)", marginBottom: "16px", letterSpacing: "1px",
+          }}>{ui.about}</h2>
           <div style={{ background: "#fff", borderRadius: "16px", padding: "24px", border: "1px solid #e5e7eb" }}>
             <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>
               PredictionCard.com is the fastest way to create and share your FIFA World Cup 2026 score predictions. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.
@@ -771,8 +871,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         >
           <h2 style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
-            color: "#0f172a", marginBottom: "20px", letterSpacing: "1px",
-          }}>Frequently Asked Questions</h2>
+            color: "rgba(255,255,255,0.90)", marginBottom: "20px", letterSpacing: "1px",
+          }}>{ui.faq}</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {[
               {
