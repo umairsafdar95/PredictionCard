@@ -409,7 +409,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "10px", alignItems: "start" }}>
             <div>
               {t1 && (
-                <div style={{ textAlign: "center", fontSize: "28px", marginBottom: "6px" }}>{t1.flag}</div>
+                <div style={{ textAlign: "center", marginBottom: "6px" }}>
+                  <img src={`https://flagcdn.com/w80/${t1.code}.png`} alt={t1.name} style={{ height: "32px", width: "auto", borderRadius: "3px", border: "1px solid rgba(255,255,255,0.15)" }} />
+                </div>
               )}
               <select
                 id="team1"
@@ -437,7 +439,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
 
             <div>
               {t2 && (
-                <div style={{ textAlign: "center", fontSize: "28px", marginBottom: "6px" }}>{t2.flag}</div>
+                <div style={{ textAlign: "center", marginBottom: "6px" }}>
+                  <img src={`https://flagcdn.com/w80/${t2.code}.png`} alt={t2.name} style={{ height: "32px", width: "auto", borderRadius: "3px", border: "1px solid rgba(255,255,255,0.15)" }} />
+                </div>
               )}
               <select
                 id="team2"

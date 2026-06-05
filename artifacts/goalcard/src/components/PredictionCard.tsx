@@ -1,6 +1,15 @@
 import React from "react";
 import { FormState, languageLabels } from "@/types";
-import { getTeam } from "@/data/teams";
+import { getTeam, getFlagUrl } from "@/data/teams";
+
+const FlagImg = ({ code, size, style }: { code: string; size?: number; style?: React.CSSProperties }) => (
+  <img
+    src={getFlagUrl(code, size ?? 160)}
+    alt={code}
+    crossOrigin="anonymous"
+    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", ...style }}
+  />
+);
 
 interface PredictionCardProps {
   formState: FormState;
@@ -86,15 +95,17 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           position: "relative", zIndex: 1, width: "100%",
         }}>
           {/* Team 1 */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-            <div style={{ fontSize: "108px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
             <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "3px",
-            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
+            }}>{t1?.shortName ?? team1}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-              color: "rgba(255,255,255,0.4)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "rgba(255,255,255,0.65)", fontWeight: 500,
             }}>{team1}</div>
           </div>
 
@@ -109,15 +120,17 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           }}>{labels.vs}</div>
 
           {/* Team 2 */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-            <div style={{ fontSize: "108px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
             <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "3px",
-            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
+            }}>{t2?.shortName ?? team2}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-              color: "rgba(255,255,255,0.4)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "rgba(255,255,255,0.65)", fontWeight: 500,
             }}>{team2}</div>
           </div>
         </div>
@@ -226,15 +239,18 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             alignItems: "center", justifyContent: "center", gap: "16px",
             padding: "0 30px",
           }}>
-            <div style={{ fontSize: "130px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{ width: "140px", height: "93px", borderRadius: "6px", overflow: "hidden", border: "3px solid rgba(255,255,255,0.30)", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
               textShadow: "0 2px 14px rgba(0,0,0,0.7)",
-            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
+            }}>{t1?.shortName ?? team1}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-              color: "rgba(255,255,255,0.65)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "28px",
+              color: "rgba(255,255,255,0.85)", fontWeight: 600,
+              textShadow: "0 1px 8px rgba(0,0,0,0.5)",
             }}>{team1}</div>
           </div>
 
@@ -258,15 +274,18 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             alignItems: "center", justifyContent: "center", gap: "16px",
             padding: "0 30px",
           }}>
-            <div style={{ fontSize: "130px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{ width: "140px", height: "93px", borderRadius: "6px", overflow: "hidden", border: "3px solid rgba(255,255,255,0.30)", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
               textShadow: "0 2px 14px rgba(0,0,0,0.7)",
-            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
+            }}>{t2?.shortName ?? team2}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "20px",
-              color: "rgba(255,255,255,0.65)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "28px",
+              color: "rgba(255,255,255,0.85)", fontWeight: 600,
+              textShadow: "0 1px 8px rgba(0,0,0,0.5)",
             }}>{team2}</div>
           </div>
         </div>
@@ -401,14 +420,16 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         }}>
           {/* Team 1 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-            <div style={{ fontSize: "112px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{ width: "130px", height: "86px", borderRadius: "4px", overflow: "hidden", border: "3px solid #1a0800", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#1a0800", letterSpacing: "4px",
-            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
+            }}>{t1?.shortName ?? team1}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-              color: "#7a4a2a",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "#5a2800", fontWeight: 600,
             }}>{team1}</div>
           </div>
 
@@ -423,14 +444,16 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
 
           {/* Team 2 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-            <div style={{ fontSize: "112px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{ width: "130px", height: "86px", borderRadius: "4px", overflow: "hidden", border: "3px solid #1a0800", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#1a0800", letterSpacing: "4px",
-            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
+            }}>{t2?.shortName ?? team2}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-              color: "#7a4a2a",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "#5a2800", fontWeight: 600,
             }}>{team2}</div>
           </div>
         </div>
@@ -560,18 +583,17 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         }}>
           {/* Team 1 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(0,232,255,0.50)", boxShadow: "0 0 20px rgba(0,232,255,0.25)", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
             <div style={{
-              fontSize: "100px", lineHeight: 1,
-              filter: "drop-shadow(0 0 14px rgba(0,232,255,0.45))",
-            }}>{t1?.flag ?? "🏳"}</div>
-            <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "4px",
               textShadow: "0 0 20px rgba(0,232,255,0.55)",
-            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
+            }}>{t1?.shortName ?? team1}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "17px",
-              color: "rgba(255,255,255,0.30)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "rgba(0,232,255,0.70)", fontWeight: 500,
             }}>{team1}</div>
           </div>
 
@@ -590,18 +612,17 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
 
           {/* Team 2 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(0,232,255,0.50)", boxShadow: "0 0 20px rgba(0,232,255,0.25)", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
             <div style={{
-              fontSize: "100px", lineHeight: 1,
-              filter: "drop-shadow(0 0 14px rgba(0,232,255,0.45))",
-            }}>{t2?.flag ?? "🏳"}</div>
-            <div style={{
-              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "4px",
               textShadow: "0 0 20px rgba(0,232,255,0.55)",
-            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
+            }}>{t2?.shortName ?? team2}</div>
             <div style={{
-              fontFamily: "'Poppins', sans-serif", fontSize: "17px",
-              color: "rgba(255,255,255,0.30)",
+              fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+              color: "rgba(0,232,255,0.70)", fontWeight: 500,
             }}>{team2}</div>
           </div>
         </div>
@@ -727,14 +748,16 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           borderRadius: "16px",
           gap: "14px",
         }}>
-          <div style={{ fontSize: "92px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+          <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(212,175,55,0.50)", boxShadow: "0 0 16px rgba(212,175,55,0.20)", flexShrink: 0 }}>
+            <FlagImg code={t1?.code ?? "un"} />
+          </div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
             color: "#f5e17a", letterSpacing: "4px",
-          }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
+          }}>{t1?.shortName ?? team1}</div>
           <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "17px",
-            color: "rgba(255,255,255,0.38)",
+            fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+            color: "rgba(255,255,255,0.65)", fontWeight: 500,
           }}>{team1}</div>
         </div>
 
@@ -758,14 +781,16 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           borderRadius: "16px",
           gap: "14px",
         }}>
-          <div style={{ fontSize: "92px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+          <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(212,175,55,0.50)", boxShadow: "0 0 16px rgba(212,175,55,0.20)", flexShrink: 0 }}>
+            <FlagImg code={t2?.code ?? "un"} />
+          </div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
             color: "#f5e17a", letterSpacing: "4px",
-          }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
+          }}>{t2?.shortName ?? team2}</div>
           <div style={{
-            fontFamily: "'Poppins', sans-serif", fontSize: "17px",
-            color: "rgba(255,255,255,0.38)",
+            fontFamily: "'Poppins', sans-serif", fontSize: "26px",
+            color: "rgba(255,255,255,0.65)", fontWeight: 500,
           }}>{team2}</div>
         </div>
       </div>
