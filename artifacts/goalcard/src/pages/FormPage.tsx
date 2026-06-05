@@ -77,12 +77,14 @@ function ScorePicker({
   hasError,
   flag,
   shortName,
+  teamName,
 }: {
   value: number;
   onChange: (v: number) => void;
   hasError: boolean;
   flag: string;
   shortName: string;
+  teamName: string;
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
@@ -95,6 +97,7 @@ function ScorePicker({
       </div>
       <button
         type="button"
+        aria-label={`Increase score for ${teamName}`}
         onClick={() => onChange(Math.min(9, value + 1))}
         style={{
           width: "48px", height: "48px",
@@ -125,6 +128,7 @@ function ScorePicker({
       }}>{value}</div>
       <button
         type="button"
+        aria-label={`Decrease score for ${teamName}`}
         onClick={() => onChange(Math.max(0, value - 1))}
         style={{
           width: "48px", height: "48px",
@@ -358,7 +362,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         </div>
       )}
 
-      <div style={{ maxWidth: "600px", margin: "0 auto", padding: "28px 16px 64px" }}>
+      <main role="main" style={{ maxWidth: "600px", margin: "0 auto", padding: "28px 16px 64px" }}>
 
         {/* ── STEP 1: Match ── */}
         <div style={card}>
@@ -379,6 +383,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                   <button
                     key={m.id}
                     type="button"
+                    aria-label={`Predict ${m.team1} vs ${m.team2}`}
                     onClick={() => prefillMatch(m)}
                     style={{
                       display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -406,7 +411,14 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               {t1 && (
                 <div style={{ textAlign: "center", fontSize: "28px", marginBottom: "6px" }}>{t1.flag}</div>
               )}
-              <select id="team1" value={team1} onChange={(e) => set("team1", e.target.value)} style={selectStyle(!!errors.team1)}>
+              <select
+                id="team1"
+                value={team1}
+                onChange={(e) => set("team1", e.target.value)}
+                style={selectStyle(!!errors.team1)}
+                title="Select Team 1 for your World Cup prediction"
+                aria-label="Select Team 1"
+              >
                 <option value="">Team 1</option>
                 {teams.map((t) => <option key={t.name} value={t.name}>{t.flag} {t.name}</option>)}
               </select>
@@ -427,7 +439,14 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               {t2 && (
                 <div style={{ textAlign: "center", fontSize: "28px", marginBottom: "6px" }}>{t2.flag}</div>
               )}
-              <select id="team2" value={team2} onChange={(e) => set("team2", e.target.value)} style={selectStyle(!!errors.team2)}>
+              <select
+                id="team2"
+                value={team2}
+                onChange={(e) => set("team2", e.target.value)}
+                style={selectStyle(!!errors.team2)}
+                title="Select Team 2 for your World Cup prediction"
+                aria-label="Select Team 2"
+              >
                 <option value="">Team 2</option>
                 {teams.map((t) => <option key={t.name} value={t.name}>{t.flag} {t.name}</option>)}
               </select>
@@ -462,6 +481,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               hasError={!!errors.score1}
               flag={t1?.flag ?? "🏳"}
               shortName={t1?.shortName ?? (team1 || "Team 1")}
+              teamName={team1 || "Team 1"}
             />
             <div style={{
               fontFamily: "'Oswald', sans-serif",
@@ -474,6 +494,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               hasError={!!errors.score2}
               flag={t2?.flag ?? "🏳"}
               shortName={t2?.shortName ?? (team2 || "Team 2")}
+              teamName={team2 || "Team 2"}
             />
           </div>
         </div>
@@ -529,6 +550,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                 <button
                   key={t.id}
                   type="button"
+                  aria-label={`Select ${t.label} card theme`}
+                  aria-pressed={selected}
                   onClick={() => set("theme", t.id)}
                   style={{
                     flex: 1,
@@ -599,6 +622,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                 <button
                   key={l.id}
                   type="button"
+                  aria-label={`Set card language to ${l.label}`}
+                  aria-pressed={sel}
                   onClick={() => set("language", l.id)}
                   style={{
                     display: "flex", alignItems: "center", gap: "10px",
@@ -627,6 +652,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         {/* ── GENERATE BUTTON ── */}
         <button
           type="button"
+          aria-label="Generate World Cup prediction card"
           onClick={handleSubmit}
           style={{
             width: "100%",
@@ -662,14 +688,157 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           Free · Instant · Shareable on WhatsApp & Instagram
         </div>
 
-        {/* Footer */}
-        <div style={{ marginTop: "60px", textAlign: "center", borderTop: "1px solid #e5e7eb", paddingTop: "28px" }}>
-          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "20px", fontWeight: 700, color: "#15803d", marginBottom: "6px" }}>
-            ⚽ PredictionCard
+        {/* ── HOW IT WORKS ── */}
+        <section
+          aria-label="How to create your World Cup 2026 prediction card"
+          style={{ marginTop: "64px", borderTop: "1px solid #e5e7eb", paddingTop: "48px" }}
+        >
+          <h2 style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
+            color: "#0f172a", marginBottom: "24px", letterSpacing: "1px",
+          }}>How to Make Your World Cup 2026 Prediction Card</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            {[
+              {
+                n: "1",
+                title: "Choose Your Match",
+                text: "Select any FIFA World Cup 2026 match from all 32 qualified teams — USA vs Mexico, Brazil vs Argentina, France vs Morocco, and every other fixture.",
+              },
+              {
+                n: "2",
+                title: "Enter Your Score Prediction",
+                text: "What's your predicted final score? Tap + and − to set the goals for each team. Your World Cup score prediction appears live on the card.",
+              },
+              {
+                n: "3",
+                title: "Pick Your Card Design",
+                text: "Choose from 5 prediction card themes: Night Match, National Colors, FIFA Gold, Retro Classic, or Neon Lights. Each design looks stunning on any screen.",
+              },
+              {
+                n: "4",
+                title: "Download and Share",
+                text: "Download your prediction card as a high-quality 1080×1080 PNG. Share it on WhatsApp, Instagram Stories, or Twitter and challenge your friends to make their own predictions.",
+              },
+            ].map((step) => (
+              <div key={step.n} style={{
+                background: "#fff",
+                borderRadius: "16px",
+                padding: "20px 18px",
+                border: "1px solid #e5e7eb",
+              }}>
+                <h3 style={{
+                  fontFamily: "'Oswald', sans-serif", fontSize: "15px", fontWeight: 700,
+                  color: "#15803d", marginBottom: "8px", letterSpacing: "0.5px",
+                }}>{step.n}. {step.title}</h3>
+                <p style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.6, margin: 0 }}>{step.text}</p>
+              </div>
+            ))}
           </div>
-          <div style={{ fontSize: "12px", color: "#9ca3af" }}>predictioncard.com · Made for football fans worldwide · Free Forever</div>
-        </div>
-      </div>
+        </section>
+
+        {/* ── ABOUT ── */}
+        <section
+          aria-label="About PredictionCard"
+          style={{ marginTop: "48px" }}
+        >
+          <h2 style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
+            color: "#0f172a", marginBottom: "16px", letterSpacing: "1px",
+          }}>The Best Free World Cup Prediction Card Maker</h2>
+          <div style={{ background: "#fff", borderRadius: "16px", padding: "24px", border: "1px solid #e5e7eb" }}>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>
+              PredictionCard.com is the fastest way to create and share your FIFA World Cup 2026 score predictions. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.
+            </p>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>
+              With all 32 World Cup 2026 teams available, you can generate a new prediction card for every single game of the tournament. Each card is personalized with your name, predicted score, team colors, and national flags.
+            </p>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, margin: 0 }}>
+              Our World Cup card maker works in 7 languages including Arabic (RTL), Portuguese, Spanish, and French — perfect for football fans worldwide. No signup, no app download, and completely free.
+            </p>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section
+          aria-label="Frequently Asked Questions about PredictionCard"
+          style={{ marginTop: "48px" }}
+          itemScope
+          itemType="https://schema.org/FAQPage"
+        >
+          <h2 style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
+            color: "#0f172a", marginBottom: "20px", letterSpacing: "1px",
+          }}>Frequently Asked Questions</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {[
+              {
+                q: "Is the World Cup 2026 prediction card generator free?",
+                a: "Yes. Creating your World Cup 2026 prediction card is 100% free. No account, no email, no credit card needed. Generate as many cards as you want for every match.",
+              },
+              {
+                q: "Which teams are available in the prediction card generator?",
+                a: "All 32 qualified FIFA World Cup 2026 teams are available, including USA, Mexico, Canada (host nations), plus Brazil, Argentina, France, Spain, England, Morocco, Saudi Arabia, Japan, South Korea, and all other qualified nations.",
+              },
+              {
+                q: "Can I share my prediction card on WhatsApp?",
+                a: "Absolutely. Your prediction card downloads as a 1080×1080 PNG image which you can share instantly on WhatsApp, Instagram, Twitter, or any social platform. The Share button lets you send directly from your phone.",
+              },
+              {
+                q: "Does the prediction card work in Arabic?",
+                a: "Yes. Select Arabic from the language menu and your prediction card will display in Arabic with proper right-to-left text. We support English, Arabic, Portuguese, Spanish, French, Turkish, and German.",
+              },
+              {
+                q: "What size is the prediction card image?",
+                a: "Prediction cards download as 1080×1080 pixel PNG images — perfect for Instagram square posts and WhatsApp sharing. The high resolution ensures your card looks crisp on any screen.",
+              },
+            ].map((faq) => (
+              <div
+                key={faq.q}
+                style={{ background: "#fff", borderRadius: "14px", padding: "20px", border: "1px solid #e5e7eb" }}
+                itemScope
+                itemProp="mainEntity"
+                itemType="https://schema.org/Question"
+              >
+                <h3
+                  itemProp="name"
+                  style={{ fontSize: "14px", fontWeight: 700, color: "#0f172a", marginBottom: "8px" }}
+                >{faq.q}</h3>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p
+                    itemProp="text"
+                    style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.6, margin: 0 }}
+                  >{faq.a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer
+          role="contentinfo"
+          style={{ marginTop: "60px", borderTop: "1px solid #e5e7eb", paddingTop: "32px", paddingBottom: "16px" }}
+        >
+          <div style={{ textAlign: "center", marginBottom: "16px" }}>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700, color: "#15803d", marginBottom: "6px" }}>
+              ⚽ PredictionCard
+            </div>
+            <p style={{ fontSize: "12px", color: "#9ca3af", margin: "0 0 12px" }}>
+              Free FIFA World Cup 2026 Prediction Card Generator
+            </p>
+          </div>
+          <nav aria-label="Language links" style={{ textAlign: "center", marginBottom: "16px", fontSize: "13px" }}>
+            <a href="/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>English</a> ·
+            <a href="/ar/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>العربية</a> ·
+            <a href="/pt/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>Português</a> ·
+            <a href="/es/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>Español</a> ·
+            <a href="/fr/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>Français</a>
+          </nav>
+          <p style={{ textAlign: "center", fontSize: "11px", color: "#d1d5db", margin: 0 }}>
+            © 2026 predictioncard.com · Made for football fans worldwide · Not affiliated with FIFA
+          </p>
+        </footer>
+      </main>
 
       <style>{`
         input[type=number]::-webkit-inner-spin-button,
