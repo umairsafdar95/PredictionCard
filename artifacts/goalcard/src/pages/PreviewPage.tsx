@@ -32,10 +32,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
       pixelRatio: 3,
       width: 1080,
       height: 1080,
-      style: {
-        transform: "scale(1)",
-        transformOrigin: "top left",
-      },
+      style: { transform: "scale(1)", transformOrigin: "top left" },
     });
   };
 
@@ -44,7 +41,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
     try {
       const dataUrl = await generateImage();
       const link = document.createElement("a");
-      link.download = `goalcard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
+      link.download = `predictioncard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
       link.href = dataUrl;
       link.click();
       onIncrementCounter();
@@ -62,296 +59,346 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
       const dataUrl = await generateImage();
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], "my-prediction.png", { type: "image/png" });
-
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: "My World Cup Prediction ⚽",
-          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make your own at predictioncard.com`,
+          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make yours at predictioncard.com`,
           files: [file],
         });
         onShared();
       } else {
         const link = document.createElement("a");
-        link.download = `goalcard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
+        link.download = `predictioncard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
         link.href = dataUrl;
         link.click();
         alert("Image downloaded! Share it on WhatsApp or Instagram. 🎉");
       }
       onIncrementCounter();
     } catch (err) {
-      if ((err as Error).name !== "AbortError") {
-        console.error("Share failed:", err);
-      }
+      if ((err as Error).name !== "AbortError") console.error("Share failed:", err);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCopyChallenge = async () => {
-    const params = new URLSearchParams({
-      match: `${t1?.shortName ?? team1}-${t2?.shortName ?? team2}`,
-      challenge: name,
-      team1,
-      team2,
-    });
+    const params = new URLSearchParams({ challenge: name, team1, team2 });
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
     await navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const secondaryBtn: React.CSSProperties = {
-    flex: 1,
-    padding: "16px",
-    background: "#fff",
-    border: "1.5px solid #d1d5db",
-    borderRadius: "12px",
-    color: "#374151",
-    fontSize: "15px",
-    fontFamily: "'Poppins', sans-serif",
-    fontWeight: 600,
-    cursor: "pointer",
-    transition: "transform 0.2s, border-color 0.2s",
-    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-  };
-
   return (
     <div style={{ minHeight: "100vh", background: "#f0fdf4", color: "#0f172a", fontFamily: "'Poppins', sans-serif" }}>
-      {/* Top bar */}
+
+      {/* ── TOP NAV BAR ── */}
       <div style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "14px 20px",
-        background: "#fff",
-        borderBottom: "1px solid #e5e7eb",
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+        display: "flex", alignItems: "center",
+        padding: "12px 20px",
+        background: "linear-gradient(160deg, #061220 0%, #0a1f14 100%)",
+        borderBottom: "3px solid #16a34a",
+        position: "sticky", top: 0, zIndex: 10,
+        boxShadow: "0 4px 20px rgba(0,0,0,0.25)",
       }}>
         <button
           onClick={onBack}
           style={{
-            background: "none",
-            border: "1.5px solid #d1d5db",
-            color: "#374151",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            color: "rgba(255,255,255,0.85)",
             borderRadius: "8px",
-            padding: "8px 16px",
+            padding: "8px 14px",
             cursor: "pointer",
             fontFamily: "'Poppins', sans-serif",
-            fontSize: "14px",
-            fontWeight: 500,
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
+            fontSize: "13px", fontWeight: 500,
+            display: "flex", alignItems: "center", gap: "6px",
           }}
         >← Back</button>
-        <div style={{ flex: 1, textAlign: "center", fontFamily: "'Oswald', sans-serif", fontSize: "20px", fontWeight: 700, letterSpacing: "1px", color: "#16a34a" }}>
-          ⚽ PredictionCard — Your Card is Ready! 🎉
+        <div style={{
+          flex: 1, textAlign: "center",
+          fontFamily: "'Oswald', sans-serif",
+          fontSize: "18px", fontWeight: 800,
+          letterSpacing: "1px", color: "#fff",
+        }}>
+          ⚽ <span style={{ color: "#22c55e" }}>PredictionCard</span>
         </div>
-        <div style={{ width: "80px" }} />
+        <button
+          onClick={onNewCard}
+          style={{
+            background: "rgba(34,197,94,0.15)",
+            border: "1px solid rgba(34,197,94,0.35)",
+            color: "#22c55e",
+            borderRadius: "8px",
+            padding: "8px 14px",
+            cursor: "pointer",
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "13px", fontWeight: 600,
+          }}
+        >+ New</button>
       </div>
 
-      <div style={{ maxWidth: "560px", margin: "0 auto", padding: "32px 16px" }}>
-        {/* Card preview */}
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "28px",
-          animation: "fadeIn 0.5s ease-out",
-        }}>
+      {/* ── MATCH HEADLINE ── */}
+      <div style={{
+        background: "linear-gradient(160deg, #061220 0%, #0a1f14 100%)",
+        padding: "20px 20px 28px",
+        textAlign: "center",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}>
+        <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", letterSpacing: "3px", textTransform: "uppercase", marginBottom: "10px" }}>
+          Your Prediction
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px" }}>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "36px" }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "16px", color: "#fff", fontWeight: 700 }}>{t1?.shortName ?? team1}</div>
+          </div>
           <div style={{
-            width: "360px",
-            height: "360px",
-            overflow: "hidden",
-            borderRadius: "18px",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.18)",
-            position: "relative",
-            border: "3px solid #e5e7eb",
-          }}>
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "42px", fontWeight: 900, color: "#fff",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "12px", padding: "6px 20px", lineHeight: 1,
+          }}>{score1} – {score2}</div>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "36px" }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "16px", color: "#fff", fontWeight: 700 }}>{t2?.shortName ?? team2}</div>
+          </div>
+        </div>
+        <div style={{ marginTop: "10px", fontSize: "13px", color: "rgba(255,255,255,0.4)" }}>
+          Predicted by <span style={{ color: "#22c55e", fontWeight: 600 }}>{name}</span>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "520px", margin: "0 auto", padding: "24px 16px 64px" }}>
+
+        {/* ── CARD PREVIEW ── */}
+        <div style={{
+          display: "flex", justifyContent: "center",
+          marginBottom: "24px",
+          animation: "slideUp 0.4s ease-out",
+        }}>
+          <div style={{ position: "relative" }}>
+            {/* Glow behind card */}
             <div style={{
-              transform: "scale(0.3333)",
-              transformOrigin: "top left",
-              width: "1080px",
-              height: "1080px",
+              position: "absolute", inset: "-12px",
+              background: "radial-gradient(ellipse at center, rgba(34,197,94,0.20) 0%, transparent 70%)",
+              borderRadius: "30px",
+              pointerEvents: "none",
+            }} />
+            <div style={{
+              width: "360px", height: "360px",
+              overflow: "hidden",
+              borderRadius: "20px",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.08)",
+              position: "relative",
             }}>
-              <PredictionCard formState={formState} cardRef={cardRef} />
+              <div style={{
+                transform: "scale(0.3333)",
+                transformOrigin: "top left",
+                width: "1080px", height: "1080px",
+              }}>
+                <PredictionCard formState={formState} cardRef={cardRef} />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Download button */}
+        {/* ── DOWNLOAD (PRIMARY) ── */}
         <button
           onClick={handleDownload}
           disabled={isLoading}
           style={{
-            width: "100%",
-            padding: "18px",
-            background: "linear-gradient(135deg, #15803d 0%, #16a34a 100%)",
-            border: "none",
-            borderRadius: "12px",
-            color: "#fff",
-            fontSize: "18px",
-            fontFamily: "'Oswald', sans-serif",
-            fontWeight: 700,
-            letterSpacing: "1px",
-            cursor: isLoading ? "wait" : "pointer",
+            width: "100%", padding: "20px",
+            background: isLoading
+              ? "linear-gradient(135deg, #166534, #15803d)"
+              : "linear-gradient(135deg, #14532d 0%, #15803d 40%, #16a34a 100%)",
+            border: "none", borderRadius: "16px",
+            color: "#fff", fontSize: "18px",
+            fontFamily: "'Oswald', sans-serif", fontWeight: 800,
+            letterSpacing: "3px", cursor: isLoading ? "wait" : "pointer",
             marginBottom: "12px",
-            transition: "transform 0.2s",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-            opacity: isLoading ? 0.75 : 1,
-            boxShadow: "0 6px 24px rgba(22,163,74,0.40)",
+            display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
+            opacity: isLoading ? 0.8 : 1,
+            boxShadow: "0 8px 32px rgba(22,163,74,0.40)",
+            transition: "transform 0.15s, box-shadow 0.15s",
+            textTransform: "uppercase",
           }}
-          onMouseOver={(e) => { if (!isLoading) e.currentTarget.style.transform = "scale(1.02)"; }}
-          onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+          onMouseOver={(e) => { if (!isLoading) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(22,163,74,0.55)"; } }}
+          onMouseOut={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(22,163,74,0.40)"; }}
         >
           {isLoading ? (
             <>
               <span style={{
-                display: "inline-block",
-                width: "18px",
-                height: "18px",
+                display: "inline-block", width: "20px", height: "20px",
                 border: "3px solid rgba(255,255,255,0.3)",
-                borderTopColor: "#fff",
-                borderRadius: "50%",
+                borderTopColor: "#fff", borderRadius: "50%",
                 animation: "spin 0.8s linear infinite",
               }} />
-              Generating...
+              Generating PNG…
             </>
-          ) : "⬇️ Download PNG"}
+          ) : (
+            <>⬇ Download 1080×1080 PNG</>
+          )}
         </button>
 
-        {/* Share + New Card row */}
-        <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
+        {/* ── SHARE + NEW ROW ── */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
           <button
             onClick={handleShare}
             disabled={isLoading}
-            style={{ ...secondaryBtn, opacity: isLoading ? 0.7 : 1, cursor: isLoading ? "wait" : "pointer" }}
-            onMouseOver={(e) => { if (!isLoading) { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.borderColor = "#16a34a"; } }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.borderColor = "#d1d5db"; }}
-          >📲 Share</button>
+            style={{
+              flex: 1, padding: "16px",
+              background: "#fff",
+              border: "1.5px solid #e2e8f0",
+              borderRadius: "12px",
+              color: "#374151", fontSize: "15px",
+              fontFamily: "'Poppins', sans-serif", fontWeight: 600,
+              cursor: isLoading ? "wait" : "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+              transition: "all 0.15s",
+            }}
+            onMouseOver={(e) => { if (!isLoading) { e.currentTarget.style.borderColor = "#16a34a"; e.currentTarget.style.background = "#f0fdf4"; e.currentTarget.style.color = "#15803d"; } }}
+            onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#374151"; }}
+          >
+            📲 Share
+          </button>
           <button
             onClick={onNewCard}
-            style={secondaryBtn}
-            onMouseOver={(e) => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.borderColor = "#16a34a"; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.borderColor = "#d1d5db"; }}
-          >🔄 New Card</button>
+            style={{
+              flex: 1, padding: "16px",
+              background: "#fff",
+              border: "1.5px solid #e2e8f0",
+              borderRadius: "12px",
+              color: "#374151", fontSize: "15px",
+              fontFamily: "'Poppins', sans-serif", fontWeight: 600,
+              cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+              transition: "all 0.15s",
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.borderColor = "#16a34a"; e.currentTarget.style.background = "#f0fdf4"; e.currentTarget.style.color = "#15803d"; }}
+            onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#374151"; }}
+          >
+            🔄 New Card
+          </button>
         </div>
 
-        {/* Challenge link */}
+        {/* ── CHALLENGE PANEL ── */}
         <div style={{
-          background: "#fff",
-          border: "1.5px solid #e5e7eb",
-          borderRadius: "14px",
-          padding: "22px 20px",
-          marginBottom: "20px",
+          background: "linear-gradient(135deg, #0a1628 0%, #0f2040 100%)",
+          border: "1px solid rgba(212,175,55,0.25)",
+          borderRadius: "18px",
+          padding: "22px",
+          marginBottom: "16px",
           textAlign: "center",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+          position: "relative",
+          overflow: "hidden",
         }}>
-          <div style={{ fontSize: "22px", marginBottom: "6px" }}>🏆</div>
-          <div style={{ fontSize: "15px", fontWeight: 700, marginBottom: "4px", color: "#0f172a" }}>
-            Challenge a friend to predict this match!
+          {/* Decorative glow */}
+          <div style={{
+            position: "absolute", top: "-20px", left: "50%",
+            transform: "translateX(-50%)",
+            width: "200px", height: "100px",
+            background: "radial-gradient(ellipse at center, rgba(212,175,55,0.12) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }} />
+          <div style={{ fontSize: "28px", marginBottom: "8px" }}>🏆</div>
+          <div style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "4px", fontFamily: "'Oswald', sans-serif", letterSpacing: "1px" }}>
+            Challenge a Friend!
           </div>
-          <div style={{ fontSize: "13px", color: "#9ca3af", marginBottom: "16px" }}>
-            They'll see your challenge when they open the link
+          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", marginBottom: "18px" }}>
+            Share your link — they'll see your prediction and make their own
           </div>
           <button
             onClick={handleCopyChallenge}
             style={{
-              background: copied ? "#f0fdf4" : "#fafafa",
-              border: `1.5px solid ${copied ? "#16a34a" : "#d1d5db"}`,
-              borderRadius: "8px",
-              color: copied ? "#16a34a" : "#374151",
-              padding: "10px 24px",
-              fontSize: "14px",
-              fontWeight: 600,
+              background: copied
+                ? "linear-gradient(135deg, #14532d, #15803d)"
+                : "rgba(212,175,55,0.15)",
+              border: `1px solid ${copied ? "#22c55e" : "rgba(212,175,55,0.40)"}`,
+              borderRadius: "10px",
+              color: copied ? "#86efac" : "#d4af37",
+              padding: "12px 28px",
+              fontSize: "14px", fontWeight: 700,
               cursor: "pointer",
               fontFamily: "'Poppins', sans-serif",
-              transition: "all 0.2s",
+              transition: "all 0.25s",
+              letterSpacing: "0.5px",
             }}
           >
-            {copied ? "✅ Link Copied!" : "🔗 Copy Challenge Link"}
+            {copied ? "✅ Challenge Link Copied!" : "🔗 Copy Challenge Link"}
           </button>
         </div>
 
-        {/* Premium upsell */}
+        {/* ── UPSELL ── */}
         <div style={{
-          border: "2px dashed #fbbf24",
-          borderRadius: "14px",
-          padding: "22px 20px",
-          textAlign: "center",
-          marginBottom: "32px",
           background: "#fffbeb",
+          border: "2px dashed #fbbf24",
+          borderRadius: "16px",
+          padding: "20px",
+          textAlign: "center",
+          marginBottom: "28px",
         }}>
-          <div style={{ fontSize: "22px", marginBottom: "6px" }}>✨</div>
-          <div style={{ fontSize: "15px", fontWeight: 700, marginBottom: "4px", color: "#92400e" }}>
+          <div style={{ fontSize: "24px", marginBottom: "6px" }}>✨</div>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: "#92400e", marginBottom: "4px" }}>
             Remove watermark + unlock 2 more themes
           </div>
-          <div style={{ fontSize: "13px", color: "#b45309", marginBottom: "16px" }}>
-            One-time payment: $1.99
-          </div>
-          <button
-            style={{
-              background: "linear-gradient(135deg, #d97706, #f59e0b)",
-              border: "none",
-              borderRadius: "8px",
-              color: "#fff",
-              padding: "10px 28px",
-              fontSize: "14px",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "'Poppins', sans-serif",
-              boxShadow: "0 4px 16px rgba(217,119,6,0.35)",
-            }}
-          >Upgrade Now</button>
+          <div style={{ fontSize: "12px", color: "#b45309", marginBottom: "14px" }}>One-time · $1.99</div>
+          <button style={{
+            background: "linear-gradient(135deg, #d97706, #f59e0b)",
+            border: "none", borderRadius: "8px",
+            color: "#fff", padding: "10px 28px",
+            fontSize: "14px", fontWeight: 700,
+            cursor: "pointer",
+            fontFamily: "'Poppins', sans-serif",
+            boxShadow: "0 4px 16px rgba(217,119,6,0.35)",
+          }}>Upgrade Now</button>
         </div>
 
-        {/* Today's other matches */}
+        {/* ── OTHER MATCHES ── */}
         {todayOtherMatches.length > 0 && (
           <div>
-            <div style={{ fontSize: "15px", fontWeight: 700, color: "#374151", marginBottom: "14px" }}>
-              🗓️ Today's Other Matches
+            <div style={{ fontSize: "12px", fontWeight: 700, color: "#9ca3af", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "12px" }}>
+              🗓 Predict another match
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {todayOtherMatches.map((m) => (
                 <button
                   key={m.id}
-                  onClick={() => {
-                    window.location.href = `${window.location.pathname}?team1=${encodeURIComponent(m.team1)}&team2=${encodeURIComponent(m.team2)}`;
-                  }}
+                  onClick={() => { window.location.href = `${window.location.pathname}?team1=${encodeURIComponent(m.team1)}&team2=${encodeURIComponent(m.team2)}`; }}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    background: "#fff",
-                    border: "1.5px solid #e5e7eb",
-                    borderRadius: "10px",
-                    padding: "14px 16px",
-                    cursor: "pointer",
-                    color: "#0f172a",
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    background: "#fff", border: "1.5px solid #e2e8f0",
+                    borderRadius: "12px", padding: "13px 16px",
+                    cursor: "pointer", color: "#0f172a",
                     fontFamily: "'Poppins', sans-serif",
-                    transition: "border-color 0.15s, box-shadow 0.15s",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+                    transition: "all 0.15s",
                   }}
-                  onMouseOver={(e) => { e.currentTarget.style.borderColor = "#16a34a"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(22,163,74,0.15)"; }}
-                  onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.05)"; }}
+                  onMouseOver={(e) => { e.currentTarget.style.borderColor = "#16a34a"; e.currentTarget.style.background = "#f0fdf4"; }}
+                  onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#fff"; }}
                 >
                   <div style={{ fontSize: "14px", fontWeight: 500 }}>
-                    {getTeam(m.team1)?.flag} {m.team1} vs {getTeam(m.team2)?.flag} {m.team2}
+                    {getTeam(m.team1)?.flag} {m.team1} <span style={{ color: "#9ca3af" }}>vs</span> {getTeam(m.team2)?.flag} {m.team2}
                   </div>
-                  <div style={{ fontSize: "12px", color: "#9ca3af", background: "#f3f4f6", borderRadius: "6px", padding: "3px 8px" }}>{m.time}</div>
+                  <div style={{ fontSize: "11px", color: "#9ca3af", background: "#f1f5f9", borderRadius: "6px", padding: "3px 8px" }}>{m.time}</div>
                 </button>
               ))}
             </div>
           </div>
         )}
+
+        {/* Footer */}
+        <div style={{ marginTop: "48px", textAlign: "center", borderTop: "1px solid #e5e7eb", paddingTop: "24px" }}>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "18px", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>⚽ PredictionCard</div>
+          <div style={{ fontSize: "12px", color: "#9ca3af" }}>predictioncard.com · Free Forever</div>
+        </div>
       </div>
 
       <style>{`
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
     </div>

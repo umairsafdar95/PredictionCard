@@ -1,0 +1,1 @@
+- [html-to-image CSS limits](html-to-image-limits.md) — backdropFilter breaks PNG export silently; all card content must be in flex flow, not absolute-only.
