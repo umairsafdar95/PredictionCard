@@ -43,6 +43,22 @@ const THEMES: {
     accent: "#d4af37",
     preview: "🏆",
   },
+  {
+    id: "retro",
+    label: "Retro Classic",
+    desc: "Vintage poster, bold red",
+    bg: "linear-gradient(135deg, #f5ede0 0%, #edddc8 100%)",
+    accent: "#c0392b",
+    preview: "🕰️",
+  },
+  {
+    id: "neon",
+    label: "Neon Lights",
+    desc: "Jet black, electric cyan",
+    bg: "radial-gradient(ellipse at 50% 0%, #07101a 0%, #010508 100%)",
+    accent: "#00e8ff",
+    preview: "⚡",
+  },
 ];
 
 const LANGUAGES: { id: Language; label: string; flag: string }[] = [
@@ -306,7 +322,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             {[
               { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: "cards made" },
               { icon: "🌍", val: "32", label: "nations" },
-              { icon: "🎨", val: "3", label: "card styles" },
+              { icon: "🎨", val: "5", label: "card styles" },
             ].map((s) => (
               <div key={s.label} style={{
                 background: "rgba(255,255,255,0.07)",

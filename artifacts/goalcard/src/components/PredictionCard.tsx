@@ -326,6 +326,340 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
   }
 
   /* ─────────────────────────────────────────────────────────────────
+     THEME 4 — RETRO CLASSIC
+     Warm cream vintage poster. Bold red accents. All in flex flow.
+     NO backdropFilter.
+  ───────────────────────────────────────────────────────────────── */
+  if (theme === "retro") {
+    return (
+      <div ref={cardRef} style={{
+        ...baseCard,
+        background: "#f5ede0",
+        justifyContent: "center",
+        padding: "0 88px",
+        gap: "0",
+      }}>
+        {/* Decorative: bold red top-right triangle */}
+        <div style={{
+          position: "absolute", top: 0, right: 0,
+          width: "0", height: "0",
+          borderStyle: "solid",
+          borderWidth: "0 320px 320px 0",
+          borderColor: "transparent #c0392b transparent transparent",
+          pointerEvents: "none",
+        }} />
+        {/* Decorative: bold red bottom-left triangle */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0,
+          width: "0", height: "0",
+          borderStyle: "solid",
+          borderWidth: "220px 0 0 220px",
+          borderColor: "transparent transparent transparent #c0392b",
+          pointerEvents: "none",
+        }} />
+        {/* Decorative: black frame */}
+        <div style={{
+          position: "absolute", inset: "32px",
+          border: "5px solid #1a0800",
+          borderRadius: "0",
+          pointerEvents: "none",
+        }} />
+        {/* Decorative: inner red frame line */}
+        <div style={{
+          position: "absolute", inset: "44px",
+          border: "2px solid #c0392b",
+          borderRadius: "0",
+          pointerEvents: "none",
+        }} />
+
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "44px", position: "relative", zIndex: 1 }}>
+          <div style={{
+            background: "#1a0800",
+            display: "inline-block",
+            padding: "14px 56px",
+            marginBottom: "18px",
+          }}>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: "19px", letterSpacing: "8px",
+              color: "#f5ede0", textTransform: "uppercase", fontWeight: 400,
+            }}>FIFA WORLD CUP 2026</div>
+          </div>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "13px", letterSpacing: "5px",
+            color: "#7a4a2a", textTransform: "uppercase",
+          }}>{labels.title}</div>
+        </div>
+
+        {/* ── TEAMS ROW ── */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          gap: "48px", marginBottom: "44px",
+          position: "relative", zIndex: 1, width: "100%",
+        }}>
+          {/* Team 1 */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div style={{ fontSize: "112px", lineHeight: 1 }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
+              color: "#1a0800", letterSpacing: "4px",
+            }}>{t1?.shortName ?? team1}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
+              color: "#7a4a2a",
+            }}>{team1}</div>
+          </div>
+
+          {/* VS badge */}
+          <div style={{
+            background: "#c0392b",
+            padding: "18px 26px",
+            fontFamily: "'Oswald', sans-serif", fontSize: "30px", fontWeight: 900,
+            color: "#f5ede0", letterSpacing: "3px",
+            flexShrink: 0,
+          }}>{labels.vs}</div>
+
+          {/* Team 2 */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div style={{ fontSize: "112px", lineHeight: 1 }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
+              color: "#1a0800", letterSpacing: "4px",
+            }}>{t2?.shortName ?? team2}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "16px",
+              color: "#7a4a2a",
+            }}>{team2}</div>
+          </div>
+        </div>
+
+        {/* ── RED RULE ── */}
+        <div style={{
+          width: "100%", height: "6px",
+          background: "#c0392b",
+          marginBottom: "36px", position: "relative", zIndex: 1,
+        }} />
+
+        {/* ── SCORE ── */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: "28px",
+          marginBottom: "36px", position: "relative", zIndex: 1,
+        }}>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "172px", fontWeight: 900,
+            color: "#1a0800", lineHeight: 1,
+          }}>{score1}</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "80px",
+            color: "#c0392b", fontWeight: 900, lineHeight: 1,
+          }}>–</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "172px", fontWeight: 900,
+            color: "#1a0800", lineHeight: 1,
+          }}>{score2}</div>
+        </div>
+
+        {/* ── RED RULE ── */}
+        <div style={{
+          width: "100%", height: "6px",
+          background: "#c0392b",
+          marginBottom: "36px", position: "relative", zIndex: 1,
+        }} />
+
+        {/* ── PREDICTED BY ── */}
+        <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif", fontSize: "15px",
+            color: "#7a4a2a", letterSpacing: "6px",
+            textTransform: "uppercase", marginBottom: "10px",
+          }}>{labels.predictedBy}</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "60px", fontWeight: 700,
+            color: "#1a0800", letterSpacing: "2px",
+          }}>{name}</div>
+        </div>
+
+        {/* Watermark */}
+        <div style={{
+          position: "absolute", bottom: "52px", right: "62px",
+          fontFamily: "'Poppins', sans-serif", fontSize: "16px",
+          color: "rgba(26,8,0,0.18)", zIndex: 5,
+        }}>⚽ predictioncard.com</div>
+      </div>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
+     THEME 5 — NEON LIGHTS
+     Jet black with electric cyan neon glow. All in flex flow.
+     Glow via textShadow/boxShadow only — NO backdropFilter.
+  ───────────────────────────────────────────────────────────────── */
+  if (theme === "neon") {
+    return (
+      <div ref={cardRef} style={{
+        ...baseCard,
+        background: "radial-gradient(ellipse at 50% 30%, #07101a 0%, #010508 100%)",
+        justifyContent: "center",
+        padding: "0 80px",
+        gap: "0",
+      }}>
+        {/* Decorative: neon border frame */}
+        <div style={{
+          position: "absolute", inset: "28px",
+          border: "2px solid rgba(0,232,255,0.35)",
+          borderRadius: "12px",
+          boxShadow: "0 0 30px rgba(0,232,255,0.08)",
+          pointerEvents: "none",
+        }} />
+        {/* Decorative: corner glow dots */}
+        {[
+          { top: "36px", left: "36px" }, { top: "36px", right: "36px" },
+          { bottom: "36px", left: "36px" }, { bottom: "36px", right: "36px" },
+        ].map((pos, i) => (
+          <div key={i} style={{
+            position: "absolute", ...pos,
+            width: "10px", height: "10px",
+            borderRadius: "50%",
+            background: "#00e8ff",
+            boxShadow: "0 0 12px 4px rgba(0,232,255,0.7)",
+            pointerEvents: "none",
+          }} />
+        ))}
+        {/* Decorative: horizontal scan line */}
+        <div style={{
+          position: "absolute", top: "50%", left: "28px", right: "28px",
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(0,232,255,0.08), transparent)",
+          pointerEvents: "none",
+        }} />
+
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "48px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: "46px", marginBottom: "14px" }}>⚡</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "21px", letterSpacing: "8px",
+            color: "#00e8ff", textTransform: "uppercase", fontWeight: 400,
+            textShadow: "0 0 20px rgba(0,232,255,0.90), 0 0 60px rgba(0,232,255,0.40)",
+            marginBottom: "10px",
+          }}>WORLD CUP 2026</div>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "14px", letterSpacing: "5px",
+            color: "rgba(255,255,255,0.22)", textTransform: "uppercase",
+          }}>{labels.title}</div>
+        </div>
+
+        {/* ── TEAMS ROW ── */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          gap: "44px", marginBottom: "40px",
+          position: "relative", zIndex: 1, width: "100%",
+        }}>
+          {/* Team 1 */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{
+              fontSize: "100px", lineHeight: 1,
+              filter: "drop-shadow(0 0 14px rgba(0,232,255,0.45))",
+            }}>{t1?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              color: "#ffffff", letterSpacing: "4px",
+              textShadow: "0 0 20px rgba(0,232,255,0.55)",
+            }}>{t1?.shortName ?? team1}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "17px",
+              color: "rgba(255,255,255,0.30)",
+            }}>{team1}</div>
+          </div>
+
+          {/* VS badge */}
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "24px", fontWeight: 700,
+            color: "#00e8ff",
+            border: "2px solid rgba(0,232,255,0.50)",
+            borderRadius: "8px",
+            padding: "12px 20px",
+            letterSpacing: "4px",
+            textShadow: "0 0 14px rgba(0,232,255,0.90)",
+            boxShadow: "0 0 20px rgba(0,232,255,0.15)",
+            flexShrink: 0,
+          }}>{labels.vs}</div>
+
+          {/* Team 2 */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{
+              fontSize: "100px", lineHeight: 1,
+              filter: "drop-shadow(0 0 14px rgba(0,232,255,0.45))",
+            }}>{t2?.flag ?? "🏳"}</div>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
+              color: "#ffffff", letterSpacing: "4px",
+              textShadow: "0 0 20px rgba(0,232,255,0.55)",
+            }}>{t2?.shortName ?? team2}</div>
+            <div style={{
+              fontFamily: "'Poppins', sans-serif", fontSize: "17px",
+              color: "rgba(255,255,255,0.30)",
+            }}>{team2}</div>
+          </div>
+        </div>
+
+        {/* ── NEON SCORE ── */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: "24px",
+          marginBottom: "48px", position: "relative", zIndex: 1,
+        }}>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900,
+            color: "#00e8ff", lineHeight: 1,
+            textShadow: "0 0 30px rgba(0,232,255,1), 0 0 80px rgba(0,232,255,0.60), 0 0 160px rgba(0,232,255,0.25)",
+          }}>{score1}</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "80px",
+            color: "rgba(0,232,255,0.20)", fontWeight: 300, lineHeight: 1,
+          }}>:</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900,
+            color: "#00e8ff", lineHeight: 1,
+            textShadow: "0 0 30px rgba(0,232,255,1), 0 0 80px rgba(0,232,255,0.60), 0 0 160px rgba(0,232,255,0.25)",
+          }}>{score2}</div>
+        </div>
+
+        {/* ── NEON DIVIDER ── */}
+        <div style={{
+          width: "560px", height: "1px",
+          background: "linear-gradient(90deg, transparent, rgba(0,232,255,0.60), transparent)",
+          boxShadow: "0 0 10px rgba(0,232,255,0.40)",
+          marginBottom: "40px", position: "relative", zIndex: 1,
+        }} />
+
+        {/* ── PREDICTED BY ── */}
+        <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif", fontSize: "15px",
+            color: "rgba(0,232,255,0.45)", letterSpacing: "6px",
+            textTransform: "uppercase", marginBottom: "12px",
+          }}>{labels.predictedBy}</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif", fontSize: "62px", fontWeight: 700,
+            color: "#ffffff", letterSpacing: "2px",
+            textShadow: "0 0 24px rgba(0,232,255,0.35)",
+          }}>{name}</div>
+        </div>
+
+        {/* Watermark */}
+        <div style={{
+          position: "absolute", bottom: "42px", right: "52px",
+          fontFamily: "'Poppins', sans-serif", fontSize: "17px",
+          color: "rgba(0,232,255,0.15)", zIndex: 5,
+        }}>⚽ predictioncard.com</div>
+      </div>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
      THEME 3 — FIFA GOLD
      Deep FIFA navy with gold trophy accents. All content in flex flow.
      NO backdropFilter.

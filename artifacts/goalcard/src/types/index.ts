@@ -1,4 +1,4 @@
-export type Theme = "dark" | "colors" | "modern";
+export type Theme = "dark" | "colors" | "modern" | "retro" | "neon";
 export type Language = "en" | "ar" | "fr" | "pt" | "es" | "de" | "tr";
 
 export interface FormState {
