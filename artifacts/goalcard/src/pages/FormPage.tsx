@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FormState, Theme, Language } from "@/types";
 import teams, { getTeam } from "@/data/teams";
 import { getTodaysMatches, type Match } from "@/data/matches";
+import SchedulePage from "@/components/SchedulePage";
+import { type ScheduleMatch } from "@/data/schedule";
 
 interface FormPageProps {
   formState: FormState;
@@ -250,6 +252,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const { team1, team2, score1, score2, name, theme, language } = formState;
   const ui = UI_TEXT[language];
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [activeTab, setActiveTab] = useState<"predict" | "schedule">("predict");
+  const [loadedMatch, setLoadedMatch] = useState<{ team1: string; team2: string; team1Flag: string; team2Flag: string } | null>(null);
   const todayMatches = getTodaysMatches().slice(0, 3);
 
   const t1 = getTeam(team1);
@@ -447,6 +451,51 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         <div style={{ height: "4px", background: "linear-gradient(90deg, #15803d, #22c55e, #86efac, #22c55e, #15803d)" }} />
       </header>
 
+      {/* ── TAB BAR ── */}
+      <div style={{
+        background: "#0d0d1f",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+      }}>
+        <div style={{ maxWidth: "600px", margin: "0 auto", display: "flex" }}>
+          {(["predict", "schedule"] as const).map((tab) => {
+            const active = activeTab === tab;
+            return (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  flex: 1, padding: "14px 0",
+                  background: "none", border: "none",
+                  borderBottom: active ? "3px solid #22c55e" : "3px solid transparent",
+                  color: active ? "#22c55e" : "rgba(255,255,255,0.50)",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "14px", fontWeight: 600,
+                  cursor: "pointer", transition: "color 0.2s, border-color 0.2s",
+                  letterSpacing: "0.3px",
+                }}
+              >
+                {tab === "predict" ? "⚽ Make Prediction" : "📅 Schedule"}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {activeTab === "schedule" ? (
+        <SchedulePage onPredict={(m: ScheduleMatch) => {
+          set("team1", m.team1);
+          set("team2", m.team2);
+          setLoadedMatch({ team1: m.team1, team2: m.team2, team1Flag: m.team1Flag, team2Flag: m.team2Flag });
+          setActiveTab("predict");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }} />
+      ) : (
+        <>
+
       {/* Challenge banner */}
       {challengerName && (
         <div style={{
@@ -463,6 +512,30 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
       )}
 
       <main role="main" style={{ maxWidth: "600px", margin: "0 auto", padding: "28px 16px 64px" }}>
+
+        {/* Loaded match banner */}
+        {loadedMatch && (
+          <div style={{
+            background: "rgba(34,197,94,0.10)",
+            border: "1px solid rgba(34,197,94,0.25)",
+            borderRadius: "14px",
+            padding: "13px 18px",
+            marginBottom: "14px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}>
+            <span style={{ fontSize: "20px" }}>⚽</span>
+            <div style={{ flex: 1, fontSize: "13px", color: "#86efac", fontWeight: 600, fontFamily: "'Poppins', sans-serif" }}>
+              Match loaded: {loadedMatch.team1Flag} {loadedMatch.team1} vs {loadedMatch.team2Flag} {loadedMatch.team2} — enter your prediction!
+            </div>
+            <button
+              type="button"
+              onClick={() => setLoadedMatch(null)}
+              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.40)", fontSize: "20px", cursor: "pointer", padding: "0 4px", lineHeight: 1 }}
+            >✕</button>
+          </div>
+        )}
 
         {/* ── STEP 1: Match ── */}
         <div style={card}>
@@ -953,6 +1026,8 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         input:focus { border-color: #16a34a !important; box-shadow: 0 0 0 3px rgba(22,163,74,0.15) !important; outline: none; }
         button:active { transform: scale(0.98) !important; }
       `}</style>
+        </>
+      )}
     </div>
   );
 }
