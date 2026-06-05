@@ -1,5 +1,4 @@
 {
-  "buildCommand": "pnpm --filter @workspace/goalcard run build",
-  "outputDirectory": "artifacts/goalcard/dist",
+  "outputDirectory": "dist",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
