@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
+
+# Block irrelevant crawling paths
+Disallow: /src/
+Disallow: /.vite/
+
+# Sitemaps
 Sitemap: https://predictioncard.com/sitemap.xml
+
+# Preferred domain
 Host: predictioncard.com

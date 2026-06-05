@@ -1,0 +1,30 @@
+{
+  "name": "PredictionCard — World Cup 2026",
+  "short_name": "PredictionCard",
+  "description": "Free FIFA World Cup 2026 prediction card generator. Predict scores, download and share.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a1a",
+  "theme_color": "#16a34a",
+  "orientation": "portrait",
+  "categories": ["sports", "entertainment", "social"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "1080x1080",
+      "type": "image/png",
+      "label": "World Cup 2026 Prediction Card"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
