@@ -233,7 +233,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   });
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f0fdf4", color: "#0f172a", fontFamily: "'Poppins', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#0a0a1a", color: "#0f172a", fontFamily: "'Poppins', sans-serif" }}>
 
       {/* ══ HERO HEADER ══ */}
       <header style={{

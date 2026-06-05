@@ -91,7 +91,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "3px",
-            }}>{t1?.shortName ?? team1}</div>
+            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "18px",
               color: "rgba(255,255,255,0.4)",
@@ -114,7 +114,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "3px",
-            }}>{t2?.shortName ?? team2}</div>
+            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "18px",
               color: "rgba(255,255,255,0.4)",
@@ -231,7 +231,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
               textShadow: "0 2px 14px rgba(0,0,0,0.7)",
-            }}>{t1?.shortName ?? team1}</div>
+            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "20px",
               color: "rgba(255,255,255,0.65)",
@@ -263,7 +263,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "5px", textTransform: "uppercase",
               textShadow: "0 2px 14px rgba(0,0,0,0.7)",
-            }}>{t2?.shortName ?? team2}</div>
+            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "20px",
               color: "rgba(255,255,255,0.65)",
@@ -405,7 +405,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#1a0800", letterSpacing: "4px",
-            }}>{t1?.shortName ?? team1}</div>
+            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "16px",
               color: "#7a4a2a",
@@ -427,7 +427,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
               color: "#1a0800", letterSpacing: "4px",
-            }}>{t2?.shortName ?? team2}</div>
+            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "16px",
               color: "#7a4a2a",
@@ -568,7 +568,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
               fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "4px",
               textShadow: "0 0 20px rgba(0,232,255,0.55)",
-            }}>{t1?.shortName ?? team1}</div>
+            }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "17px",
               color: "rgba(255,255,255,0.30)",
@@ -598,7 +598,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
               fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
               color: "#ffffff", letterSpacing: "4px",
               textShadow: "0 0 20px rgba(0,232,255,0.55)",
-            }}>{t2?.shortName ?? team2}</div>
+            }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
             <div style={{
               fontFamily: "'Poppins', sans-serif", fontSize: "17px",
               color: "rgba(255,255,255,0.30)",
@@ -731,7 +731,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
             color: "#f5e17a", letterSpacing: "4px",
-          }}>{t1?.shortName ?? team1}</div>
+          }}>{t1?.flag ?? "🏳"} {t1?.shortName ?? team1}</div>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "17px",
             color: "rgba(255,255,255,0.38)",
@@ -762,7 +762,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
             color: "#f5e17a", letterSpacing: "4px",
-          }}>{t2?.shortName ?? team2}</div>
+          }}>{t2?.flag ?? "🏳"} {t2?.shortName ?? team2}</div>
           <div style={{
             fontFamily: "'Poppins', sans-serif", fontSize: "17px",
             color: "rgba(255,255,255,0.38)",
