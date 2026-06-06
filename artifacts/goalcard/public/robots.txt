@@ -6,7 +6,7 @@ Disallow: /src/
 Disallow: /.vite/
 
 # Sitemaps
-Sitemap: https://predictioncard.com/sitemap.xml
+Sitemap: https://perdictioncard.com/sitemap.xml
 
 # Preferred domain
-Host: predictioncard.com
+Host: perdictioncard.com
