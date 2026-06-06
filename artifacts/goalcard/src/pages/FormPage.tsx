@@ -939,8 +939,6 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         <section
           aria-label="Frequently Asked Questions about PredictionCard"
           style={{ marginTop: "48px" }}
-          itemScope
-          itemType="https://schema.org/FAQPage"
         >
           <h2 style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700,
@@ -972,17 +970,12 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               <div
                 key={faq.q}
                 style={{ background: "#fff", borderRadius: "14px", padding: "20px", border: "1px solid #e5e7eb" }}
-                itemScope
-                itemProp="mainEntity"
-                itemType="https://schema.org/Question"
               >
                 <h3
-                  itemProp="name"
                   style={{ fontSize: "14px", fontWeight: 700, color: "#0f172a", marginBottom: "8px" }}
                 >{faq.q}</h3>
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <div>
                   <p
-                    itemProp="text"
                     style={{ fontSize: "13px", color: "#6b7280", lineHeight: 1.6, margin: 0 }}
                   >{faq.a}</p>
                 </div>
