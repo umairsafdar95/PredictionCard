@@ -588,9 +588,91 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               letterSpacing: "1px",
               color: "#fff",
               lineHeight: 1,
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
             }}>
-              <span style={{ fontSize: "clamp(44px, 10vw, 62px)", lineHeight: 1 }}>⚽</span>
+              {/* HD Football SVG */}
+              <svg
+                viewBox="0 0 120 120"
+                style={{ width: "clamp(60px,11vw,76px)", height: "clamp(60px,11vw,76px)", flexShrink: 0, filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.7)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  {/* Main sphere — light from top-left */}
+                  <radialGradient id="hd_ball" cx="36%" cy="28%" r="70%" gradientUnits="objectBoundingBox">
+                    <stop offset="0%"   stopColor="#ffffff" />
+                    <stop offset="20%"  stopColor="#f0f0f0" />
+                    <stop offset="55%"  stopColor="#d0d0d0" />
+                    <stop offset="80%"  stopColor="#a0a0a0" />
+                    <stop offset="100%" stopColor="#606060" />
+                  </radialGradient>
+                  {/* Edge vignette */}
+                  <radialGradient id="hd_vignette" cx="50%" cy="50%" r="50%">
+                    <stop offset="55%" stopColor="rgba(0,0,0,0)" />
+                    <stop offset="100%" stopColor="rgba(0,0,0,0.55)" />
+                  </radialGradient>
+                  {/* Primary specular */}
+                  <radialGradient id="hd_spec1" cx="40%" cy="30%" r="50%">
+                    <stop offset="0%"   stopColor="rgba(255,255,255,0.90)" />
+                    <stop offset="50%"  stopColor="rgba(255,255,255,0.30)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                  </radialGradient>
+                  {/* Secondary tiny specular */}
+                  <radialGradient id="hd_spec2" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="rgba(255,255,255,0.70)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                  </radialGradient>
+                  {/* Pentagon shading — darker in shadow zones */}
+                  <radialGradient id="hd_patch" cx="36%" cy="28%" r="70%">
+                    <stop offset="0%"   stopColor="#2a2a2a" />
+                    <stop offset="60%"  stopColor="#111111" />
+                    <stop offset="100%" stopColor="#080808" />
+                  </radialGradient>
+                  <clipPath id="hd_clip">
+                    <circle cx="60" cy="60" r="56" />
+                  </clipPath>
+                </defs>
+
+                {/* Drop shadow circle */}
+                <ellipse cx="62" cy="116" rx="38" ry="6" fill="rgba(0,0,0,0.35)" />
+
+                {/* Base sphere */}
+                <circle cx="60" cy="60" r="56" fill="url(#hd_ball)" />
+
+                {/* Black pentagon patches — classic Telstar layout */}
+                <g clipPath="url(#hd_clip)" fill="url(#hd_patch)" stroke="#0a0a0a" strokeWidth="0.5" strokeLinejoin="round">
+                  {/* Top center */}
+                  <polygon points="60,8 71,17 67,30 53,30 49,17" />
+                  {/* Top-left */}
+                  <polygon points="30,22 43,18 49,30 41,41 27,37" />
+                  {/* Top-right */}
+                  <polygon points="90,22 77,18 71,30 79,41 93,37" />
+                  {/* Mid-left */}
+                  <polygon points="13,55 24,47 37,52 35,66 20,70" />
+                  {/* Mid-right */}
+                  <polygon points="107,55 96,47 83,52 85,66 100,70" />
+                  {/* Bot-left */}
+                  <polygon points="23,86 22,71 35,66 44,75 38,88" />
+                  {/* Bot-right */}
+                  <polygon points="97,86 98,71 85,66 76,75 82,88" />
+                  {/* Bottom center */}
+                  <polygon points="60,110 49,101 53,88 67,88 71,101" />
+                </g>
+
+                {/* Edge vignette for depth */}
+                <circle cx="60" cy="60" r="56" fill="url(#hd_vignette)" />
+
+                {/* Primary specular highlight */}
+                <ellipse cx="44" cy="38" rx="19" ry="13"
+                  fill="url(#hd_spec1)"
+                  transform="rotate(-30 44 38)"
+                />
+                {/* Small bright hotspot */}
+                <ellipse cx="40" cy="32" rx="7" ry="4.5"
+                  fill="url(#hd_spec2)"
+                  transform="rotate(-20 40 32)"
+                />
+              </svg>
+
               <span>
                 <span style={{
                   background: "linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #86efac 100%)",
