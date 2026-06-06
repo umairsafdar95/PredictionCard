@@ -13,6 +13,11 @@ type View = "form" | "preview" | "shared";
 const COUNTER_KEY = "goalcard_session_count";
 const TOTAL_KEY = "goalcard_total_count";
 
+function getLangFromPath(): import("@/types").Language {
+  const m = window.location.pathname.match(/^\/(ar|pt|es|fr|de|tr)(\/|$)/);
+  return (m ? m[1] : "en") as import("@/types").Language;
+}
+
 const DEFAULT_FORM: FormState = {
   team1: "United States",
   team2: "Mexico",
@@ -20,7 +25,7 @@ const DEFAULT_FORM: FormState = {
   score2: 0,
   name: "",
   theme: "dark",
-  language: "en",
+  language: getLangFromPath(),
 };
 
 function getCardCount(): number {
