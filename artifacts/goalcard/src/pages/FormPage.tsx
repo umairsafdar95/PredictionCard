@@ -552,77 +552,98 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           background: "linear-gradient(90deg, transparent, #d4af37 30%, #f5e17a 50%, #d4af37 70%, transparent)",
         }} />
 
-        <div style={{ padding: "36px 20px 40px", position: "relative" }}>
-          {/* Tournament badge */}
+        <div style={{ padding: "40px 20px 44px", position: "relative" }}>
+
+          {/* Tournament badge — bigger, bolder */}
           <div style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            background: "rgba(212,175,55,0.12)",
-            border: "1px solid rgba(212,175,55,0.35)",
-            borderRadius: "20px",
-            padding: "5px 16px",
-            marginBottom: "20px",
-            fontSize: "11px",
-            color: "#d4af37",
-            fontWeight: 700,
-            letterSpacing: "3px",
-            textTransform: "uppercase",
+            display: "inline-flex", alignItems: "center", gap: "10px",
+            background: "linear-gradient(135deg, rgba(212,175,55,0.18) 0%, rgba(245,225,122,0.10) 100%)",
+            border: "1.5px solid rgba(212,175,55,0.55)",
+            borderRadius: "40px",
+            padding: "9px 22px",
+            marginBottom: "24px",
+            boxShadow: "0 0 24px rgba(212,175,55,0.18), inset 0 1px 0 rgba(255,255,255,0.10)",
           }}>
-            🏆 FIFA WORLD CUP 2026
+            <span style={{ fontSize: "20px", lineHeight: 1 }}>🏆</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1px" }}>
+              <span style={{
+                fontSize: "13px", color: "#f5e17a", fontWeight: 800,
+                letterSpacing: "3px", textTransform: "uppercase" as const,
+                fontFamily: "'Oswald', sans-serif", lineHeight: 1,
+              }}>FIFA WORLD CUP 2026</span>
+              <span style={{
+                fontSize: "10px", color: "rgba(212,175,55,0.65)", fontWeight: 600,
+                letterSpacing: "4px", textTransform: "uppercase" as const,
+                fontFamily: "'Poppins', sans-serif", lineHeight: 1,
+              }}>MATCH PREDICTION</span>
+            </div>
           </div>
 
-          {/* Logo */}
-          <div style={{
-            fontFamily: "'Oswald', sans-serif",
-            fontSize: "52px",
-            fontWeight: 900,
-            letterSpacing: "2px",
-            marginBottom: "10px",
-            color: "#fff",
-            lineHeight: 1,
-          }}>
-            ⚽ <span style={{
-              background: "linear-gradient(135deg, #22c55e 0%, #86efac 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}>Prediction</span>Card
+          {/* Logo — larger, more impact */}
+          <div style={{ marginBottom: "12px", lineHeight: 1 }}>
+            <div style={{
+              fontFamily: "'Oswald', sans-serif",
+              fontSize: "clamp(52px, 12vw, 72px)",
+              fontWeight: 900,
+              letterSpacing: "1px",
+              color: "#fff",
+              lineHeight: 1,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+            }}>
+              <span style={{ fontSize: "clamp(44px, 10vw, 62px)", lineHeight: 1 }}>⚽</span>
+              <span>
+                <span style={{
+                  background: "linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #86efac 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  filter: "drop-shadow(0 0 20px rgba(34,197,94,0.4))",
+                }}>Perd</span><span style={{
+                  background: "linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}>ictionCard</span>
+              </span>
+            </div>
           </div>
 
           <div style={{
-            fontSize: "16px",
-            color: "rgba(255,255,255,0.65)",
-            marginBottom: "28px",
-            letterSpacing: "0.5px",
+            fontSize: "17px",
+            color: "rgba(255,255,255,0.70)",
+            marginBottom: "32px",
+            letterSpacing: "0.3px",
+            fontFamily: "'Poppins', sans-serif",
           }}>{ui.subtitle}</div>
 
-          {/* Stats row */}
+          {/* Stats row — larger values */}
           <div style={{
             display: "flex",
             justifyContent: "center",
-            gap: "12px",
-            flexWrap: "wrap",
+            gap: "10px",
+            flexWrap: "wrap" as const,
           }}>
             {[
-              { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: "cards made" },
-              { icon: "🌍", val: "32", label: "nations" },
-              { icon: "🎨", val: "5", label: "card styles" },
+              { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: ui.cardsMade ?? "cards made" },
+              { icon: "🌍", val: "32", label: ui.nations ?? "nations" },
+              { icon: "🎨", val: "5", label: ui.cardStyles ?? "card styles" },
             ].map((s) => (
               <div key={s.label} style={{
                 background: "rgba(255,255,255,0.07)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: "14px",
-                padding: "10px 18px",
-                display: "flex", alignItems: "center", gap: "8px",
+                border: "1px solid rgba(255,255,255,0.14)",
+                borderRadius: "16px",
+                padding: "12px 20px",
+                display: "flex", alignItems: "center", gap: "10px",
+                backdropFilter: "blur(4px)",
               }}>
-                <span style={{ fontSize: "16px" }}>{s.icon}</span>
-                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "20px", fontWeight: 700, color: "#fff" }}>{s.val}</span>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>{s.label}</span>
+                <span style={{ fontSize: "18px" }}>{s.icon}</span>
+                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "24px", fontWeight: 700, color: "#fff" }}>{s.val}</span>
+                <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.50)" }}>{s.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom green bar */}
-        <div style={{ height: "4px", background: "linear-gradient(90deg, #15803d, #22c55e, #86efac, #22c55e, #15803d)" }} />
+        {/* Bottom green bar — slightly thicker */}
+        <div style={{ height: "5px", background: "linear-gradient(90deg, #15803d, #22c55e, #86efac, #22c55e, #15803d)" }} />
       </header>
 
       {/* ── TAB BAR ── */}
