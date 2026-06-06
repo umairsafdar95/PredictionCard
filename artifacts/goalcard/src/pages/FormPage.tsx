@@ -590,59 +590,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               lineHeight: 1,
               display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
             }}>
-              {/* HD Football SVG — precise Telstar icosahedral layout */}
-              <svg
-                viewBox="0 0 120 120"
-                style={{ width: "clamp(62px,11vw,78px)", height: "clamp(62px,11vw,78px)", flexShrink: 0, filter: "drop-shadow(0 5px 18px rgba(0,0,0,0.85))" }}
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  <radialGradient id="fb_ball" cx="35%" cy="28%" r="70%">
-                    <stop offset="0%"   stopColor="#ffffff" />
-                    <stop offset="22%"  stopColor="#f5f5f5" />
-                    <stop offset="52%"  stopColor="#d8d8d8" />
-                    <stop offset="78%"  stopColor="#aaaaaa" />
-                    <stop offset="100%" stopColor="#606060" />
-                  </radialGradient>
-                  <radialGradient id="fb_edge" cx="50%" cy="50%" r="50%">
-                    <stop offset="56%" stopColor="rgba(0,0,0,0)" />
-                    <stop offset="100%" stopColor="rgba(0,0,0,0.70)" />
-                  </radialGradient>
-                  <radialGradient id="fb_spec" cx="42%" cy="32%" r="50%">
-                    <stop offset="0%"   stopColor="rgba(255,255,255,0.95)" />
-                    <stop offset="50%"  stopColor="rgba(255,255,255,0.30)" />
-                    <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                  </radialGradient>
-                  <clipPath id="fb_clip"><circle cx="60" cy="60" r="56" /></clipPath>
-                </defs>
-
-                {/* Sphere */}
-                <circle cx="60" cy="60" r="56" fill="url(#fb_ball)" />
-
-                {/* 6 pentagons — precisely placed on icosahedral vertices, projected to 2D */}
-                <g clipPath="url(#fb_clip)" fill="#141414" stroke="#060606" strokeWidth="0.6" strokeLinejoin="round">
-                  {/* TOP — vertex pointing up */}
-                  <polygon points="60,3.5 70.9,11.4 66.8,24.3 53.2,24.3 49.1,11.4" />
-                  {/* UPPER-LEFT */}
-                  <polygon points="27.8,42.7 31.9,55.6 21.0,63.5 10.1,55.6 14.2,42.7" />
-                  {/* UPPER-RIGHT */}
-                  <polygon points="92.2,42.7 88.1,55.6 99.0,63.5 109.9,55.6 105.8,42.7" />
-                  {/* LOWER-LEFT */}
-                  <polygon points="28.0,71.5 38.9,79.4 34.8,92.3 21.2,92.3 17.1,79.4" />
-                  {/* LOWER-RIGHT */}
-                  <polygon points="92.0,71.5 81.1,79.4 85.2,92.3 98.8,92.3 102.9,79.4" />
-                  {/* BOTTOM — vertex pointing down */}
-                  <polygon points="53.2,94.7 66.8,94.7 70.9,107.6 60.0,115.5 49.1,107.6" />
-                </g>
-
-                {/* Rim vignette */}
-                <circle cx="60" cy="60" r="56" fill="url(#fb_edge)" />
-
-                {/* Specular — large soft glow */}
-                <ellipse cx="43" cy="37" rx="20" ry="13" fill="url(#fb_spec)" transform="rotate(-28 43 37)" />
-                {/* Hotspot */}
-                <ellipse cx="38" cy="30" rx="7.5" ry="5" fill="rgba(255,255,255,0.68)" transform="rotate(-22 38 30)" />
-              </svg>
+              <span style={{ fontSize: "clamp(44px, 10vw, 62px)", lineHeight: 1 }}>⚽</span>
 
               <span>
                 <span style={{
