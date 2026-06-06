@@ -77,7 +77,13 @@ const UI_TEXT: Record<Language, {
   subtitle: string; step1: string; step1sub: string; step2: string; step2sub: string;
   step3: string; step3sub: string; step4: string; step4sub: string; step5: string;
   step5sub: string; generate: string; howItWorks: string; about: string; faq: string;
-  team1: string; team2: string; namePlaceholder: string;
+  team1: string; team2: string; namePlaceholder: string; freeInstant: string;
+  howStep1Title: string; howStep1Text: string; howStep2Title: string; howStep2Text: string;
+  howStep3Title: string; howStep3Text: string; howStep4Title: string; howStep4Text: string;
+  aboutP1: string; aboutP2: string; aboutP3: string;
+  faqQ1: string; faqA1: string; faqQ2: string; faqA2: string;
+  faqQ3: string; faqA3: string; faqQ4: string; faqA4: string; faqQ5: string; faqA5: string;
+  footerTagline: string; footerCopyright: string;
 }> = {
   en: {
     subtitle: "Predict the score · Download your card · Challenge friends",
@@ -91,6 +97,30 @@ const UI_TEXT: Record<Language, {
     about: "The Best Free World Cup Prediction Card Maker",
     faq: "Frequently Asked Questions",
     team1: "Team 1", team2: "Team 2", namePlaceholder: "e.g. Ahmed, Sarah, Carlos...",
+    freeInstant: "Free · Instant · Shareable on WhatsApp & Instagram",
+    howStep1Title: "Choose Your Match",
+    howStep1Text: "Select any FIFA World Cup 2026 match from all 48 qualified teams — USA vs Mexico, Brazil vs Argentina, France vs Morocco, and every other fixture.",
+    howStep2Title: "Enter Your Score Prediction",
+    howStep2Text: "What's your predicted final score? Tap + and − to set the goals for each team. Your World Cup score prediction appears live on the card.",
+    howStep3Title: "Pick Your Card Design",
+    howStep3Text: "Choose from 5 prediction card themes: Night Match, National Colors, FIFA Gold, Retro Classic, or Neon Lights. Each design looks stunning on any screen.",
+    howStep4Title: "Download and Share",
+    howStep4Text: "Download your prediction card as a high-quality 1080×1080 PNG. Share it on WhatsApp, Instagram Stories, or Twitter and challenge your friends to make their own predictions.",
+    aboutP1: "PerdictionCard.com is the fastest way to create and share your FIFA World Cup 2026 score predictions. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.",
+    aboutP2: "With all 48 World Cup 2026 teams available, you can generate a new prediction card for every single game of the tournament. Each card is personalized with your name, predicted score, team colors, and national flags.",
+    aboutP3: "Our World Cup card maker works in 7 languages including Arabic (RTL), Portuguese, Spanish, and French — perfect for football fans worldwide. No signup, no app download, and completely free.",
+    faqQ1: "Is the World Cup 2026 prediction card generator free?",
+    faqA1: "Yes. Creating your World Cup 2026 prediction card is 100% free. No account, no email, no credit card needed. Generate as many cards as you want for every match.",
+    faqQ2: "Which teams are available in the prediction card generator?",
+    faqA2: "All 48 qualified FIFA World Cup 2026 teams are available, including USA, Mexico, Canada (host nations), plus Brazil, Argentina, France, Spain, England, Morocco, Saudi Arabia, Japan, South Korea, and all other qualified nations.",
+    faqQ3: "Can I share my prediction card on WhatsApp?",
+    faqA3: "Absolutely. Your prediction card downloads as a 1080×1080 PNG image which you can share instantly on WhatsApp, Instagram, Twitter, or any social platform. The Share button lets you send directly from your phone.",
+    faqQ4: "Does the prediction card work in Arabic?",
+    faqA4: "Yes. Select Arabic from the language menu and your prediction card will display in Arabic with proper right-to-left text. We support English, Arabic, Portuguese, Spanish, French, Turkish, and German.",
+    faqQ5: "What size is the prediction card image?",
+    faqA5: "Prediction cards download as 1080×1080 pixel PNG images — perfect for Instagram square posts and WhatsApp sharing. The high resolution ensures your card looks crisp on any screen.",
+    footerTagline: "Free FIFA World Cup 2026 Prediction Card Generator",
+    footerCopyright: "© 2026 perdictioncard.com · Made for football fans worldwide · Not affiliated with FIFA",
   },
   ar: {
     subtitle: "توقع النتيجة · نزّل بطاقتك · تحدّ أصدقاءك",
@@ -104,6 +134,30 @@ const UI_TEXT: Record<Language, {
     about: "أفضل مولد بطاقات توقعات مجاني لكأس العالم",
     faq: "الأسئلة المتكررة",
     team1: "الفريق 1", team2: "الفريق 2", namePlaceholder: "مثال: أحمد، سارة، كارلوس...",
+    freeInstant: "مجاني · فوري · قابل للمشاركة على واتساب وإنستغرام",
+    howStep1Title: "اختر مباراتك",
+    howStep1Text: "اختر أي مباراة من كأس العالم 2026 من بين 48 فريقاً — الولايات المتحدة ضد المكسيك، البرازيل ضد الأرجنتين، فرنسا ضد المغرب، وجميع المباريات الأخرى.",
+    howStep2Title: "أدخل توقعك للنتيجة",
+    howStep2Text: "ما هي نتيجتك المتوقعة؟ اضغط + و − لتحديد عدد الأهداف لكل فريق. يظهر توقعك مباشرةً على البطاقة.",
+    howStep3Title: "اختر تصميم البطاقة",
+    howStep3Text: "اختر من بين 5 تصاميم: مباراة ليلية، ألوان وطنية، ذهبي فيفا، كلاسيكي قديم، أو أضواء النيون. كل تصميم رائع على أي شاشة.",
+    howStep4Title: "نزّل وشارك",
+    howStep4Text: "نزّل بطاقة توقعك كصورة PNG عالية الجودة 1080×1080. شاركها على واتساب أو إنستغرام أو تويتر وتحدّ أصدقاءك.",
+    aboutP1: "موقع PerdictionCard.com هو أسرع طريقة لإنشاء ومشاركة توقعاتك لنتائج كأس العالم 2026. على خلاف التوقعات النصية البسيطة، تُعدّ بطاقات توقعاتنا لكرة القدم صوراً مصمَّمة بشكل جميل تبرز في مجموعات واتساب وتغذيات إنستغرام.",
+    aboutP2: "مع توفر جميع فرق كأس العالم 2026 الـ48، يمكنك إنشاء بطاقة توقع جديدة لكل مباراة في البطولة. كل بطاقة مخصصة باسمك والنتيجة المتوقعة وألوان الفريق والأعلام الوطنية.",
+    aboutP3: "يعمل مولّد بطاقات كأس العالم لدينا بـ7 لغات تشمل العربية (من اليمين لليسار) والبرتغالية والإسبانية والفرنسية — مثالي لمحبي كرة القدم حول العالم. لا تسجيل، لا تحميل تطبيق، ومجاناً تماماً.",
+    faqQ1: "هل مولّد بطاقات التوقع لكأس العالم 2026 مجاني؟",
+    faqA1: "نعم. إنشاء بطاقة توقعاتك لكأس العالم 2026 مجاني 100٪. لا حساب، لا بريد إلكتروني، لا بطاقة ائتمان. أنشئ عدداً غير محدود من البطاقات لكل مباراة.",
+    faqQ2: "ما هي الفرق المتاحة في مولّد بطاقات التوقع؟",
+    faqA2: "جميع فرق كأس العالم 2026 الـ48 متاحة، بما فيها الولايات المتحدة والمكسيك وكندا (الدول المضيفة)، إضافة إلى البرازيل والأرجنتين وفرنسا وإسبانيا وإنجلترا والمغرب والسعودية واليابان وكوريا الجنوبية وجميع الأمم الأخرى.",
+    faqQ3: "هل يمكنني مشاركة بطاقة توقعي على واتساب؟",
+    faqA3: "بالطبع. يتم تنزيل بطاقة توقعك كصورة PNG بحجم 1080×1080 يمكنك مشاركتها فوراً على واتساب وإنستغرام وتويتر أو أي منصة. يتيح لك زر المشاركة الإرسال مباشرة من هاتفك.",
+    faqQ4: "هل تعمل بطاقة التوقع باللغة العربية؟",
+    faqA4: "نعم. اختر العربية من قائمة اللغات وستُعرض بطاقة توقعك باللغة العربية مع النص من اليمين إلى اليسار. ندعم: الإنجليزية والعربية والبرتغالية والإسبانية والفرنسية والتركية والألمانية.",
+    faqQ5: "ما هو حجم صورة بطاقة التوقع؟",
+    faqA5: "تُنزَّل بطاقات التوقع كصور PNG بحجم 1080×1080 بيكسل — مثالية لمنشورات إنستغرام المربعة والمشاركة على واتساب. الدقة العالية تضمن وضوح بطاقتك على أي شاشة.",
+    footerTagline: "مولّد بطاقات توقعات كأس العالم 2026 المجاني",
+    footerCopyright: "© 2026 perdictioncard.com · صُنع لمحبي كرة القدم حول العالم · غير تابع لفيفا",
   },
   fr: {
     subtitle: "Prédis le score · Télécharge ta carte · Défie tes amis",
@@ -117,6 +171,30 @@ const UI_TEXT: Record<Language, {
     about: "Le meilleur générateur gratuit de cartes de prédiction",
     faq: "Questions fréquentes",
     team1: "Équipe 1", team2: "Équipe 2", namePlaceholder: "ex. Ahmed, Sarah, Carlos...",
+    freeInstant: "Gratuit · Instantané · Partageable sur WhatsApp et Instagram",
+    howStep1Title: "Choisis ton match",
+    howStep1Text: "Sélectionne n'importe quel match de la Coupe du Monde 2026 parmi 48 équipes — USA vs Mexique, Brésil vs Argentine, France vs Maroc et tous les autres.",
+    howStep2Title: "Entre ton score prédit",
+    howStep2Text: "Quel est ton score final prédit ? Appuie sur + et − pour fixer les buts de chaque équipe. Ta prédiction apparaît en direct sur la carte.",
+    howStep3Title: "Choisis ton design de carte",
+    howStep3Text: "Choisis parmi 5 thèmes : Match de nuit, Couleurs nationales, Or FIFA, Classique rétro ou Lumières néon. Chaque design est superbe sur n'importe quel écran.",
+    howStep4Title: "Télécharge et partage",
+    howStep4Text: "Télécharge ta carte de prédiction en PNG haute qualité 1080×1080. Partage-la sur WhatsApp, Instagram Stories ou Twitter et défie tes amis.",
+    aboutP1: "PerdictionCard.com est le moyen le plus rapide de créer et partager vos prédictions de score pour la Coupe du Monde FIFA 2026. Contrairement aux prédictions textuelles basiques, nos cartes sont de belles images qui se démarquent dans les groupes WhatsApp et les fils Instagram.",
+    aboutP2: "Avec les 48 équipes disponibles, vous pouvez générer une nouvelle carte de prédiction pour chaque match du tournoi. Chaque carte est personnalisée avec votre nom, le score prédit, les couleurs de l'équipe et les drapeaux nationaux.",
+    aboutP3: "Notre générateur fonctionne en 7 langues dont l'arabe (RTL), le portugais, l'espagnol et le français — parfait pour les fans de football du monde entier. Sans inscription, sans téléchargement, et entièrement gratuit.",
+    faqQ1: "Le générateur de cartes de prédiction Coupe du Monde 2026 est-il gratuit ?",
+    faqA1: "Oui. Créer ta carte de prédiction est 100 % gratuit. Aucun compte, aucun e-mail, aucune carte bancaire requis. Génère autant de cartes que tu veux pour chaque match.",
+    faqQ2: "Quelles équipes sont disponibles dans le générateur ?",
+    faqA2: "Les 48 équipes qualifiées sont disponibles, dont les USA, le Mexique, le Canada (nations hôtes), ainsi que le Brésil, l'Argentine, la France, l'Espagne, l'Angleterre, le Maroc, l'Arabie saoudite, le Japon, la Corée du Sud et toutes les autres nations.",
+    faqQ3: "Puis-je partager ma carte de prédiction sur WhatsApp ?",
+    faqA3: "Absolument. Ta carte se télécharge sous forme d'image PNG 1080×1080 que tu peux partager instantanément sur WhatsApp, Instagram, Twitter ou toute autre plateforme. Le bouton Partager te permet d'envoyer directement depuis ton téléphone.",
+    faqQ4: "La carte de prédiction fonctionne-t-elle en arabe ?",
+    faqA4: "Oui. Sélectionne l'arabe dans le menu des langues et ta carte s'affichera en arabe avec un texte de droite à gauche. Nous prenons en charge l'anglais, l'arabe, le portugais, l'espagnol, le français, le turc et l'allemand.",
+    faqQ5: "Quelle est la taille de l'image de la carte de prédiction ?",
+    faqA5: "Les cartes se téléchargent en PNG de 1080×1080 pixels — le format carré idéal pour les posts Instagram et le partage WhatsApp. La haute résolution garantit que ta carte est nette sur n'importe quel écran.",
+    footerTagline: "Générateur gratuit de cartes de prédiction Coupe du Monde 2026",
+    footerCopyright: "© 2026 perdictioncard.com · Créé pour les fans de football du monde entier · Non affilié à la FIFA",
   },
   pt: {
     subtitle: "Preveja o placar · Baixe seu card · Desafie amigos",
@@ -130,6 +208,30 @@ const UI_TEXT: Record<Language, {
     about: "O melhor gerador gratuito de cards de previsão",
     faq: "Perguntas frequentes",
     team1: "Time 1", team2: "Time 2", namePlaceholder: "ex. Ahmed, Sarah, Carlos...",
+    freeInstant: "Grátis · Instantâneo · Compartilhável no WhatsApp e Instagram",
+    howStep1Title: "Escolha sua partida",
+    howStep1Text: "Selecione qualquer jogo da Copa do Mundo 2026 entre 48 seleções — EUA vs México, Brasil vs Argentina, França vs Marrocos e todos os outros jogos.",
+    howStep2Title: "Digite seu placar previsto",
+    howStep2Text: "Qual é o seu placar final previsto? Toque em + e − para definir os gols de cada time. Sua previsão aparece ao vivo no card.",
+    howStep3Title: "Escolha o design do card",
+    howStep3Text: "Escolha entre 5 temas: Noite de Jogo, Cores Nacionais, Ouro FIFA, Clássico Retrô ou Luzes Neon. Cada design fica incrível em qualquer tela.",
+    howStep4Title: "Baixe e compartilhe",
+    howStep4Text: "Baixe seu card de previsão como PNG de alta qualidade 1080×1080. Compartilhe no WhatsApp, Instagram Stories ou Twitter e desafie seus amigos.",
+    aboutP1: "PerdictionCard.com é a maneira mais rápida de criar e compartilhar suas previsões de placar para a Copa do Mundo FIFA 2026. Ao contrário de previsões de texto simples, nossos cards são imagens lindamente criadas que se destacam nos grupos do WhatsApp e feeds do Instagram.",
+    aboutP2: "Com todas as 48 seleções da Copa do Mundo 2026 disponíveis, você pode criar um novo card de previsão para cada jogo do torneio. Cada card é personalizado com seu nome, placar previsto, cores do time e bandeiras nacionais.",
+    aboutP3: "Nosso criador de cards funciona em 7 idiomas, incluindo árabe (RTL), português, espanhol e francês — perfeito para fãs de futebol em todo o mundo. Sem cadastro, sem download de app, e completamente gratuito.",
+    faqQ1: "O gerador de cards de previsão da Copa do Mundo 2026 é gratuito?",
+    faqA1: "Sim. Criar seu card de previsão da Copa do Mundo 2026 é 100% gratuito. Sem conta, sem e-mail, sem cartão de crédito. Gere quantos cards quiser para cada partida.",
+    faqQ2: "Quais times estão disponíveis no gerador?",
+    faqA2: "Todos os 48 times qualificados para a Copa do Mundo FIFA 2026 estão disponíveis, incluindo EUA, México, Canadá (países sede), além de Brasil, Argentina, França, Espanha, Inglaterra, Marrocos, Arábia Saudita, Japão, Coreia do Sul e todas as outras nações.",
+    faqQ3: "Posso compartilhar meu card de previsão no WhatsApp?",
+    faqA3: "Com certeza. Seu card é baixado como uma imagem PNG 1080×1080 que você pode compartilhar instantaneamente no WhatsApp, Instagram, Twitter ou qualquer plataforma social. O botão Compartilhar permite enviar diretamente do seu celular.",
+    faqQ4: "O card de previsão funciona em árabe?",
+    faqA4: "Sim. Selecione árabe no menu de idiomas e seu card será exibido em árabe com texto da direita para a esquerda. Suportamos inglês, árabe, português, espanhol, francês, turco e alemão.",
+    faqQ5: "Qual é o tamanho da imagem do card de previsão?",
+    faqA5: "Os cards são baixados como imagens PNG de 1080×1080 pixels — formato quadrado perfeito para posts do Instagram e compartilhamento no WhatsApp. A alta resolução garante que seu card fique nítido em qualquer tela.",
+    footerTagline: "Gerador gratuito de cards de previsão da Copa do Mundo 2026",
+    footerCopyright: "© 2026 perdictioncard.com · Feito para fãs de futebol do mundo inteiro · Não afiliado à FIFA",
   },
   es: {
     subtitle: "Predice el marcador · Descarga tu tarjeta · Reta a amigos",
@@ -143,6 +245,30 @@ const UI_TEXT: Record<Language, {
     about: "El mejor generador gratuito de tarjetas de predicción",
     faq: "Preguntas frecuentes",
     team1: "Equipo 1", team2: "Equipo 2", namePlaceholder: "ej. Ahmed, Sarah, Carlos...",
+    freeInstant: "Gratis · Instantáneo · Compartible en WhatsApp e Instagram",
+    howStep1Title: "Elige tu partido",
+    howStep1Text: "Selecciona cualquier partido del Mundial 2026 entre 48 equipos — EE.UU. vs México, Brasil vs Argentina, Francia vs Marruecos y todos los demás.",
+    howStep2Title: "Introduce tu marcador predicho",
+    howStep2Text: "¿Cuál es tu marcador final previsto? Pulsa + y − para establecer los goles de cada equipo. Tu predicción aparece en directo en la tarjeta.",
+    howStep3Title: "Elige el diseño de tu tarjeta",
+    howStep3Text: "Elige entre 5 temas: Partido Nocturno, Colores Nacionales, Oro FIFA, Clásico Retro o Luces Neón. Cada diseño luce espectacular en cualquier pantalla.",
+    howStep4Title: "Descarga y comparte",
+    howStep4Text: "Descarga tu tarjeta de predicción como PNG de alta calidad 1080×1080. Compártela en WhatsApp, Instagram Stories o Twitter y reta a tus amigos.",
+    aboutP1: "PerdictionCard.com es la forma más rápida de crear y compartir tus predicciones de marcador para la Copa del Mundo FIFA 2026. A diferencia de las predicciones de texto básicas, nuestras tarjetas son imágenes bellamente diseñadas que destacan en grupos de WhatsApp y feeds de Instagram.",
+    aboutP2: "Con los 48 equipos disponibles, puedes generar una nueva tarjeta de predicción para cada partido del torneo. Cada tarjeta está personalizada con tu nombre, marcador predicho, colores del equipo y banderas nacionales.",
+    aboutP3: "Nuestro creador funciona en 7 idiomas incluyendo árabe (RTL), portugués, español y francés — perfecto para aficionados al fútbol de todo el mundo. Sin registro, sin descarga de app, y completamente gratis.",
+    faqQ1: "¿El generador de tarjetas de predicción del Mundial 2026 es gratuito?",
+    faqA1: "Sí. Crear tu tarjeta de predicción del Mundial 2026 es 100% gratuito. Sin cuenta, sin correo, sin tarjeta de crédito. Genera tantas tarjetas como quieras para cada partido.",
+    faqQ2: "¿Qué equipos están disponibles en el generador?",
+    faqA2: "Los 48 equipos clasificados para la Copa del Mundo FIFA 2026 están disponibles, incluidos EE.UU., México, Canadá (naciones sede), más Brasil, Argentina, Francia, España, Inglaterra, Marruecos, Arabia Saudita, Japón, Corea del Sur y todos los demás.",
+    faqQ3: "¿Puedo compartir mi tarjeta de predicción en WhatsApp?",
+    faqA3: "Por supuesto. Tu tarjeta se descarga como imagen PNG 1080×1080 que puedes compartir al instante en WhatsApp, Instagram, Twitter o cualquier plataforma. El botón Compartir te permite enviar directamente desde tu teléfono.",
+    faqQ4: "¿La tarjeta de predicción funciona en árabe?",
+    faqA4: "Sí. Selecciona árabe en el menú de idiomas y tu tarjeta se mostrará en árabe con texto de derecha a izquierda. Admitimos inglés, árabe, portugués, español, francés, turco y alemán.",
+    faqQ5: "¿Cuál es el tamaño de la imagen de la tarjeta de predicción?",
+    faqA5: "Las tarjetas se descargan como imágenes PNG de 1080×1080 píxeles — el formato cuadrado perfecto para publicaciones de Instagram y compartir en WhatsApp. La alta resolución garantiza que tu tarjeta se vea nítida en cualquier pantalla.",
+    footerTagline: "Generador gratuito de tarjetas de predicción del Mundial 2026",
+    footerCopyright: "© 2026 perdictioncard.com · Hecho para aficionados al fútbol de todo el mundo · No afiliado a la FIFA",
   },
   de: {
     subtitle: "Tippe das Ergebnis · Lade deine Karte herunter · Fordere Freunde heraus",
@@ -156,6 +282,30 @@ const UI_TEXT: Record<Language, {
     about: "Der beste kostenlose WM-Tipp-Karten-Generator",
     faq: "Häufig gestellte Fragen",
     team1: "Team 1", team2: "Team 2", namePlaceholder: "z.B. Ahmed, Sarah, Carlos...",
+    freeInstant: "Kostenlos · Sofort · Teilbar auf WhatsApp & Instagram",
+    howStep1Title: "Wähle dein Spiel",
+    howStep1Text: "Wähle ein beliebiges WM 2026 Spiel aus 48 Teams — USA vs Mexiko, Brasilien vs Argentinien, Frankreich vs Marokko und alle anderen Begegnungen.",
+    howStep2Title: "Gib deinen Tipp ein",
+    howStep2Text: "Was ist dein vorhergesagtes Endergebnis? Tippe + und −, um die Tore jedes Teams festzulegen. Dein Tipp erscheint live auf der Karte.",
+    howStep3Title: "Wähle dein Karten-Design",
+    howStep3Text: "Wähle aus 5 Themen: Nachtspiel, Nationalfarben, FIFA Gold, Retro Klassik oder Neonlichter. Jedes Design sieht auf jedem Bildschirm fantastisch aus.",
+    howStep4Title: "Herunterladen und teilen",
+    howStep4Text: "Lade deine Tipp-Karte als hochauflösendes 1080×1080 PNG herunter. Teile sie auf WhatsApp, Instagram Stories oder Twitter und fordere deine Freunde heraus.",
+    aboutP1: "PerdictionCard.com ist der schnellste Weg, deine FIFA WM 2026 Ergebnis-Tipps zu erstellen und zu teilen. Im Gegensatz zu einfachen Texttipps sind unsere Tipp-Karten wunderschön gestaltete Bilder, die in WhatsApp-Gruppen und Instagram-Feeds herausstechen.",
+    aboutP2: "Mit allen 48 WM 2026 Teams kannst du für jedes Spiel des Turniers eine neue Tipp-Karte erstellen. Jede Karte wird mit deinem Namen, dem vorhergesagten Ergebnis, Teamfarben und Nationalflaggen personalisiert.",
+    aboutP3: "Unser WM-Karten-Generator unterstützt 7 Sprachen darunter Arabisch (RTL), Portugiesisch, Spanisch und Französisch — perfekt für Fußballfans weltweit. Ohne Anmeldung, ohne App-Download und völlig kostenlos.",
+    faqQ1: "Ist der WM 2026 Tipp-Karten-Generator kostenlos?",
+    faqA1: "Ja. Das Erstellen deiner WM 2026 Tipp-Karte ist 100 % kostenlos. Kein Konto, keine E-Mail, keine Kreditkarte erforderlich. Erstelle so viele Karten wie du willst für jedes Spiel.",
+    faqQ2: "Welche Teams sind im Generator verfügbar?",
+    faqA2: "Alle 48 qualifizierten Teams sind verfügbar, darunter USA, Mexiko, Kanada (Gastgeberländer) sowie Brasilien, Argentinien, Frankreich, Spanien, England, Marokko, Saudi-Arabien, Japan, Südkorea und alle anderen qualifizierten Nationen.",
+    faqQ3: "Kann ich meine Tipp-Karte auf WhatsApp teilen?",
+    faqA3: "Absolut. Deine Karte wird als 1080×1080 PNG-Bild heruntergeladen, das du sofort auf WhatsApp, Instagram, Twitter oder jeder anderen Plattform teilen kannst. Mit dem Teilen-Button kannst du direkt von deinem Handy senden.",
+    faqQ4: "Funktioniert die Tipp-Karte auf Arabisch?",
+    faqA4: "Ja. Wähle Arabisch im Sprachmenü und deine Karte wird auf Arabisch mit Rechts-nach-Links-Text angezeigt. Wir unterstützen Englisch, Arabisch, Portugiesisch, Spanisch, Französisch, Türkisch und Deutsch.",
+    faqQ5: "Wie groß ist das Bild der Tipp-Karte?",
+    faqA5: "Tipp-Karten werden als 1080×1080 Pixel PNG-Bilder heruntergeladen — das perfekte quadratische Format für Instagram-Posts und WhatsApp-Sharing. Die hohe Auflösung sorgt dafür, dass deine Karte auf jedem Bildschirm scharf aussieht.",
+    footerTagline: "Kostenloser FIFA WM 2026 Tipp-Karten-Generator",
+    footerCopyright: "© 2026 perdictioncard.com · Für Fußballfans weltweit · Nicht mit der FIFA verbunden",
   },
   tr: {
     subtitle: "Skoru tahmin et · Kartını indir · Arkadaşlarına meydan oku",
@@ -169,6 +319,30 @@ const UI_TEXT: Record<Language, {
     about: "En iyi ücretsiz Dünya Kupası tahmin kartı oluşturucu",
     faq: "Sıkça Sorulan Sorular",
     team1: "Takım 1", team2: "Takım 2", namePlaceholder: "örn. Ahmed, Sarah, Carlos...",
+    freeInstant: "Ücretsiz · Anında · WhatsApp ve Instagram'da paylaşılabilir",
+    howStep1Title: "Maçını seç",
+    howStep1Text: "2026 Dünya Kupası'ndan 48 takım arasında herhangi bir maçı seç — ABD vs Meksika, Brezilya vs Arjantin, Fransa vs Fas ve diğer tüm maçlar.",
+    howStep2Title: "Tahmin ettiğin skoru gir",
+    howStep2Text: "Tahmin ettiğin final skoru nedir? Her takım için gol sayısını belirlemek için + ve − düğmelerine dokun. Tahminın kart üzerinde canlı görünür.",
+    howStep3Title: "Kart tasarımını seç",
+    howStep3Text: "5 tema arasından seç: Gece Maçı, Ulusal Renkler, FIFA Altın, Retro Klasik veya Neon Işıklar. Her tasarım her ekranda muhteşem görünür.",
+    howStep4Title: "İndir ve paylaş",
+    howStep4Text: "Tahmin kartını yüksek kaliteli 1080×1080 PNG olarak indir. WhatsApp, Instagram Hikayeleri veya Twitter'da paylaş ve arkadaşlarına meydan oku.",
+    aboutP1: "PerdictionCard.com, FIFA 2026 Dünya Kupası skor tahminlerinizi oluşturmanın ve paylaşmanın en hızlı yoludur. Temel metin tahminlerinin aksine, futbol tahmin kartlarımız WhatsApp gruplarında ve Instagram akışlarında öne çıkan güzelce tasarlanmış görsellerdir.",
+    aboutP2: "2026 Dünya Kupası'nın 48 takımının tamamı mevcut olduğundan, turnuvanın her maçı için yeni bir tahmin kartı oluşturabilirsiniz. Her kart adınız, tahmin ettiğiniz skor, takım renkleri ve ulusal bayraklarla kişiselleştirilir.",
+    aboutP3: "Dünya Kupası kart yapıcımız, Arapça (RTL), Portekizce, İspanyolca ve Fransızca dahil 7 dilde çalışır — dünya genelindeki futbol severler için mükemmel. Kayıt yok, uygulama indirme yok ve tamamen ücretsiz.",
+    faqQ1: "2026 Dünya Kupası tahmin kartı oluşturucu ücretsiz mi?",
+    faqA1: "Evet. 2026 Dünya Kupası tahmin kartınızı oluşturmak %100 ücretsizdir. Hesap, e-posta veya kredi kartı gerekmez. Her maç için istediğiniz kadar kart oluşturun.",
+    faqQ2: "Oluşturucuda hangi takımlar mevcut?",
+    faqA2: "Tüm 48 FIFA Dünya Kupası 2026 takımı mevcuttur; ABD, Meksika, Kanada (ev sahibi ülkeler) ve ayrıca Brezilya, Arjantin, Fransa, İspanya, İngiltere, Fas, Suudi Arabistan, Japonya, Güney Kore ve diğer tüm katılan uluslar dahildir.",
+    faqQ3: "Tahmin kartımı WhatsApp'ta paylaşabilir miyim?",
+    faqA3: "Kesinlikle. Tahmin kartınız 1080×1080 PNG görüntüsü olarak indirilir ve WhatsApp, Instagram, Twitter veya herhangi bir sosyal platformda anında paylaşabilirsiniz. Paylaş düğmesi, doğrudan telefonunuzdan göndermenizi sağlar.",
+    faqQ4: "Tahmin kartı Arapça çalışıyor mu?",
+    faqA4: "Evet. Dil menüsünden Arapçayı seçin; tahmin kartınız doğru sağdan sola metinle Arapça olarak görüntülenir. İngilizce, Arapça, Portekizce, İspanyolca, Fransızca, Türkçe ve Almancayı destekliyoruz.",
+    faqQ5: "Tahmin kartı görüntüsünün boyutu nedir?",
+    faqA5: "Tahmin kartları 1080×1080 piksel PNG görüntüsü olarak indirilir — Instagram kare gönderileri ve WhatsApp paylaşımı için mükemmel format. Yüksek çözünürlük, kartınızın her ekranda net görünmesini sağlar.",
+    footerTagline: "Ücretsiz FIFA 2026 Dünya Kupası Tahmin Kartı Oluşturucu",
+    footerCopyright: "© 2026 perdictioncard.com · Dünya genelindeki futbol severler için yapıldı · FIFA ile bağlantısı yoktur",
   },
 };
 
@@ -486,7 +660,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
       </div>
 
       {activeTab === "schedule" ? (
-        <SchedulePage onPredict={(m: ScheduleMatch) => {
+        <SchedulePage language={language} onPredict={(m: ScheduleMatch) => {
           set("team1", m.team1);
           set("team2", m.team2);
           setLoadedMatch({ team1: m.team1, team2: m.team2, team1Flag: m.team1Flag, team2Flag: m.team2Flag });
@@ -862,7 +1036,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         </button>
 
         <div style={{ textAlign: "center", fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>
-          Free · Instant · Shareable on WhatsApp & Instagram
+          {ui.freeInstant}
         </div>
 
         {/* ── HOW IT WORKS ── */}
@@ -876,26 +1050,10 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           }}>{ui.howItWorks}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
-              {
-                n: "1",
-                title: "Choose Your Match",
-                text: "Select any FIFA World Cup 2026 match from all 32 qualified teams — USA vs Mexico, Brazil vs Argentina, France vs Morocco, and every other fixture.",
-              },
-              {
-                n: "2",
-                title: "Enter Your Score Prediction",
-                text: "What's your predicted final score? Tap + and − to set the goals for each team. Your World Cup score prediction appears live on the card.",
-              },
-              {
-                n: "3",
-                title: "Pick Your Card Design",
-                text: "Choose from 5 prediction card themes: Night Match, National Colors, FIFA Gold, Retro Classic, or Neon Lights. Each design looks stunning on any screen.",
-              },
-              {
-                n: "4",
-                title: "Download and Share",
-                text: "Download your prediction card as a high-quality 1080×1080 PNG. Share it on WhatsApp, Instagram Stories, or Twitter and challenge your friends to make their own predictions.",
-              },
+              { n: "1", title: ui.howStep1Title, text: ui.howStep1Text },
+              { n: "2", title: ui.howStep2Title, text: ui.howStep2Text },
+              { n: "3", title: ui.howStep3Title, text: ui.howStep3Text },
+              { n: "4", title: ui.howStep4Title, text: ui.howStep4Text },
             ].map((step) => (
               <div key={step.n} style={{
                 background: "#fff",
@@ -923,15 +1081,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             color: "rgba(255,255,255,0.90)", marginBottom: "16px", letterSpacing: "1px",
           }}>{ui.about}</h2>
           <div style={{ background: "#fff", borderRadius: "16px", padding: "24px", border: "1px solid #e5e7eb" }}>
-            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>
-              PredictionCard.com is the fastest way to create and share your FIFA World Cup 2026 score predictions. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.
-            </p>
-            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>
-              With all 32 World Cup 2026 teams available, you can generate a new prediction card for every single game of the tournament. Each card is personalized with your name, predicted score, team colors, and national flags.
-            </p>
-            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, margin: 0 }}>
-              Our World Cup card maker works in 7 languages including Arabic (RTL), Portuguese, Spanish, and French — perfect for football fans worldwide. No signup, no app download, and completely free.
-            </p>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>{ui.aboutP1}</p>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, marginBottom: "14px" }}>{ui.aboutP2}</p>
+            <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, margin: 0 }}>{ui.aboutP3}</p>
           </div>
         </section>
 
@@ -946,26 +1098,11 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           }}>{ui.faq}</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {[
-              {
-                q: "Is the World Cup 2026 prediction card generator free?",
-                a: "Yes. Creating your World Cup 2026 prediction card is 100% free. No account, no email, no credit card needed. Generate as many cards as you want for every match.",
-              },
-              {
-                q: "Which teams are available in the prediction card generator?",
-                a: "All 32 qualified FIFA World Cup 2026 teams are available, including USA, Mexico, Canada (host nations), plus Brazil, Argentina, France, Spain, England, Morocco, Saudi Arabia, Japan, South Korea, and all other qualified nations.",
-              },
-              {
-                q: "Can I share my prediction card on WhatsApp?",
-                a: "Absolutely. Your prediction card downloads as a 1080×1080 PNG image which you can share instantly on WhatsApp, Instagram, Twitter, or any social platform. The Share button lets you send directly from your phone.",
-              },
-              {
-                q: "Does the prediction card work in Arabic?",
-                a: "Yes. Select Arabic from the language menu and your prediction card will display in Arabic with proper right-to-left text. We support English, Arabic, Portuguese, Spanish, French, Turkish, and German.",
-              },
-              {
-                q: "What size is the prediction card image?",
-                a: "Prediction cards download as 1080×1080 pixel PNG images — perfect for Instagram square posts and WhatsApp sharing. The high resolution ensures your card looks crisp on any screen.",
-              },
+              { q: ui.faqQ1, a: ui.faqA1 },
+              { q: ui.faqQ2, a: ui.faqA2 },
+              { q: ui.faqQ3, a: ui.faqA3 },
+              { q: ui.faqQ4, a: ui.faqA4 },
+              { q: ui.faqQ5, a: ui.faqA5 },
             ].map((faq) => (
               <div
                 key={faq.q}
@@ -991,10 +1128,10 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         >
           <div style={{ textAlign: "center", marginBottom: "16px" }}>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700, color: "#15803d", marginBottom: "6px" }}>
-              ⚽ PredictionCard
+              ⚽ PerdictionCard
             </div>
             <p style={{ fontSize: "12px", color: "#9ca3af", margin: "0 0 12px" }}>
-              Free FIFA World Cup 2026 Prediction Card Generator
+              {ui.footerTagline}
             </p>
           </div>
           <nav aria-label="Language links" style={{ textAlign: "center", marginBottom: "16px", fontSize: "13px" }}>
@@ -1005,7 +1142,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             <a href="/fr/" style={{ color: "#6b7280", textDecoration: "none", margin: "0 6px" }}>Français</a>
           </nav>
           <p style={{ textAlign: "center", fontSize: "11px", color: "#d1d5db", margin: 0 }}>
-            © 2026 predictioncard.com · Made for football fans worldwide · Not affiliated with FIFA
+            {ui.footerCopyright}
           </p>
         </footer>
       </main>
