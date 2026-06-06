@@ -775,7 +775,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           )}
 
           {/* Team selectors */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "10px", alignItems: "start" }}>
+          <div className="team-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "10px", alignItems: "start" }}>
             <div>
               {t1 && (
                 <div style={{ textAlign: "center", marginBottom: "6px" }}>
@@ -796,7 +796,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               {errors.team1 && <div style={errorMsg}>{errors.team1}</div>}
             </div>
 
-            <div style={{
+            <div className="vs-btn" style={{
               fontFamily: "'Oswald', sans-serif", fontWeight: 900,
               fontSize: "13px", color: "#fff",
               background: "linear-gradient(135deg, #15803d, #16a34a)",
@@ -916,7 +916,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
               <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "1px" }}>{ui.step4sub}</div>
             </div>
           </div>
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div className="theme-picker" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             {THEMES.map((t) => {
               const selected = theme === t.id;
               return (
@@ -1177,6 +1177,44 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         select:focus { border-color: #16a34a !important; box-shadow: 0 0 0 3px rgba(22,163,74,0.15) !important; outline: none; }
         input:focus { border-color: #16a34a !important; box-shadow: 0 0 0 3px rgba(22,163,74,0.15) !important; outline: none; }
         button:active { transform: scale(0.98) !important; }
+
+        /* ── MOBILE RESPONSIVE ── */
+        @media (max-width: 500px) {
+          /* Team selectors: stack vertically */
+          .team-grid {
+            grid-template-columns: 1fr !important;
+            gap: 8px !important;
+          }
+          .vs-btn {
+            margin-top: 0 !important;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 20px !important;
+          }
+          /* Selects: full-width, bigger touch target */
+          select {
+            font-size: 16px !important;
+            padding: 14px 12px !important;
+          }
+          /* Theme cards: 3 per row on mobile */
+          .theme-picker {
+            gap: 8px !important;
+          }
+          .theme-picker > button {
+            flex: 0 0 calc(33.33% - 6px) !important;
+            min-width: 0 !important;
+          }
+          .theme-picker > button div:last-child {
+            padding: 8px 4px 10px !important;
+          }
+          .theme-picker > button div:last-child > div:first-child {
+            font-size: 10px !important;
+          }
+          .theme-picker > button div:last-child > div:last-child {
+            display: none;
+          }
+        }
       `}</style>
         </>
       )}

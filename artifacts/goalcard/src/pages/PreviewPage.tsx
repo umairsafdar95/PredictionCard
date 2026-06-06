@@ -36,14 +36,44 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
     });
   };
 
+  const isIOS = () =>
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as unknown as Record<string, unknown>).MSStream;
+
   const handleDownload = async () => {
     setIsLoading(true);
     try {
       const dataUrl = await generateImage();
-      const link = document.createElement("a");
-      link.download = `predictioncard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
-      link.href = dataUrl;
-      link.click();
+      const filename = `perdictioncard-${team1.replace(/\s/g, "-")}-vs-${team2.replace(/\s/g, "-")}.png`;
+
+      if (isIOS()) {
+        // iOS Safari does not support the download attribute on data: URLs.
+        // Open the image in a new tab — user long-presses to save to Camera Roll.
+        const newWin = window.open("", "_blank");
+        if (newWin) {
+          newWin.document.write(`<!DOCTYPE html><html><head>
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <title>Save Your Card</title>
+            <style>
+              body{margin:0;background:#0a0a1a;display:flex;flex-direction:column;
+                   align-items:center;justify-content:center;min-height:100vh;
+                   font-family:sans-serif;padding:16px;box-sizing:border-box;}
+              img{max-width:100%;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.6);}
+              p{color:#fff;margin-top:20px;font-size:15px;text-align:center;line-height:1.5;
+                background:rgba(255,255,255,0.08);padding:12px 20px;border-radius:10px;}
+            </style></head><body>
+            <img src="${dataUrl}" alt="Prediction Card">
+            <p>📸 Long-press the image and tap<br><strong>"Save to Photos"</strong></p>
+            </body></html>`);
+          newWin.document.close();
+        }
+      } else {
+        const link = document.createElement("a");
+        link.download = filename;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
       onIncrementCounter();
     } catch (err) {
       console.error("Download failed:", err);
