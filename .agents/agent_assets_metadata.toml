@@ -1,0 +1,26 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "L4OzhE0I50BHUkzjMgaFJ"
+uri = "file://screenshots/perdictioncard-01-desktop-hero.png"
+type = "image"
+title = "01 — Desktop Hero (1920×1080)"
+
+[[outputs]]
+id = "NDRdQnZ4zLIn_tQh8qCTd"
+uri = "file://screenshots/perdictioncard-02-desktop-form.png"
+type = "image"
+title = "02 — Desktop Form (1280×900)"
+
+[[outputs]]
+id = "OUPL2k9FGKSzyPYY0U0aX"
+uri = "file://screenshots/perdictioncard-03-mobile.png"
+type = "image"
+title = "03 — Mobile Portrait (1080px wide)"
+
+[[outputs]]
+id = "8tG0GWj6BIDTcFuW_JGPA"
+uri = "file://screenshots/perdictioncard-04-tablet.png"
+type = "image"
+title = "04 — Tablet Portrait (1536px wide)"
