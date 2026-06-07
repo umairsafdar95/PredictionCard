@@ -179,9 +179,10 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         {/* Watermark */}
         <div style={{
           position: "absolute", bottom: "38px", right: "48px",
-          fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-          color: "rgba(255,255,255,0.12)", letterSpacing: "1px",
-        }}>⚽ predictioncard.com</div>
+          fontFamily: "'Poppins', sans-serif", fontSize: "18px", fontWeight: 600,
+          color: "rgba(255,255,255,0.38)", letterSpacing: "1.5px",
+          textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+        }}>⚽ perdictioncard.com</div>
       </div>
     );
   }
@@ -337,9 +338,10 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         {/* Watermark */}
         <div style={{
           position: "absolute", bottom: "14px", right: "48px",
-          fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-          color: "rgba(255,255,255,0.18)", zIndex: 5,
-        }}>⚽ predictioncard.com</div>
+          fontFamily: "'Poppins', sans-serif", fontSize: "16px", fontWeight: 600,
+          color: "rgba(255,255,255,0.38)", zIndex: 5, letterSpacing: "1px",
+          textShadow: "0 1px 4px rgba(0,0,0,0.35)",
+        }}>⚽ perdictioncard.com</div>
       </div>
     );
   }
@@ -507,9 +509,9 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         {/* Watermark */}
         <div style={{
           position: "absolute", bottom: "52px", right: "62px",
-          fontFamily: "'Poppins', sans-serif", fontSize: "16px",
-          color: "rgba(26,8,0,0.18)", zIndex: 5,
-        }}>⚽ predictioncard.com</div>
+          fontFamily: "'Poppins', sans-serif", fontSize: "16px", fontWeight: 600,
+          color: "rgba(26,8,0,0.35)", zIndex: 5, letterSpacing: "1px",
+        }}>⚽ perdictioncard.com</div>
       </div>
     );
   }
@@ -673,9 +675,10 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         {/* Watermark */}
         <div style={{
           position: "absolute", bottom: "42px", right: "52px",
-          fontFamily: "'Poppins', sans-serif", fontSize: "17px",
-          color: "rgba(0,232,255,0.15)", zIndex: 5,
-        }}>⚽ predictioncard.com</div>
+          fontFamily: "'Poppins', sans-serif", fontSize: "17px", fontWeight: 600,
+          color: "rgba(0,232,255,0.45)", zIndex: 5, letterSpacing: "1px",
+          textShadow: "0 0 10px rgba(0,232,255,0.3)",
+        }}>⚽ perdictioncard.com</div>
       </div>
     );
   }
@@ -845,9 +848,10 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
       {/* Watermark */}
       <div style={{
         position: "absolute", bottom: "22px", right: "48px",
-        fontFamily: "'Poppins', sans-serif", fontSize: "18px",
-        color: "rgba(212,175,55,0.22)", letterSpacing: "1px", zIndex: 1,
-      }}>⚽ predictioncard.com</div>
+        fontFamily: "'Poppins', sans-serif", fontSize: "18px", fontWeight: 600,
+        color: "rgba(212,175,55,0.55)", letterSpacing: "1px", zIndex: 1,
+        textShadow: "0 1px 4px rgba(0,0,0,0.3)",
+      }}>⚽ perdictioncard.com</div>
     </div>
   );
 }

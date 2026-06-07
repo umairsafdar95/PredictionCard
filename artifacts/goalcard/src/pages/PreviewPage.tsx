@@ -92,7 +92,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: "My World Cup Prediction ⚽",
-          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make yours at predictioncard.com`,
+          text: `I predict ${t1?.flag ?? ""} ${team1} ${score1}–${score2} ${team2} ${t2?.flag ?? ""}! Make yours at perdictioncard.com`,
           files: [file],
         });
         onShared();
@@ -364,27 +364,55 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
 
         {/* ── UPSELL ── */}
         <div style={{
-          background: "#fffbeb",
-          border: "2px dashed #fbbf24",
-          borderRadius: "16px",
-          padding: "20px",
+          background: "linear-gradient(135deg, #1a0a00 0%, #2d1500 100%)",
+          border: "2px solid #f59e0b",
+          borderRadius: "18px",
+          padding: "22px 20px",
           textAlign: "center",
           marginBottom: "28px",
+          boxShadow: "0 4px 24px rgba(245,158,11,0.18)",
+          position: "relative",
+          overflow: "hidden",
         }}>
-          <div style={{ fontSize: "24px", marginBottom: "6px" }}>✨</div>
-          <div style={{ fontSize: "14px", fontWeight: 700, color: "#92400e", marginBottom: "4px" }}>
-            Remove watermark + unlock 2 more themes
+          {/* Glow blob */}
+          <div style={{
+            position: "absolute", top: "-30px", right: "-30px",
+            width: "100px", height: "100px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(245,158,11,0.25) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }} />
+          <div style={{ fontSize: "28px", marginBottom: "8px" }}>⭐</div>
+          <div style={{ fontSize: "15px", fontWeight: 800, color: "#fbbf24", marginBottom: "4px", fontFamily: "'Oswald', sans-serif", letterSpacing: "0.5px" }}>
+            REMOVE WATERMARK
           </div>
-          <div style={{ fontSize: "12px", color: "#b45309", marginBottom: "14px" }}>One-time · $1.99</div>
-          <button style={{
-            background: "linear-gradient(135deg, #d97706, #f59e0b)",
-            border: "none", borderRadius: "8px",
-            color: "#fff", padding: "10px 28px",
-            fontSize: "14px", fontWeight: 700,
-            cursor: "pointer",
-            fontFamily: "'Poppins', sans-serif",
-            boxShadow: "0 4px 16px rgba(217,119,6,0.35)",
-          }}>Upgrade Now</button>
+          <div style={{ fontSize: "13px", color: "#fcd34d", marginBottom: "6px" }}>
+            + unlock 2 exclusive premium themes
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
+            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", textDecoration: "line-through" }}>$4.99</span>
+            <span style={{ fontSize: "22px", fontWeight: 900, color: "#fff", fontFamily: "'Oswald', sans-serif" }}>$1.99</span>
+            <span style={{ fontSize: "10px", background: "#16a34a", color: "#fff", borderRadius: "6px", padding: "2px 7px", fontWeight: 700 }}>ONE-TIME</span>
+          </div>
+          <button
+            onClick={() => window.open("https://perdictioncard.com/upgrade", "_blank")}
+            style={{
+              background: "linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)",
+              border: "none", borderRadius: "10px",
+              color: "#1a0800", padding: "12px 36px",
+              fontSize: "14px", fontWeight: 800,
+              cursor: "pointer",
+              fontFamily: "'Oswald', sans-serif",
+              letterSpacing: "1px",
+              boxShadow: "0 4px 20px rgba(245,158,11,0.5)",
+              width: "100%",
+            }}
+          >
+            ⚡ UPGRADE NOW — $1.99
+          </button>
+          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.35)", marginTop: "10px" }}>
+            Instant unlock · No account needed · Pay once
+          </div>
         </div>
 
         {/* ── OTHER MATCHES ── */}
@@ -422,8 +450,8 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
 
         {/* Footer */}
         <div style={{ marginTop: "48px", textAlign: "center", borderTop: "1px solid #e5e7eb", paddingTop: "24px" }}>
-          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "18px", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>⚽ PredictionCard</div>
-          <div style={{ fontSize: "12px", color: "#9ca3af" }}>predictioncard.com · Free Forever</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "18px", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>⚽ PerdictionCard</div>
+          <div style={{ fontSize: "12px", color: "#9ca3af" }}>perdictioncard.com · Free to use</div>
         </div>
       </div>
 
