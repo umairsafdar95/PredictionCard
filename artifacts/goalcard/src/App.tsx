@@ -3,6 +3,9 @@ import { FormState } from "@/types";
 import FormPage from "@/pages/FormPage";
 import PreviewPage from "@/pages/PreviewPage";
 import ShareSuccessPage from "@/pages/ShareSuccessPage";
+import PricingPage from "@/pages/PricingPage";
+import TermsPage from "@/pages/TermsPage";
+import PrivacyPage from "@/pages/PrivacyPage";
 import "@fontsource/oswald/400.css";
 import "@fontsource/oswald/700.css";
 import "@fontsource/poppins/400.css";
@@ -38,22 +41,20 @@ function incrementCardCount() {
   localStorage.setItem(TOTAL_KEY, String(current + 1));
 }
 
-export default function App() {
+/* ── Main app (has hooks — must not have early returns before hooks) ── */
+function MainApp() {
   const [view, setView] = useState<View>("form");
   const [formState, setFormState] = useState<FormState>(DEFAULT_FORM);
   const [challengerName, setChallengerName] = useState<string | null>(null);
   const [cardCount, setCardCount] = useState<number>(getCardCount());
 
-  // Parse query params on mount for challenge links and match prefill
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const challenge = params.get("challenge");
     const team1 = params.get("team1");
     const team2 = params.get("team2");
 
-    if (challenge) {
-      setChallengerName(challenge);
-    }
+    if (challenge) setChallengerName(challenge);
     if (team1 || team2) {
       setFormState((prev) => ({
         ...prev,
@@ -61,25 +62,23 @@ export default function App() {
         ...(team2 ? { team2 } : {}),
       }));
     }
-    // Clear query string without reload
     if (params.toString()) {
-      const url = window.location.pathname;
-      window.history.replaceState({}, "", url);
+      window.history.replaceState({}, "", window.location.pathname);
     }
   }, []);
 
   const getDefaultTitle = (lang = formState.language) => {
-    if (lang === "ar") return "مولد بطاقة توقع كأس العالم 2026 | PredictionCard.com";
-    if (lang === "pt") return "Gerador de Cartão de Previsão Copa 2026 | PredictionCard.com";
-    if (lang === "es") return "Generador de Tarjeta de Predicción Mundial 2026 | PredictionCard.com";
-    if (lang === "fr") return "Générateur Carte Prédiction Coupe du Monde 2026 | PredictionCard.com";
-    return "World Cup 2026 Prediction Card Generator — Free | PredictionCard.com";
+    if (lang === "ar") return "مولد بطاقة توقع كأس العالم 2026 | PerdictionCard.com";
+    if (lang === "pt") return "Gerador de Cartão de Previsão Copa 2026 | PerdictionCard.com";
+    if (lang === "es") return "Generador de Tarjeta de Predicción Mundial 2026 | PerdictionCard.com";
+    if (lang === "fr") return "Générateur Carte Prédiction Coupe du Monde 2026 | PerdictionCard.com";
+    return "World Cup 2026 Prediction Card Generator — Free | PerdictionCard.com";
   };
 
   const handleGenerate = () => {
     setView("preview");
     const { team1, score1, score2, team2 } = formState;
-    document.title = `${team1} vs ${team2} Prediction Card | PredictionCard.com`;
+    document.title = `${team1} vs ${team2} Prediction Card | PerdictionCard.com`;
     window.scrollTo({ top: 0 });
   };
 
@@ -107,7 +106,7 @@ export default function App() {
 
   const handleMakeAnother = () => {
     setView("form");
-    document.title = "PredictionCard — Free World Cup 2026 Prediction Card Generator";
+    document.title = "PerdictionCard — Free World Cup 2026 Prediction Card Generator";
     window.scrollTo({ top: 0 });
   };
 
@@ -136,4 +135,13 @@ export default function App() {
       cardCount={cardCount}
     />
   );
+}
+
+/* ── Router — no hooks, safe to early-return ── */
+export default function App() {
+  const path = window.location.pathname.replace(/\/$/, "");
+  if (path === "/pricing") return <PricingPage />;
+  if (path === "/terms-and-conditions") return <TermsPage />;
+  if (path === "/privacy") return <PrivacyPage />;
+  return <MainApp />;
 }
