@@ -6,7 +6,7 @@ export default function PricingPage() {
       <header style={{ background: "linear-gradient(135deg, #0a1628 0%, #0f2040 50%, #0a1628 100%)", borderBottom: "3px solid #16a34a", padding: "20px 24px", textAlign: "center" }}>
         <a href="/" style={{ textDecoration: "none" }}>
           <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "28px", fontWeight: 900, color: "#fff" }}>
-            ⚽ <span style={{ color: "#22c55e" }}>Perd</span>ictionCard
+            ⚽ <span style={{ color: "#22c55e" }}>Pred</span>ictionCard
           </div>
         </a>
         <div style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px", letterSpacing: "2px" }}>PRICING</div>
@@ -88,7 +88,7 @@ export default function PricingPage() {
         </div>
 
         <div style={{ marginTop: "48px", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "24px" }}>
-          <a href="/" style={{ color: "#22c55e", textDecoration: "none", fontSize: "13px" }}>← Back to PerdictionCard</a>
+          <a href="/" style={{ color: "#22c55e", textDecoration: "none", fontSize: "13px" }}>← Back to PredictionCard</a>
         </div>
       </main>
 

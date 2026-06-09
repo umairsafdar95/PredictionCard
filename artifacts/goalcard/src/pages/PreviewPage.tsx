@@ -450,7 +450,7 @@ export default function PreviewPage({ formState, onBack, onNewCard, onShared, on
 
         {/* Footer */}
         <div style={{ marginTop: "48px", textAlign: "center", borderTop: "1px solid #e5e7eb", paddingTop: "24px" }}>
-          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "18px", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>⚽ PerdictionCard</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "18px", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>⚽ PredictionCard</div>
           <div style={{ fontSize: "12px", color: "#9ca3af" }}>perdictioncard.com · Free to use</div>
         </div>
       </div>

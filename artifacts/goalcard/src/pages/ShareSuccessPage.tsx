@@ -72,7 +72,7 @@ export default function ShareSuccessPage({ onMakeAnother }: ShareSuccessPageProp
       </div>
 
       <div style={{ marginTop: "32px", color: "#9ca3af", fontSize: "14px" }}>
-        ⚽ perdictioncard.com — Free to use
+        ⚽ PredictionCard.com — Free to use
       </div>
 
       <style>{`

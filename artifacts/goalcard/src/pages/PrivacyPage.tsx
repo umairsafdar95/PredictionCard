@@ -8,7 +8,7 @@ export default function PrivacyPage() {
       <header style={{ background: "linear-gradient(135deg, #0a1628, #0f2040, #0a1628)", borderBottom: "3px solid #16a34a", padding: "20px 24px", textAlign: "center" }}>
         <a href="/" style={{ textDecoration: "none" }}>
           <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "28px", fontWeight: 900, color: "#fff" }}>
-            ⚽ <span style={{ color: "#22c55e" }}>Perd</span>ictionCard
+            ⚽ <span style={{ color: "#22c55e" }}>Pred</span>ictionCard
           </div>
         </a>
         <div style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px", letterSpacing: "2px" }}>PRIVACY POLICY</div>
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         <h1 style={{ fontSize: "32px", fontWeight: 800, color: "#fff", marginBottom: "8px", fontFamily: "'Oswald', sans-serif" }}>Privacy Policy</h1>
         <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "36px" }}>Last updated: June 2026</p>
 
-        <p style={s}>PerdictionCard ("we", "us", "our") is committed to protecting your privacy. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data when you use perdictioncard.com.</p>
+        <p style={s}>PredictionCard ("we", "us", "our") is committed to protecting your privacy. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data when you use perdictioncard.com.</p>
 
         <h2 style={h2}>1. Information We Collect</h2>
         <p style={s}><strong style={{ color: "#e2e8f0" }}>Information you provide:</strong> When you generate a prediction card, you enter team names, a predicted score, and your name. This data is processed entirely in your browser and is never sent to or stored on our servers.</p>
@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         <p style={s}>We use the information we collect to: provide and improve the Service; process payments and confirm upgrades; respond to support requests; and understand how the Service is used in aggregate. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
 
         <h2 style={h2}>3. Cookies and Local Storage</h2>
-        <p style={s}>PerdictionCard uses browser localStorage to remember how many cards you have generated and whether you have purchased the premium upgrade. We do not use tracking cookies for advertising. Third-party services (such as Google Fonts) may set their own cookies according to their own privacy policies.</p>
+        <p style={s}>PredictionCard uses browser localStorage to remember how many cards you have generated and whether you have purchased the premium upgrade. We do not use tracking cookies for advertising. Third-party services (such as Google Fonts) may set their own cookies according to their own privacy policies.</p>
 
         <h2 style={h2}>4. Third-Party Services</h2>
         <p style={s}>We use the following third-party services:</p>
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
         <p style={s}>Because the core service is fully client-side, we do not store your prediction data on our servers. Data in your browser's localStorage remains until you clear it. Any email address received from a payment confirmation is retained only as long as needed for support purposes.</p>
 
         <h2 style={h2}>6. Children's Privacy</h2>
-        <p style={s}>PerdictionCard is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+        <p style={s}>PredictionCard is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately.</p>
 
         <h2 style={h2}>7. Your Rights</h2>
         <p style={s}>Depending on your location, you may have the right to access, correct, or delete personal data we hold about you. Since we store almost no personal data, the most effective way to clear your data is to clear your browser's localStorage and cookies. For any other requests, contact us at the address below.</p>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
         <p style={s}>If you have questions about this Privacy Policy, please contact us at: <a href="mailto:support@perdictioncard.com" style={{ color: "#22c55e" }}>support@perdictioncard.com</a></p>
 
         <div style={{ marginTop: "48px", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "24px" }}>
-          <a href="/" style={{ color: "#22c55e", textDecoration: "none", fontSize: "13px" }}>← Back to PerdictionCard</a>
+          <a href="/" style={{ color: "#22c55e", textDecoration: "none", fontSize: "13px" }}>← Back to PredictionCard</a>
           <span style={{ color: "#374151", margin: "0 12px" }}>·</span>
           <a href="/terms-and-conditions" style={{ color: "#22c55e", textDecoration: "none", fontSize: "13px" }}>Terms of Service →</a>
         </div>

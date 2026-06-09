@@ -106,7 +106,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "Choose from 5 prediction card themes: Night Match, National Colors, FIFA Gold, Retro Classic, or Neon Lights. Each design looks stunning on any screen.",
     howStep4Title: "Download and Share",
     howStep4Text: "Download your prediction card as a high-quality 1080×1080 PNG. Share it on WhatsApp, Instagram Stories, or Twitter and challenge your friends to make their own predictions.",
-    aboutP1: "PerdictionCard.com is the fastest way to create and share your FIFA World Cup 2026 score predictions. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.",
+    aboutP1: "PredictionCard.com is the #1 free World Cup 2026 prediction generator. Create and share your FIFA World Cup 2026 score predictions in seconds. Unlike basic text predictions, our football prediction cards are beautifully designed images that stand out in WhatsApp groups and Instagram feeds.",
     aboutP2: "With all 48 World Cup 2026 teams available, you can generate a new prediction card for every single game of the tournament. Each card is personalized with your name, predicted score, team colors, and national flags.",
     aboutP3: "Our World Cup card maker works in 7 languages including Arabic (RTL), Portuguese, Spanish, and French — perfect for football fans worldwide. No signup, no app download, and completely free.",
     faqQ1: "Is the World Cup 2026 prediction card generator free?",
@@ -143,7 +143,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "اختر من بين 5 تصاميم: مباراة ليلية، ألوان وطنية، ذهبي فيفا، كلاسيكي قديم، أو أضواء النيون. كل تصميم رائع على أي شاشة.",
     howStep4Title: "نزّل وشارك",
     howStep4Text: "نزّل بطاقة توقعك كصورة PNG عالية الجودة 1080×1080. شاركها على واتساب أو إنستغرام أو تويتر وتحدّ أصدقاءك.",
-    aboutP1: "موقع PerdictionCard.com هو أسرع طريقة لإنشاء ومشاركة توقعاتك لنتائج كأس العالم 2026. على خلاف التوقعات النصية البسيطة، تُعدّ بطاقات توقعاتنا لكرة القدم صوراً مصمَّمة بشكل جميل تبرز في مجموعات واتساب وتغذيات إنستغرام.",
+    aboutP1: "موقع PredictionCard.com هو أسرع طريقة لإنشاء ومشاركة توقعاتك لنتائج كأس العالم 2026. على خلاف التوقعات النصية البسيطة، تُعدّ بطاقات توقعاتنا لكرة القدم صوراً مصمَّمة بشكل جميل تبرز في مجموعات واتساب وتغذيات إنستغرام.",
     aboutP2: "مع توفر جميع فرق كأس العالم 2026 الـ48، يمكنك إنشاء بطاقة توقع جديدة لكل مباراة في البطولة. كل بطاقة مخصصة باسمك والنتيجة المتوقعة وألوان الفريق والأعلام الوطنية.",
     aboutP3: "يعمل مولّد بطاقات كأس العالم لدينا بـ7 لغات تشمل العربية (من اليمين لليسار) والبرتغالية والإسبانية والفرنسية — مثالي لمحبي كرة القدم حول العالم. لا تسجيل، لا تحميل تطبيق، ومجاناً تماماً.",
     faqQ1: "هل مولّد بطاقات التوقع لكأس العالم 2026 مجاني؟",
@@ -180,7 +180,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "Choisis parmi 5 thèmes : Match de nuit, Couleurs nationales, Or FIFA, Classique rétro ou Lumières néon. Chaque design est superbe sur n'importe quel écran.",
     howStep4Title: "Télécharge et partage",
     howStep4Text: "Télécharge ta carte de prédiction en PNG haute qualité 1080×1080. Partage-la sur WhatsApp, Instagram Stories ou Twitter et défie tes amis.",
-    aboutP1: "PerdictionCard.com est le moyen le plus rapide de créer et partager vos prédictions de score pour la Coupe du Monde FIFA 2026. Contrairement aux prédictions textuelles basiques, nos cartes sont de belles images qui se démarquent dans les groupes WhatsApp et les fils Instagram.",
+    aboutP1: "PredictionCard.com est le moyen le plus rapide de créer et partager vos prédictions de score pour la Coupe du Monde FIFA 2026. Contrairement aux prédictions textuelles basiques, nos cartes sont de belles images qui se démarquent dans les groupes WhatsApp et les fils Instagram.",
     aboutP2: "Avec les 48 équipes disponibles, vous pouvez générer une nouvelle carte de prédiction pour chaque match du tournoi. Chaque carte est personnalisée avec votre nom, le score prédit, les couleurs de l'équipe et les drapeaux nationaux.",
     aboutP3: "Notre générateur fonctionne en 7 langues dont l'arabe (RTL), le portugais, l'espagnol et le français — parfait pour les fans de football du monde entier. Sans inscription, sans téléchargement, et entièrement gratuit.",
     faqQ1: "Le générateur de cartes de prédiction Coupe du Monde 2026 est-il gratuit ?",
@@ -217,7 +217,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "Escolha entre 5 temas: Noite de Jogo, Cores Nacionais, Ouro FIFA, Clássico Retrô ou Luzes Neon. Cada design fica incrível em qualquer tela.",
     howStep4Title: "Baixe e compartilhe",
     howStep4Text: "Baixe seu card de previsão como PNG de alta qualidade 1080×1080. Compartilhe no WhatsApp, Instagram Stories ou Twitter e desafie seus amigos.",
-    aboutP1: "PerdictionCard.com é a maneira mais rápida de criar e compartilhar suas previsões de placar para a Copa do Mundo FIFA 2026. Ao contrário de previsões de texto simples, nossos cards são imagens lindamente criadas que se destacam nos grupos do WhatsApp e feeds do Instagram.",
+    aboutP1: "PredictionCard.com é a maneira mais rápida de criar e compartilhar suas previsões de placar para a Copa do Mundo FIFA 2026. Ao contrário de previsões de texto simples, nossos cards são imagens lindamente criadas que se destacam nos grupos do WhatsApp e feeds do Instagram.",
     aboutP2: "Com todas as 48 seleções da Copa do Mundo 2026 disponíveis, você pode criar um novo card de previsão para cada jogo do torneio. Cada card é personalizado com seu nome, placar previsto, cores do time e bandeiras nacionais.",
     aboutP3: "Nosso criador de cards funciona em 7 idiomas, incluindo árabe (RTL), português, espanhol e francês — perfeito para fãs de futebol em todo o mundo. Sem cadastro, sem download de app, e completamente gratuito.",
     faqQ1: "O gerador de cards de previsão da Copa do Mundo 2026 é gratuito?",
@@ -254,7 +254,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "Elige entre 5 temas: Partido Nocturno, Colores Nacionales, Oro FIFA, Clásico Retro o Luces Neón. Cada diseño luce espectacular en cualquier pantalla.",
     howStep4Title: "Descarga y comparte",
     howStep4Text: "Descarga tu tarjeta de predicción como PNG de alta calidad 1080×1080. Compártela en WhatsApp, Instagram Stories o Twitter y reta a tus amigos.",
-    aboutP1: "PerdictionCard.com es la forma más rápida de crear y compartir tus predicciones de marcador para la Copa del Mundo FIFA 2026. A diferencia de las predicciones de texto básicas, nuestras tarjetas son imágenes bellamente diseñadas que destacan en grupos de WhatsApp y feeds de Instagram.",
+    aboutP1: "PredictionCard.com es la forma más rápida de crear y compartir tus predicciones de marcador para la Copa del Mundo FIFA 2026. A diferencia de las predicciones de texto básicas, nuestras tarjetas son imágenes bellamente diseñadas que destacan en grupos de WhatsApp y feeds de Instagram.",
     aboutP2: "Con los 48 equipos disponibles, puedes generar una nueva tarjeta de predicción para cada partido del torneo. Cada tarjeta está personalizada con tu nombre, marcador predicho, colores del equipo y banderas nacionales.",
     aboutP3: "Nuestro creador funciona en 7 idiomas incluyendo árabe (RTL), portugués, español y francés — perfecto para aficionados al fútbol de todo el mundo. Sin registro, sin descarga de app, y completamente gratis.",
     faqQ1: "¿El generador de tarjetas de predicción del Mundial 2026 es gratuito?",
@@ -291,7 +291,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "Wähle aus 5 Themen: Nachtspiel, Nationalfarben, FIFA Gold, Retro Klassik oder Neonlichter. Jedes Design sieht auf jedem Bildschirm fantastisch aus.",
     howStep4Title: "Herunterladen und teilen",
     howStep4Text: "Lade deine Tipp-Karte als hochauflösendes 1080×1080 PNG herunter. Teile sie auf WhatsApp, Instagram Stories oder Twitter und fordere deine Freunde heraus.",
-    aboutP1: "PerdictionCard.com ist der schnellste Weg, deine FIFA WM 2026 Ergebnis-Tipps zu erstellen und zu teilen. Im Gegensatz zu einfachen Texttipps sind unsere Tipp-Karten wunderschön gestaltete Bilder, die in WhatsApp-Gruppen und Instagram-Feeds herausstechen.",
+    aboutP1: "PredictionCard.com ist der schnellste Weg, deine FIFA WM 2026 Ergebnis-Tipps zu erstellen und zu teilen. Im Gegensatz zu einfachen Texttipps sind unsere Tipp-Karten wunderschön gestaltete Bilder, die in WhatsApp-Gruppen und Instagram-Feeds herausstechen.",
     aboutP2: "Mit allen 48 WM 2026 Teams kannst du für jedes Spiel des Turniers eine neue Tipp-Karte erstellen. Jede Karte wird mit deinem Namen, dem vorhergesagten Ergebnis, Teamfarben und Nationalflaggen personalisiert.",
     aboutP3: "Unser WM-Karten-Generator unterstützt 7 Sprachen darunter Arabisch (RTL), Portugiesisch, Spanisch und Französisch — perfekt für Fußballfans weltweit. Ohne Anmeldung, ohne App-Download und völlig kostenlos.",
     faqQ1: "Ist der WM 2026 Tipp-Karten-Generator kostenlos?",
@@ -328,7 +328,7 @@ const UI_TEXT: Record<Language, {
     howStep3Text: "5 tema arasından seç: Gece Maçı, Ulusal Renkler, FIFA Altın, Retro Klasik veya Neon Işıklar. Her tasarım her ekranda muhteşem görünür.",
     howStep4Title: "İndir ve paylaş",
     howStep4Text: "Tahmin kartını yüksek kaliteli 1080×1080 PNG olarak indir. WhatsApp, Instagram Hikayeleri veya Twitter'da paylaş ve arkadaşlarına meydan oku.",
-    aboutP1: "PerdictionCard.com, FIFA 2026 Dünya Kupası skor tahminlerinizi oluşturmanın ve paylaşmanın en hızlı yoludur. Temel metin tahminlerinin aksine, futbol tahmin kartlarımız WhatsApp gruplarında ve Instagram akışlarında öne çıkan güzelce tasarlanmış görsellerdir.",
+    aboutP1: "PredictionCard.com, FIFA 2026 Dünya Kupası skor tahminlerinizi oluşturmanın ve paylaşmanın en hızlı yoludur. Temel metin tahminlerinin aksine, futbol tahmin kartlarımız WhatsApp gruplarında ve Instagram akışlarında öne çıkan güzelce tasarlanmış görsellerdir.",
     aboutP2: "2026 Dünya Kupası'nın 48 takımının tamamı mevcut olduğundan, turnuvanın her maçı için yeni bir tahmin kartı oluşturabilirsiniz. Her kart adınız, tahmin ettiğiniz skor, takım renkleri ve ulusal bayraklarla kişiselleştirilir.",
     aboutP3: "Dünya Kupası kart yapıcımız, Arapça (RTL), Portekizce, İspanyolca ve Fransızca dahil 7 dilde çalışır — dünya genelindeki futbol severler için mükemmel. Kayıt yok, uygulama indirme yok ve tamamen ücretsiz.",
     faqQ1: "2026 Dünya Kupası tahmin kartı oluşturucu ücretsiz mi?",
@@ -598,7 +598,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   filter: "drop-shadow(0 0 20px rgba(34,197,94,0.4))",
-                }}>Perd</span><span style={{
+                }}>Pred</span><span style={{
                   background: "linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -1150,7 +1150,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         >
           <div style={{ textAlign: "center", marginBottom: "16px" }}>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700, color: "#15803d", marginBottom: "6px" }}>
-              ⚽ PerdictionCard
+              ⚽ PredictionCard
             </div>
             <p style={{ fontSize: "12px", color: "#9ca3af", margin: "0 0 12px" }}>
               {ui.footerTagline}

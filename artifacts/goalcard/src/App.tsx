@@ -68,17 +68,17 @@ function MainApp() {
   }, []);
 
   const getDefaultTitle = (lang = formState.language) => {
-    if (lang === "ar") return "مولد بطاقة توقع كأس العالم 2026 | PerdictionCard.com";
-    if (lang === "pt") return "Gerador de Cartão de Previsão Copa 2026 | PerdictionCard.com";
-    if (lang === "es") return "Generador de Tarjeta de Predicción Mundial 2026 | PerdictionCard.com";
-    if (lang === "fr") return "Générateur Carte Prédiction Coupe du Monde 2026 | PerdictionCard.com";
-    return "World Cup 2026 Prediction Card Generator — Free | PerdictionCard.com";
+    if (lang === "ar") return "مولد توقعات كأس العالم 2026 | PredictionCard.com";
+    if (lang === "pt") return "Gerador de Previsão Copa do Mundo 2026 | PredictionCard.com";
+    if (lang === "es") return "Generador de Predicciones Mundial 2026 | PredictionCard.com";
+    if (lang === "fr") return "Générateur de Pronostics Coupe du Monde 2026 | PredictionCard.com";
+    return "Free World Cup 2026 Prediction Generator — Match Cards | PredictionCard.com";
   };
 
   const handleGenerate = () => {
     setView("preview");
     const { team1, score1, score2, team2 } = formState;
-    document.title = `${team1} vs ${team2} Prediction Card | PerdictionCard.com`;
+    document.title = `${team1} vs ${team2} | World Cup 2026 Prediction — PredictionCard.com`;
     window.scrollTo({ top: 0 });
   };
 
@@ -106,7 +106,7 @@ function MainApp() {
 
   const handleMakeAnother = () => {
     setView("form");
-    document.title = "PerdictionCard — Free World Cup 2026 Prediction Card Generator";
+    document.title = "Free World Cup 2026 Prediction Generator | PredictionCard.com";
     window.scrollTo({ top: 0 });
   };
 
