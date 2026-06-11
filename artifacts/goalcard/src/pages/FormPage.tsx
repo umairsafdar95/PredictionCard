@@ -20,6 +20,7 @@ const THEMES: {
   bg: string;
   accent: string;
   preview: string;
+  premium?: boolean;
 }[] = [
   {
     id: "dark",
@@ -60,6 +61,24 @@ const THEMES: {
     bg: "radial-gradient(ellipse at 50% 0%, #07101a 0%, #010508 100%)",
     accent: "#00e8ff",
     preview: "⚡",
+  },
+  {
+    id: "galaxy",
+    label: "Galaxy",
+    desc: "Deep space, purple glow",
+    bg: "radial-gradient(ellipse at 35% 25%, #1e0b4a 0%, #0d0126 100%)",
+    accent: "#c084fc",
+    preview: "🌌",
+    premium: true,
+  },
+  {
+    id: "sunset",
+    label: "Sunset Stadium",
+    desc: "Warm fire, golden hour",
+    bg: "linear-gradient(160deg, #2d0a00 0%, #4a1000 60%, #1a0800 100%)",
+    accent: "#ff6b35",
+    preview: "🌅",
+    premium: true,
   },
 ];
 
@@ -432,6 +451,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
 
   const t1 = getTeam(team1);
   const t2 = getTeam(team2);
+  const isPremium = localStorage.getItem("goalcard_premium") === "true";
 
   const set = <K extends keyof FormState>(field: K, value: FormState[K]) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
@@ -625,7 +645,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             {[
               { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: ui.cardsMade ?? "cards made" },
               { icon: "🌍", val: "32", label: ui.nations ?? "nations" },
-              { icon: "🎨", val: "5", label: ui.cardStyles ?? "card styles" },
+              { icon: "🎨", val: "7", label: ui.cardStyles ?? "card styles" },
             ].map((s) => (
               <div key={s.label} style={{
                 background: "rgba(255,255,255,0.07)",
@@ -919,13 +939,20 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           <div className="theme-picker" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             {THEMES.map((t) => {
               const selected = theme === t.id;
+              const locked = !!(t.premium && !isPremium);
               return (
                 <button
                   key={t.id}
                   type="button"
-                  aria-label={`Select ${t.label} card theme`}
+                  aria-label={`Select ${t.label} card theme${locked ? " (Premium)" : ""}`}
                   aria-pressed={selected}
-                  onClick={() => set("theme", t.id)}
+                  onClick={() => {
+                    if (locked) {
+                      window.location.href = "/pricing";
+                    } else {
+                      set("theme", t.id);
+                    }
+                  }}
                   style={{
                     flex: 1,
                     padding: "0",
@@ -936,6 +963,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                     overflow: "hidden",
                     boxShadow: selected ? `0 0 0 3px ${t.accent === "#ffffff" ? "rgba(34,197,94,0.2)" : t.accent + "33"}` : "none",
                     transition: "all 0.2s",
+                    opacity: locked ? 0.85 : 1,
                   }}
                 >
                   {/* Color preview bar */}
@@ -957,7 +985,15 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                       background: t.accent,
                       boxShadow: `0 0 6px ${t.accent}`,
                     }} />
-                    {t.preview}
+                    {locked && (
+                      <div style={{
+                        position: "absolute", inset: 0,
+                        background: "rgba(0,0,0,0.42)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "24px",
+                      }}>👑</div>
+                    )}
+                    {!locked && t.preview}
                   </div>
                   {/* Label */}
                   <div style={{
@@ -971,7 +1007,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                       fontFamily: "'Oswald', sans-serif",
                       letterSpacing: "0.5px",
                     }}>{t.label}</div>
-                    <div style={{ fontSize: "10px", color: "#9ca3af" }}>{t.desc}</div>
+                    <div style={{ fontSize: "10px", color: locked ? "#f59e0b" : "#9ca3af", fontWeight: locked ? 600 : 400 }}>
+                      {locked ? "👑 PREMIUM" : t.desc}
+                    </div>
                   </div>
                 </button>
               );

@@ -684,6 +684,245 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
   }
 
   /* ─────────────────────────────────────────────────────────────────
+     THEME 6 — GALAXY  (PREMIUM)
+     Deep space purple. Star particles, nebula glow. No backdropFilter.
+  ───────────────────────────────────────────────────────────────── */
+  if (theme === "galaxy") {
+    const stars = [
+      { top: "8%", left: "12%" }, { top: "6%", left: "85%" },
+      { top: "15%", left: "45%" }, { top: "22%", left: "7%" },
+      { top: "28%", left: "92%" }, { top: "35%", left: "25%" },
+      { top: "42%", left: "75%" }, { top: "55%", left: "5%" },
+      { top: "58%", left: "88%" }, { top: "65%", left: "55%" },
+      { top: "72%", left: "18%" }, { top: "75%", left: "70%" },
+      { top: "82%", left: "35%" }, { top: "88%", left: "8%" },
+      { top: "92%", left: "62%" }, { top: "95%", left: "82%" },
+      { top: "3%", left: "65%" }, { top: "48%", left: "40%" },
+    ];
+    return (
+      <div ref={cardRef} style={{
+        ...baseCard,
+        background: "radial-gradient(ellipse at 35% 20%, #1e0b4a 0%, #0d0126 55%, #000010 100%)",
+        justifyContent: "center",
+        padding: "0 80px",
+        gap: "0",
+      }}>
+        {/* Stars */}
+        {stars.map((s, i) => (
+          <div key={i} style={{
+            position: "absolute", top: s.top, left: s.left,
+            width: i % 3 === 0 ? "3px" : "2px",
+            height: i % 3 === 0 ? "3px" : "2px",
+            borderRadius: "50%",
+            background: i % 5 === 0 ? "#c084fc" : "#ffffff",
+            boxShadow: i % 5 === 0 ? "0 0 6px 2px rgba(192,132,252,0.8)" : "0 0 4px rgba(255,255,255,0.8)",
+            pointerEvents: "none",
+            opacity: 0.65 + (i % 3) * 0.12,
+          }} />
+        ))}
+        {/* Nebula glow top */}
+        <div style={{
+          position: "absolute", top: "-100px", left: "50%",
+          transform: "translateX(-50%)",
+          width: "900px", height: "600px",
+          background: "radial-gradient(ellipse at 50% 30%, rgba(192,132,252,0.13) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        {/* Border frame */}
+        <div style={{
+          position: "absolute", inset: "30px",
+          border: "1px solid rgba(192,132,252,0.25)",
+          borderRadius: "16px",
+          pointerEvents: "none",
+        }} />
+        {/* Corner jewels */}
+        {[
+          { top: "38px", left: "38px" }, { top: "38px", right: "38px" },
+          { bottom: "38px", left: "38px" }, { bottom: "38px", right: "38px" },
+        ].map((pos, i) => (
+          <div key={i} style={{
+            position: "absolute", ...pos,
+            width: "8px", height: "8px", borderRadius: "50%",
+            background: "#c084fc",
+            boxShadow: "0 0 10px 3px rgba(192,132,252,0.7)",
+            pointerEvents: "none",
+          }} />
+        ))}
+
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "50px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: "50px", marginBottom: "14px" }}>🌌</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "22px", letterSpacing: "7px",
+            color: "#c084fc", textTransform: "uppercase", fontWeight: 400,
+            marginBottom: "8px",
+            textShadow: "0 0 22px rgba(192,132,252,0.85)",
+          }}>WORLD CUP 2026</div>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "15px", letterSpacing: "5px",
+            color: "rgba(192,132,252,0.40)", textTransform: "uppercase",
+          }}>{labels.title}</div>
+        </div>
+
+        {/* ── TEAMS ROW ── */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          gap: "48px", marginBottom: "40px",
+          position: "relative", zIndex: 1, width: "100%",
+        }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(192,132,252,0.45)", boxShadow: "0 0 18px rgba(192,132,252,0.25)", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(192,132,252,0.50)" }}>{t1?.shortName ?? team1}</div>
+            <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(192,132,252,0.75)", fontWeight: 500 }}>{team1}</div>
+          </div>
+
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700, color: "#c084fc", border: "2px solid rgba(192,132,252,0.40)", borderRadius: "8px", padding: "12px 20px", letterSpacing: "4px", textShadow: "0 0 14px rgba(192,132,252,0.90)", boxShadow: "0 0 18px rgba(192,132,252,0.12)", flexShrink: 0 }}>{labels.vs}</div>
+
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(192,132,252,0.45)", boxShadow: "0 0 18px rgba(192,132,252,0.25)", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(192,132,252,0.50)" }}>{t2?.shortName ?? team2}</div>
+            <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(192,132,252,0.75)", fontWeight: 500 }}>{team2}</div>
+          </div>
+        </div>
+
+        {/* ── SCORE ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "28px", marginBottom: "48px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900, color: "#ffffff", lineHeight: 1, textShadow: "0 0 40px rgba(192,132,252,0.85), 0 0 110px rgba(192,132,252,0.35)" }}>{score1}</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "80px", color: "rgba(192,132,252,0.18)", fontWeight: 300, lineHeight: 1 }}>:</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900, color: "#ffffff", lineHeight: 1, textShadow: "0 0 40px rgba(192,132,252,0.85), 0 0 110px rgba(192,132,252,0.35)" }}>{score2}</div>
+        </div>
+
+        {/* ── DIVIDER ── */}
+        <div style={{ width: "560px", height: "1px", background: "linear-gradient(90deg, transparent, rgba(192,132,252,0.60), transparent)", boxShadow: "0 0 10px rgba(192,132,252,0.35)", marginBottom: "44px", position: "relative", zIndex: 1 }} />
+
+        {/* ── PREDICTED BY ── */}
+        <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "16px", color: "rgba(192,132,252,0.45)", letterSpacing: "6px", textTransform: "uppercase", marginBottom: "12px" }}>{labels.predictedBy}</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "62px", fontWeight: 700, color: "#ffffff", letterSpacing: "2px", textShadow: "0 0 22px rgba(192,132,252,0.30)" }}>{name}</div>
+        </div>
+
+        {/* Watermark */}
+        <div style={{ position: "absolute", bottom: "40px", right: "48px", fontFamily: "'Poppins', sans-serif", fontSize: "17px", fontWeight: 600, color: "rgba(192,132,252,0.42)", zIndex: 5, letterSpacing: "1.5px", textShadow: "0 0 8px rgba(192,132,252,0.25)" }}>⚽ perdictioncard.com</div>
+      </div>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
+     THEME 7 — SUNSET STADIUM  (PREMIUM)
+     Deep ember-orange warmth. Sun glow, corner bracket accents.
+     No backdropFilter.
+  ───────────────────────────────────────────────────────────────── */
+  if (theme === "sunset") {
+    return (
+      <div ref={cardRef} style={{
+        ...baseCard,
+        background: "linear-gradient(175deg, #0f0300 0%, #2a0700 30%, #4a0f00 60%, #180600 100%)",
+        justifyContent: "center",
+        padding: "0 80px",
+        gap: "0",
+      }}>
+        {/* Sun glow from top */}
+        <div style={{
+          position: "absolute", top: "-80px", left: "50%",
+          transform: "translateX(-50%)",
+          width: "900px", height: "500px",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(255,140,20,0.22) 0%, rgba(255,60,0,0.10) 40%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        {/* Bottom ember glow */}
+        <div style={{
+          position: "absolute", bottom: "0", left: "50%",
+          transform: "translateX(-50%)",
+          width: "800px", height: "320px",
+          background: "radial-gradient(ellipse at 50% 100%, rgba(255,80,0,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        {/* Corner bracket — top-left */}
+        <div style={{ position: "absolute", top: "32px", left: "32px", width: "80px", height: "4px", background: "linear-gradient(90deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "32px", left: "32px", width: "4px", height: "80px", background: "linear-gradient(180deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        {/* Corner bracket — top-right */}
+        <div style={{ position: "absolute", top: "32px", right: "32px", width: "80px", height: "4px", background: "linear-gradient(270deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "32px", right: "32px", width: "4px", height: "80px", background: "linear-gradient(180deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        {/* Corner bracket — bottom-left */}
+        <div style={{ position: "absolute", bottom: "32px", left: "32px", width: "80px", height: "4px", background: "linear-gradient(90deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "32px", left: "32px", width: "4px", height: "80px", background: "linear-gradient(0deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        {/* Corner bracket — bottom-right */}
+        <div style={{ position: "absolute", bottom: "32px", right: "32px", width: "80px", height: "4px", background: "linear-gradient(270deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "32px", right: "32px", width: "4px", height: "80px", background: "linear-gradient(0deg, #ff6b35, transparent)", pointerEvents: "none" }} />
+        {/* Corner label */}
+        <div style={{ position: "absolute", top: "44px", left: "48px", fontFamily: "'Oswald', sans-serif", fontSize: "18px", color: "rgba(255,107,53,0.35)", letterSpacing: "3px" }}>FIFA WC 2026</div>
+
+        {/* ── HEADER ── */}
+        <div style={{ textAlign: "center", marginBottom: "50px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: "50px", marginBottom: "14px" }}>🌅</div>
+          <div style={{
+            fontFamily: "'Oswald', sans-serif",
+            fontSize: "22px", letterSpacing: "7px",
+            color: "#ff6b35", textTransform: "uppercase", fontWeight: 400,
+            marginBottom: "8px",
+            textShadow: "0 0 22px rgba(255,107,53,0.75)",
+          }}>WORLD CUP 2026</div>
+          <div style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: "15px", letterSpacing: "5px",
+            color: "rgba(255,107,53,0.40)", textTransform: "uppercase",
+          }}>{labels.title}</div>
+        </div>
+
+        {/* ── TEAMS ROW ── */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          gap: "48px", marginBottom: "40px",
+          position: "relative", zIndex: 1, width: "100%",
+        }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,107,53,0.45)", boxShadow: "0 0 20px rgba(255,107,53,0.22)", flexShrink: 0 }}>
+              <FlagImg code={t1?.code ?? "un"} />
+            </div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(255,107,53,0.45)" }}>{t1?.shortName ?? team1}</div>
+            <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(255,160,80,0.80)", fontWeight: 500 }}>{team1}</div>
+          </div>
+
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "26px", fontWeight: 700, color: "#ff6b35", border: "2px solid rgba(255,107,53,0.45)", borderRadius: "8px", padding: "12px 20px", letterSpacing: "4px", textShadow: "0 0 14px rgba(255,107,53,0.85)", boxShadow: "0 0 16px rgba(255,107,53,0.14)", flexShrink: 0 }}>{labels.vs}</div>
+
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,107,53,0.45)", boxShadow: "0 0 20px rgba(255,107,53,0.22)", flexShrink: 0 }}>
+              <FlagImg code={t2?.code ?? "un"} />
+            </div>
+            <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(255,107,53,0.45)" }}>{t2?.shortName ?? team2}</div>
+            <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(255,160,80,0.80)", fontWeight: 500 }}>{team2}</div>
+          </div>
+        </div>
+
+        {/* ── SCORE ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "28px", marginBottom: "48px", position: "relative", zIndex: 1 }}>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900, color: "#ffffff", lineHeight: 1, textShadow: "0 0 55px rgba(255,107,53,0.75), 0 4px 12px rgba(0,0,0,0.6)" }}>{score1}</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "80px", color: "rgba(255,107,53,0.18)", fontWeight: 300, lineHeight: 1 }}>:</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "175px", fontWeight: 900, color: "#ffffff", lineHeight: 1, textShadow: "0 0 55px rgba(255,107,53,0.75), 0 4px 12px rgba(0,0,0,0.6)" }}>{score2}</div>
+        </div>
+
+        {/* ── DIVIDER ── */}
+        <div style={{ width: "560px", height: "2px", background: "linear-gradient(90deg, transparent, #ff6b35, transparent)", boxShadow: "0 0 12px rgba(255,107,53,0.55)", marginBottom: "44px", position: "relative", zIndex: 1 }} />
+
+        {/* ── PREDICTED BY ── */}
+        <div style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "16px", color: "rgba(255,107,53,0.45)", letterSpacing: "6px", textTransform: "uppercase", marginBottom: "12px" }}>{labels.predictedBy}</div>
+          <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "62px", fontWeight: 700, color: "#ffffff", letterSpacing: "2px", textShadow: "0 0 22px rgba(255,107,53,0.30)" }}>{name}</div>
+        </div>
+
+        {/* Watermark */}
+        <div style={{ position: "absolute", bottom: "40px", right: "48px", fontFamily: "'Poppins', sans-serif", fontSize: "17px", fontWeight: 600, color: "rgba(255,107,53,0.42)", zIndex: 5, letterSpacing: "1.5px", textShadow: "0 0 8px rgba(255,107,53,0.25)" }}>⚽ perdictioncard.com</div>
+      </div>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
      THEME 3 — FIFA GOLD
      Deep FIFA navy with gold trophy accents. All content in flex flow.
      NO backdropFilter.
