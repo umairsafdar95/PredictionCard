@@ -4,6 +4,7 @@ import teams, { getTeam } from "@/data/teams";
 import { getTodaysMatches, type Match } from "@/data/matches";
 import SchedulePage from "@/components/SchedulePage";
 import { type ScheduleMatch } from "@/data/schedule";
+import { useLiveMatches, findLiveScore } from "@/lib/liveData";
 
 interface FormPageProps {
   formState: FormState;
@@ -448,6 +449,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const [activeTab, setActiveTab] = useState<"predict" | "schedule">("predict");
   const [loadedMatch, setLoadedMatch] = useState<{ team1: string; team2: string; team1Flag: string; team2Flag: string } | null>(null);
   const todayMatches = getTodaysMatches().slice(0, 3);
+  const { matches: liveMatches } = useLiveMatches();
 
   const t1 = getTeam(team1);
   const t2 = getTeam(team2);
@@ -786,7 +788,18 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                     onMouseOut={(e) => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#f8fafc"; }}
                   >
                     <span>{getTeam(m.team1)?.flag} {m.team1} <span style={{ color: "#9ca3af" }}>vs</span> {getTeam(m.team2)?.flag} {m.team2}</span>
-                    <span style={{ fontSize: "11px", color: "#9ca3af", background: "#e5e7eb", borderRadius: "6px", padding: "2px 8px", whiteSpace: "nowrap" }}>{m.time}</span>
+                    {(() => {
+                      const ls = findLiveScore(liveMatches, m.team1, m.team2);
+                      if (ls && ls.score1 !== null && ls.score2 !== null) {
+                        const isLive = ls.status === "live";
+                        return (
+                          <span style={{ fontSize: "12px", fontWeight: 700, color: isLive ? "#dc2626" : "#15803d", background: isLive ? "#fee2e2" : "#dcfce7", border: `1px solid ${isLive ? "#fca5a5" : "#86efac"}`, borderRadius: "6px", padding: "2px 8px", whiteSpace: "nowrap" as const, fontFamily: "'Oswald', sans-serif", letterSpacing: "1px" }}>
+                            {isLive ? `🔴 ${ls.score1}–${ls.score2}` : `✓ ${ls.score1}–${ls.score2} FT`}
+                          </span>
+                        );
+                      }
+                      return <span style={{ fontSize: "11px", color: "#9ca3af", background: "#e5e7eb", borderRadius: "6px", padding: "2px 8px", whiteSpace: "nowrap" as const }}>{m.time}</span>;
+                    })()}
                   </button>
                 ))}
               </div>
