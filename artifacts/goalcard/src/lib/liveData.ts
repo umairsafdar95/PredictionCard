@@ -23,6 +23,17 @@ export interface GroupStanding { group: string; entries: StandingEntry[] }
 const ESPN_SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world";
 const ESPN_V2   = "https://site.api.espn.com/apis/v2/sports/soccer/fifa.world";
 
+// ESPN uses different spellings from our schedule — map to schedule names
+const ESPN_NAME_MAP: Record<string, string> = {
+  "Bosnia-Herzegovina":    "Bosnia & Herzegovina",
+  "Türkiye":               "Turkey",
+  "Curaçao":               "Curacao",
+  "Congo DR":              "DR Congo",
+};
+function canonicalName(espnName: string): string {
+  return ESPN_NAME_MAP[espnName] ?? espnName;
+}
+
 function yyyymmdd(offsetDays: number): string {
   const d = new Date(Date.now() + offsetDays * 86_400_000);
   return d.toISOString().slice(0, 10).replace(/-/g, "");
@@ -57,8 +68,8 @@ function parseMatches(raw: unknown): LiveMatch[] {
       out.push({
         id:         (e.id as string) ?? String(Math.random()),
         date:       ((e.date as string) ?? "").split("T")[0],
-        team1:      (homeTeam.displayName as string) ?? "",
-        team2:      (awayTeam.displayName as string) ?? "",
+        team1:      canonicalName((homeTeam.displayName as string) ?? ""),
+        team2:      canonicalName((awayTeam.displayName as string) ?? ""),
         team1Abbr:  (homeTeam.abbreviation as string) ?? "",
         team2Abbr:  (awayTeam.abbreviation as string) ?? "",
         score1:     status !== "scheduled" ? (parseInt((home.score as string) ?? "0") || 0) : null,
