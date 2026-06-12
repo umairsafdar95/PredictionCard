@@ -456,8 +456,9 @@ export default function SchedulePage({ onPredict, language }: Props) {
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   {dayMatches.map((m) => {
                     const status = getStatus(m);
-                    const isCompleted = status === "completed";
-                    const isLive = status === "live";
+                    const ls = findLiveScore(liveMatches, m.team1, m.team2);
+                    const isCompleted = status === "completed" || ls?.status === "finished";
+                    const isLive = status === "live" || ls?.status === "live";
                     const isToday = status === "today";
                     const isFinal = !!m.isFinal;
 
@@ -523,7 +524,6 @@ export default function SchedulePage({ onPredict, language }: Props) {
 
                         {/* Teams row */}
                         {(() => {
-                          const ls = findLiveScore(liveMatches, m.team1, m.team2);
                           const hasScore = ls && ls.score1 !== null && ls.score2 !== null;
                           return (
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
