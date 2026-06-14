@@ -3,7 +3,7 @@ import { FormState, Theme, Language } from "@/types";
 import teams, { getTeam } from "@/data/teams";
 import { getTodaysMatches, type Match } from "@/data/matches";
 import SchedulePage from "@/components/SchedulePage";
-import { type ScheduleMatch } from "@/data/schedule";
+import schedule, { type ScheduleMatch } from "@/data/schedule";
 import { useLiveMatches, findLiveScore } from "@/lib/liveData";
 
 interface FormPageProps {
@@ -452,6 +452,14 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const todayMatches = getTodaysMatches().slice(0, 3);
   const { matches: liveMatches } = useLiveMatches();
 
+  const nowET = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const todayET = `${nowET.getFullYear()}-${String(nowET.getMonth() + 1).padStart(2, "0")}-${String(nowET.getDate()).padStart(2, "0")}`;
+  const todayScheduleMatches = schedule.filter((m) => m.date === todayET);
+  const dashboardMatches = todayScheduleMatches.length > 0
+    ? todayScheduleMatches
+    : schedule.filter((m) => m.date > todayET).slice(0, 4);
+  const dashboardIsToday = todayScheduleMatches.length > 0;
+
   const t1 = getTeam(team1);
   const t2 = getTeam(team2);
   const isPremium = localStorage.getItem("goalcard_premium") === "true";
@@ -647,7 +655,7 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
           }}>
             {[
               { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: ui.cardsMade ?? "cards made" },
-              { icon: "🌍", val: "32", label: ui.nations ?? "nations" },
+              { icon: "🌍", val: "48", label: ui.nations ?? "nations" },
               { icon: "🎨", val: "7", label: ui.cardStyles ?? "card styles" },
             ].map((s) => (
               <div key={s.label} style={{
@@ -669,6 +677,131 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
         {/* Bottom green bar — slightly thicker */}
         <div style={{ height: "5px", background: "linear-gradient(90deg, #15803d, #22c55e, #86efac, #22c55e, #15803d)" }} />
       </header>
+
+      {/* ══ TODAY'S MATCHES DASHBOARD ══ */}
+      {dashboardMatches.length > 0 && (
+        <div style={{ background: "#0c0c20", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "18px 16px 16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <div style={{
+                fontSize: "11px", letterSpacing: "3px", fontWeight: 800,
+                color: dashboardIsToday ? "#22c55e" : "#f59e0b",
+                fontFamily: "'Oswald', sans-serif",
+              }}>
+                {dashboardIsToday ? "🗓 TODAY'S MATCHES" : "⏭ COMING UP NEXT"}
+              </div>
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", fontFamily: "'Poppins', sans-serif" }}>
+                {nowET.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {dashboardMatches.map((m) => {
+                const ls = findLiveScore(liveMatches, m.team1, m.team2);
+                const isLive = ls?.status === "live";
+                const isFinished = ls?.status === "finished";
+                const hasScore = ls && ls.score1 !== null && ls.score2 !== null;
+                const dm1 = getTeam(m.team1);
+                const dm2 = getTeam(m.team2);
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => {
+                      set("team1", m.team1);
+                      set("team2", m.team2);
+                      setLoadedMatch({ team1: m.team1, team2: m.team2, team1Flag: m.team1Flag, team2Flag: m.team2Flag });
+                      setActiveTab("predict");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: "10px",
+                      background: isLive ? "rgba(220,38,38,0.09)" : "rgba(255,255,255,0.04)",
+                      border: isLive ? "1.5px solid rgba(220,38,38,0.40)" : "1px solid rgba(255,255,255,0.09)",
+                      borderRadius: "12px", padding: "13px 14px",
+                      cursor: "pointer", textAlign: "left", width: "100%",
+                    }}
+                    onMouseOver={(e) => { e.currentTarget.style.background = isLive ? "rgba(220,38,38,0.14)" : "rgba(34,197,94,0.07)"; e.currentTarget.style.borderColor = isLive ? "rgba(220,38,38,0.6)" : "rgba(34,197,94,0.35)"; }}
+                    onMouseOut={(e) => { e.currentTarget.style.background = isLive ? "rgba(220,38,38,0.09)" : "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = isLive ? "rgba(220,38,38,0.40)" : "rgba(255,255,255,0.09)"; }}
+                  >
+                    {/* Group badge */}
+                    {m.group && (
+                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.30)", fontFamily: "'Oswald', sans-serif", letterSpacing: "1px", minWidth: "28px", flexShrink: 0 }}>
+                        GRP<br />{m.group}
+                      </div>
+                    )}
+
+                    {/* Team 1 */}
+                    <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px", overflow: "hidden", minWidth: 0 }}>
+                      {dm1?.code ? (
+                        <img src={`https://flagcdn.com/w40/${dm1.code}.png`} alt={m.team1} crossOrigin="anonymous"
+                          style={{ height: "24px", width: "auto", borderRadius: "3px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.15)" }} />
+                      ) : (
+                        <span style={{ fontSize: "20px", flexShrink: 0 }}>{m.team1Flag}</span>
+                      )}
+                      <span style={{ fontSize: "13px", fontWeight: 600, color: "#fff", fontFamily: "'Poppins', sans-serif", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" }}>{m.team1}</span>
+                    </div>
+
+                    {/* Score / Time */}
+                    <div style={{ flexShrink: 0, textAlign: "center", minWidth: "68px" }}>
+                      {hasScore ? (
+                        <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
+                          {isLive && <div style={{ fontSize: "8px", color: "#ef4444", letterSpacing: "2px", marginBottom: "2px" }}>🔴 LIVE</div>}
+                          <div style={{ fontSize: "18px", color: isLive ? "#ef4444" : "#22c55e", letterSpacing: "2px" }}>{ls.score1} – {ls.score2}</div>
+                          {isFinished && <div style={{ fontSize: "8px", color: "#22c55e", letterSpacing: "2px", marginTop: "2px" }}>FULL TIME</div>}
+                        </div>
+                      ) : (
+                        <div style={{ fontFamily: "'Poppins', sans-serif", lineHeight: 1.4 }}>
+                          <div style={{ fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "2px" }}>VS</div>
+                          <div style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.55)", marginTop: "2px" }}>{m.timeET.replace(" ET", "")}</div>
+                          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.25)" }}>ET</div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Team 2 */}
+                    <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px", justifyContent: "flex-end", overflow: "hidden", minWidth: 0 }}>
+                      <span style={{ fontSize: "13px", fontWeight: 600, color: "#fff", fontFamily: "'Poppins', sans-serif", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", textAlign: "right" as const }}>{m.team2}</span>
+                      {dm2?.code ? (
+                        <img src={`https://flagcdn.com/w40/${dm2.code}.png`} alt={m.team2} crossOrigin="anonymous"
+                          style={{ height: "24px", width: "auto", borderRadius: "3px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.15)" }} />
+                      ) : (
+                        <span style={{ fontSize: "20px", flexShrink: 0 }}>{m.team2Flag}</span>
+                      )}
+                    </div>
+
+                    {/* Action pill */}
+                    {(!hasScore || isLive) && (
+                      <div style={{
+                        flexShrink: 0,
+                        background: "linear-gradient(135deg, #15803d, #22c55e)",
+                        borderRadius: "8px", padding: "8px 13px",
+                        fontSize: "11px", fontWeight: 700, color: "#fff",
+                        letterSpacing: "0.5px", fontFamily: "'Poppins', sans-serif",
+                        whiteSpace: "nowrap" as const,
+                      }}>
+                        {isLive ? "Predict Live" : "Predict"}
+                      </div>
+                    )}
+                    {isFinished && (
+                      <div style={{
+                        flexShrink: 0,
+                        background: "rgba(34,197,94,0.10)",
+                        border: "1px solid rgba(34,197,94,0.25)",
+                        borderRadius: "8px", padding: "8px 13px",
+                        fontSize: "11px", fontWeight: 700, color: "#22c55e",
+                        letterSpacing: "0.5px", fontFamily: "'Poppins', sans-serif",
+                        whiteSpace: "nowrap" as const,
+                      }}>
+                        Share Pick
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── TAB BAR ── */}
       <div style={{

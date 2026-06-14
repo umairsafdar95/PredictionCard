@@ -2,14 +2,38 @@ import React from "react";
 import { FormState, languageLabels } from "@/types";
 import { getTeam, getFlagUrl } from "@/data/teams";
 
-const FlagImg = ({ code, size, style }: { code: string; size?: number; style?: React.CSSProperties }) => (
-  <img
-    src={getFlagUrl(code, size ?? 160)}
-    alt={code}
-    crossOrigin="anonymous"
-    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", ...style }}
-  />
-);
+const FlagImg = ({ code, size, style }: { code: string | undefined; size?: number; style?: React.CSSProperties }) => {
+  if (!code) {
+    return (
+      <div style={{
+        width: "100%", height: "100%",
+        background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: "32px",
+      }}>⚽</div>
+    );
+  }
+  return (
+    <img
+      src={getFlagUrl(code, size ?? 160)}
+      alt={code}
+      crossOrigin="anonymous"
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", ...style }}
+      onError={(e) => {
+        const el = e.currentTarget as HTMLImageElement;
+        el.style.display = "none";
+        const parent = el.parentElement;
+        if (parent) {
+          parent.style.background = "linear-gradient(135deg, #1e293b 0%, #334155 100%)";
+          const fb = document.createElement("div");
+          fb.style.cssText = "width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;";
+          fb.textContent = "⚽";
+          parent.appendChild(fb);
+        }
+      }}
+    />
+  );
+};
 
 interface PredictionCardProps {
   formState: FormState;
@@ -97,7 +121,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 1 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -122,7 +146,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 2 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -241,7 +265,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             padding: "0 30px",
           }}>
             <div style={{ width: "140px", height: "93px", borderRadius: "6px", overflow: "hidden", border: "3px solid rgba(255,255,255,0.30)", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
@@ -276,7 +300,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
             padding: "0 30px",
           }}>
             <div style={{ width: "140px", height: "93px", borderRadius: "6px", overflow: "hidden", border: "3px solid rgba(255,255,255,0.30)", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "56px", fontWeight: 700,
@@ -423,7 +447,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 1 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "4px", overflow: "hidden", border: "3px solid #1a0800", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -447,7 +471,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 2 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "4px", overflow: "hidden", border: "3px solid #1a0800", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -586,7 +610,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 1 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(0,232,255,0.50)", boxShadow: "0 0 20px rgba(0,232,255,0.25)", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -615,7 +639,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           {/* Team 2 */}
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(0,232,255,0.50)", boxShadow: "0 0 20px rgba(0,232,255,0.25)", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{
               fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700,
@@ -774,7 +798,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         }}>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(192,132,252,0.45)", boxShadow: "0 0 18px rgba(192,132,252,0.25)", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(192,132,252,0.50)" }}>{t1?.shortName ?? team1}</div>
             <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(192,132,252,0.75)", fontWeight: 500 }}>{team1}</div>
@@ -784,7 +808,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
 
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(192,132,252,0.45)", boxShadow: "0 0 18px rgba(192,132,252,0.25)", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(192,132,252,0.50)" }}>{t2?.shortName ?? team2}</div>
             <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(192,132,252,0.75)", fontWeight: 500 }}>{team2}</div>
@@ -883,7 +907,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
         }}>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,107,53,0.45)", boxShadow: "0 0 20px rgba(255,107,53,0.22)", flexShrink: 0 }}>
-              <FlagImg code={t1?.code ?? "un"} />
+              <FlagImg code={t1?.code} />
             </div>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(255,107,53,0.45)" }}>{t1?.shortName ?? team1}</div>
             <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(255,160,80,0.80)", fontWeight: 500 }}>{team1}</div>
@@ -893,7 +917,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
 
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(255,107,53,0.45)", boxShadow: "0 0 20px rgba(255,107,53,0.22)", flexShrink: 0 }}>
-              <FlagImg code={t2?.code ?? "un"} />
+              <FlagImg code={t2?.code} />
             </div>
             <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "46px", fontWeight: 700, color: "#ffffff", letterSpacing: "3px", textShadow: "0 0 18px rgba(255,107,53,0.45)" }}>{t2?.shortName ?? team2}</div>
             <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "26px", color: "rgba(255,160,80,0.80)", fontWeight: 500 }}>{team2}</div>
@@ -991,7 +1015,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           gap: "14px",
         }}>
           <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(212,175,55,0.50)", boxShadow: "0 0 16px rgba(212,175,55,0.20)", flexShrink: 0 }}>
-            <FlagImg code={t1?.code ?? "un"} />
+            <FlagImg code={t1?.code} />
           </div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
@@ -1024,7 +1048,7 @@ export default function PredictionCard({ formState, cardRef }: PredictionCardPro
           gap: "14px",
         }}>
           <div style={{ width: "130px", height: "86px", borderRadius: "8px", overflow: "hidden", border: "2px solid rgba(212,175,55,0.50)", boxShadow: "0 0 16px rgba(212,175,55,0.20)", flexShrink: 0 }}>
-            <FlagImg code={t2?.code ?? "un"} />
+            <FlagImg code={t2?.code} />
           </div>
           <div style={{
             fontFamily: "'Oswald', sans-serif", fontSize: "44px", fontWeight: 700,
