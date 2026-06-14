@@ -138,8 +138,8 @@ export function useLiveMatches() {
         return;
       }
       try {
-        // Fetch yesterday, today, tomorrow, day-after in parallel
-        const days = [-1, 0, 1, 2];
+        // Fetch 3 days back through 2 days ahead in parallel
+        const days = [-3, -2, -1, 0, 1, 2];
         const results = await Promise.allSettled(
           days.map((d) =>
             fetch(`${ESPN_SITE}/scoreboard?dates=${yyyymmdd(d)}&limit=20`, {
