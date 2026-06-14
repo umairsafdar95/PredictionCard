@@ -104,6 +104,7 @@ const UI_TEXT: Record<Language, {
   faqQ1: string; faqA1: string; faqQ2: string; faqA2: string;
   faqQ3: string; faqA3: string; faqQ4: string; faqA4: string; faqQ5: string; faqA5: string;
   footerTagline: string; footerCopyright: string;
+  cardsMade?: string; nations?: string; cardStyles?: string;
 }> = {
   en: {
     subtitle: "Predict the score · Download your card · Challenge friends",
