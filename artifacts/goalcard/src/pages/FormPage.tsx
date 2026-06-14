@@ -646,29 +646,30 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
             fontFamily: "'Poppins', sans-serif",
           }}>{ui.subtitle}</div>
 
-          {/* Stats row — larger values */}
+          {/* Stats row — 3-column grid, never wraps on mobile */}
           <div style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "10px",
-            flexWrap: "wrap" as const,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: "8px",
+            width: "100%",
+            maxWidth: "480px",
+            margin: "0 auto",
           }}>
             {[
-              { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: ui.cardsMade ?? "cards made" },
+              { icon: "🃏", val: (cardCount + 47293).toLocaleString(), label: ui.cardsMade ?? "cards" },
               { icon: "🌍", val: "48", label: ui.nations ?? "nations" },
-              { icon: "🎨", val: "7", label: ui.cardStyles ?? "card styles" },
+              { icon: "🎨", val: "7", label: ui.cardStyles ?? "styles" },
             ].map((s) => (
               <div key={s.label} style={{
                 background: "rgba(255,255,255,0.07)",
                 border: "1px solid rgba(255,255,255,0.14)",
-                borderRadius: "16px",
-                padding: "12px 20px",
-                display: "flex", alignItems: "center", gap: "10px",
-                backdropFilter: "blur(4px)",
+                borderRadius: "14px",
+                padding: "11px 10px",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: "3px",
               }}>
-                <span style={{ fontSize: "18px" }}>{s.icon}</span>
-                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "24px", fontWeight: 700, color: "#fff" }}>{s.val}</span>
-                <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.50)" }}>{s.label}</span>
+                <span style={{ fontSize: "16px" }}>{s.icon}</span>
+                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "22px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{s.val}</span>
+                <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", lineHeight: 1 }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -714,85 +715,109 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     style={{
-                      display: "flex", alignItems: "center", gap: "10px",
+                      display: "flex", flexDirection: "column", gap: "10px",
                       background: isLive ? "rgba(220,38,38,0.09)" : "rgba(255,255,255,0.04)",
                       border: isLive ? "1.5px solid rgba(220,38,38,0.40)" : "1px solid rgba(255,255,255,0.09)",
-                      borderRadius: "12px", padding: "13px 14px",
+                      borderRadius: "14px", padding: "14px 16px",
                       cursor: "pointer", textAlign: "left", width: "100%",
                     }}
                     onMouseOver={(e) => { e.currentTarget.style.background = isLive ? "rgba(220,38,38,0.14)" : "rgba(34,197,94,0.07)"; e.currentTarget.style.borderColor = isLive ? "rgba(220,38,38,0.6)" : "rgba(34,197,94,0.35)"; }}
                     onMouseOut={(e) => { e.currentTarget.style.background = isLive ? "rgba(220,38,38,0.09)" : "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = isLive ? "rgba(220,38,38,0.40)" : "rgba(255,255,255,0.09)"; }}
                   >
-                    {/* Group badge */}
-                    {m.group && (
-                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.30)", fontFamily: "'Oswald', sans-serif", letterSpacing: "1px", minWidth: "28px", flexShrink: 0 }}>
-                        GRP<br />{m.group}
-                      </div>
-                    )}
-
-                    {/* Team 1 */}
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px", overflow: "hidden", minWidth: 0 }}>
-                      {dm1?.code ? (
-                        <img src={`https://flagcdn.com/w40/${dm1.code}.png`} alt={m.team1} crossOrigin="anonymous"
-                          style={{ height: "24px", width: "auto", borderRadius: "3px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.15)" }} />
-                      ) : (
-                        <span style={{ fontSize: "20px", flexShrink: 0 }}>{m.team1Flag}</span>
-                      )}
-                      <span style={{ fontSize: "13px", fontWeight: 600, color: "#fff", fontFamily: "'Poppins', sans-serif", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis" }}>{m.team1}</span>
-                    </div>
-
-                    {/* Score / Time */}
-                    <div style={{ flexShrink: 0, textAlign: "center", minWidth: "68px" }}>
-                      {hasScore ? (
-                        <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
-                          {isLive && <div style={{ fontSize: "8px", color: "#ef4444", letterSpacing: "2px", marginBottom: "2px" }}>🔴 LIVE</div>}
-                          <div style={{ fontSize: "18px", color: isLive ? "#ef4444" : "#22c55e", letterSpacing: "2px" }}>{ls.score1} – {ls.score2}</div>
-                          {isFinished && <div style={{ fontSize: "8px", color: "#22c55e", letterSpacing: "2px", marginTop: "2px" }}>FULL TIME</div>}
-                        </div>
-                      ) : (
-                        <div style={{ fontFamily: "'Poppins', sans-serif", lineHeight: 1.4 }}>
-                          <div style={{ fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "2px" }}>VS</div>
-                          <div style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.55)", marginTop: "2px" }}>{m.timeET.replace(" ET", "")}</div>
-                          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.25)" }}>ET</div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Team 2 */}
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px", justifyContent: "flex-end", overflow: "hidden", minWidth: 0 }}>
-                      <span style={{ fontSize: "13px", fontWeight: 600, color: "#fff", fontFamily: "'Poppins', sans-serif", whiteSpace: "nowrap" as const, overflow: "hidden", textOverflow: "ellipsis", textAlign: "right" as const }}>{m.team2}</span>
-                      {dm2?.code ? (
-                        <img src={`https://flagcdn.com/w40/${dm2.code}.png`} alt={m.team2} crossOrigin="anonymous"
-                          style={{ height: "24px", width: "auto", borderRadius: "3px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.15)" }} />
-                      ) : (
-                        <span style={{ fontSize: "20px", flexShrink: 0 }}>{m.team2Flag}</span>
-                      )}
-                    </div>
-
-                    {/* Action pill */}
-                    {(!hasScore || isLive) && (
+                    {/* ── Row 1: metadata ── */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{
-                        flexShrink: 0,
-                        background: "linear-gradient(135deg, #15803d, #22c55e)",
-                        borderRadius: "8px", padding: "8px 13px",
-                        fontSize: "11px", fontWeight: 700, color: "#fff",
-                        letterSpacing: "0.5px", fontFamily: "'Poppins', sans-serif",
-                        whiteSpace: "nowrap" as const,
+                        fontSize: "10px", fontWeight: 700, letterSpacing: "2px",
+                        color: "rgba(255,255,255,0.35)", fontFamily: "'Oswald', sans-serif",
+                        textTransform: "uppercase" as const,
                       }}>
-                        {isLive ? "Predict Live" : "Predict"}
+                        {m.group ? `Group ${m.group}` : "World Cup 2026"}
                       </div>
-                    )}
-                    {isFinished && (
+                      <div style={{ fontSize: "11px", fontFamily: "'Poppins', sans-serif" }}>
+                        {isLive ? (
+                          <span style={{ color: "#ef4444", fontWeight: 700, letterSpacing: "1px" }}>🔴 LIVE</span>
+                        ) : isFinished ? (
+                          <span style={{ color: "#22c55e", fontWeight: 600 }}>Full Time</span>
+                        ) : (
+                          <span style={{ color: "rgba(255,255,255,0.45)", fontWeight: 500 }}>{m.timeET}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* ── Row 2: teams + score ── */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      {/* Team 1 */}
+                      <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+                        {dm1?.code ? (
+                          <img src={`https://flagcdn.com/w40/${dm1.code}.png`} alt={m.team1} crossOrigin="anonymous"
+                            style={{ height: "28px", width: "auto", borderRadius: "4px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.2)" }} />
+                        ) : (
+                          <span style={{ fontSize: "22px", flexShrink: 0, lineHeight: 1 }}>{m.team1Flag}</span>
+                        )}
+                        <span style={{
+                          fontSize: "15px", fontWeight: 700, color: "#ffffff",
+                          fontFamily: "'Poppins', sans-serif",
+                          lineHeight: 1.2,
+                        }}>{m.team1}</span>
+                      </div>
+
+                      {/* Score / VS */}
+                      <div style={{ flexShrink: 0, textAlign: "center", minWidth: "52px" }}>
+                        {hasScore ? (
+                          <div style={{
+                            fontFamily: "'Oswald', sans-serif", fontWeight: 900,
+                            fontSize: "22px", letterSpacing: "2px",
+                            color: isLive ? "#ef4444" : "#22c55e",
+                          }}>
+                            {ls.score1}–{ls.score2}
+                          </div>
+                        ) : (
+                          <div style={{
+                            fontFamily: "'Oswald', sans-serif", fontSize: "12px",
+                            color: "rgba(255,255,255,0.25)", letterSpacing: "3px", fontWeight: 400,
+                          }}>VS</div>
+                        )}
+                      </div>
+
+                      {/* Team 2 */}
+                      <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "10px", justifyContent: "flex-end", minWidth: 0 }}>
+                        <span style={{
+                          fontSize: "15px", fontWeight: 700, color: "#ffffff",
+                          fontFamily: "'Poppins', sans-serif",
+                          lineHeight: 1.2, textAlign: "right" as const,
+                        }}>{m.team2}</span>
+                        {dm2?.code ? (
+                          <img src={`https://flagcdn.com/w40/${dm2.code}.png`} alt={m.team2} crossOrigin="anonymous"
+                            style={{ height: "28px", width: "auto", borderRadius: "4px", flexShrink: 0, border: "1px solid rgba(255,255,255,0.2)" }} />
+                        ) : (
+                          <span style={{ fontSize: "22px", flexShrink: 0, lineHeight: 1 }}>{m.team2Flag}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* ── Row 3: action button (full width) ── */}
+                    {isFinished ? (
                       <div style={{
-                        flexShrink: 0,
-                        background: "rgba(34,197,94,0.10)",
-                        border: "1px solid rgba(34,197,94,0.25)",
-                        borderRadius: "8px", padding: "8px 13px",
-                        fontSize: "11px", fontWeight: 700, color: "#22c55e",
-                        letterSpacing: "0.5px", fontFamily: "'Poppins', sans-serif",
-                        whiteSpace: "nowrap" as const,
+                        textAlign: "center", padding: "9px",
+                        background: "rgba(34,197,94,0.08)",
+                        border: "1px solid rgba(34,197,94,0.22)",
+                        borderRadius: "8px",
+                        fontSize: "13px", fontWeight: 700, color: "#22c55e",
+                        fontFamily: "'Poppins', sans-serif", letterSpacing: "0.3px",
                       }}>
-                        Share Pick
+                        📤 Share Your Pick
+                      </div>
+                    ) : (
+                      <div style={{
+                        textAlign: "center", padding: "10px",
+                        background: isLive
+                          ? "linear-gradient(135deg, #991b1b, #dc2626)"
+                          : "linear-gradient(135deg, #15803d, #22c55e)",
+                        borderRadius: "8px",
+                        fontSize: "13px", fontWeight: 700, color: "#fff",
+                        fontFamily: "'Poppins', sans-serif", letterSpacing: "0.5px",
+                      }}>
+                        {isLive ? "⚽ Predict Live Score" : "⚽ Predict This Match"}
                       </div>
                     )}
                   </button>
