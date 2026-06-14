@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormState, Theme, Language } from "@/types";
 import teams, { getTeam } from "@/data/teams";
 import { getTodaysMatches, type Match } from "@/data/matches";
@@ -463,6 +463,21 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const t1 = getTeam(team1);
   const t2 = getTeam(team2);
   const isPremium = localStorage.getItem("goalcard_premium") === "true";
+
+  // Preload flag images the moment teams are selected so the card renders
+  // instantly. crossOrigin must match PredictionCard or the browser keeps
+  // two separate cache entries and re-fetches on card open.
+  useEffect(() => {
+    const codes = [t1?.code, t2?.code].filter(Boolean) as string[];
+    codes.forEach((code) => {
+      [160, 80, 40].forEach((size) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = `https://flagcdn.com/w${size}/${code}.png`;
+      });
+    });
+  }, [t1?.code, t2?.code]);
+
 
   const set = <K extends keyof FormState>(field: K, value: FormState[K]) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
