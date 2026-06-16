@@ -452,7 +452,13 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const todayMatches = getTodaysMatches().slice(0, 3);
   const { matches: liveMatches } = useLiveMatches();
 
-  const nowET = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const getETNow = () => new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const [nowET, setNowET] = useState<Date>(getETNow);
+  useEffect(() => {
+    const tick = setInterval(() => setNowET(getETNow()), 60_000);
+    return () => clearInterval(tick);
+  }, []);
+
   const todayET = `${nowET.getFullYear()}-${String(nowET.getMonth() + 1).padStart(2, "0")}-${String(nowET.getDate()).padStart(2, "0")}`;
   const todayScheduleMatches = schedule.filter((m) => m.date === todayET);
   const dashboardMatches = todayScheduleMatches.length > 0
