@@ -61,7 +61,7 @@ export default function PricingPage() {
             ))}
           </ul>
           <button
-            onClick={() => window.open("https://perdictioncard.com/upgrade", "_blank")}
+            onClick={() => window.open("https://safdar84.gumroad.com/l/brizke", "_blank")}
             style={{ display: "block", width: "100%", marginTop: "28px", padding: "14px", background: "linear-gradient(135deg, #d97706, #f59e0b, #fbbf24)", border: "none", borderRadius: "10px", textAlign: "center", color: "#1a0800", fontWeight: 800, fontSize: "15px", cursor: "pointer", fontFamily: "'Oswald', sans-serif", letterSpacing: "1px", boxShadow: "0 4px 20px rgba(245,158,11,0.4)" }}
           >
             ⚡ UPGRADE NOW — $1.99
