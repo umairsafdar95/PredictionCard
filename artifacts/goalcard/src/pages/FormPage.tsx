@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { FormState, Theme, Language } from "@/types";
 import teams, { getTeam } from "@/data/teams";
-import { getTodaysMatches, type Match } from "@/data/matches";
+import { type Match } from "@/data/matches";
 import SchedulePage from "@/components/SchedulePage";
-import { type ScheduleMatch } from "@/data/matches";
 import { useLiveMatches, findLiveScore } from "@/lib/liveData";
 import { useMergedSchedule } from "@/lib/useMergedSchedule";
 
@@ -451,9 +450,9 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const [activeTab, setActiveTab] = useState<"predict" | "schedule">("predict");
   const [loadedMatch, setLoadedMatch] = useState<{ team1: string; team2: string; team1Flag: string; team2Flag: string } | null>(null);
   const matchList = useMergedSchedule();
-const todayMatches = matchList
-  .filter((m) => m.date === todayET)
-  .slice(0, 3);
+  const todayMatches = matchList
+    .filter((m) => m.date === todayET)
+    .slice(0, 3);
   const { matches: liveMatches } = useLiveMatches();
 
   const getETNow = () => new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
