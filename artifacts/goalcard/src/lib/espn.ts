@@ -2,8 +2,8 @@ const ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer";
 
 export interface EspnKnockoutMatch {
   date: string;
-  time: string;       // "15:00" ET 24h
-  timeET: string;     // "3:00 PM ET"
+  time: string;
+  timeET: string;
   stage: string;
   team1: string;
   team2: string;
@@ -74,26 +74,25 @@ function fixName(name: string): string {
   return NAME_FIX[name] || name;
 }
 
-/* ── Stage helpers ── */
-const KO_KEYWORDS = [
-  "round of 32","round of 16","quarter","semi",
-  "third place","third-place","final","championship",
-];
+/* ── Stage helpers — ORDER MATTERS: check more specific first ── */
+function normalizeStage(name: string): string {
+  const l = name.toLowerCase();
+  if (l.includes("third place") || l.includes("third-place")) return "Third Place";
+  if (l.includes("semi")) return "Semi Finals";
+  if (l.includes("quarter")) return "Quarter Finals";
+  if (l.includes("round of 16") || l.includes("eight finals") || l.includes("round of sixteen")) return "Round of 16";
+  if (l.includes("round of 32") || l.includes("round of thirty") || l.includes("sixteen finals")) return "Round of 32";
+  if (l.includes("final") || l.includes("championship")) return "Final";
+  return name;
+}
 
 function isKnockout(name: string): boolean {
   const l = name.toLowerCase();
-  return KO_KEYWORDS.some(k => l.includes(k));
-}
-
-function normalizeStage(name: string): string {
-  const l = name.toLowerCase();
-  if (l.includes("round of 32") || l.includes("round of 16")) return "Round of 32";
-  if (l.includes("round of 16") || l.includes("eight finals")) return "Round of 16";
-  if (l.includes("quarter")) return "Quarter Finals";
-  if (l.includes("semi")) return "Semi Finals";
-  if (l.includes("third")) return "Third Place";
-  if (l.includes("final") || l.includes("championship")) return "Final";
-  return name;
+  return [
+    "round of 32","round of 16","round of thirty","round of sixteen",
+    "eight finals","sixteen finals","quarter","semi",
+    "third place","third-place","final","championship",
+  ].some(k => l.includes(k));
 }
 
 function mapStatus(raw: string): "upcoming" | "live" | "completed" {
@@ -122,12 +121,12 @@ function toET24h(iso: string): string {
   } catch { return ""; }
 }
 
-/* ── Main fetch ── */
+/* ── Main fetch — fifa.world is the WORKING slug ── */
 export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
   const slugs = [
-    "fifa.worldcup.2026",
-    "fifa.worldcup",
-    "fifa.world",
+    "fifa.world",            // ✅ VERIFIED WORKING
+    "fifa.worldcup",         // fallback
+    "fifa.worldcup.2026",    // fallback
   ];
 
   for (const slug of slugs) {
