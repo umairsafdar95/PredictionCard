@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { type ScheduleMatch } from "@/data/schedule";
-import { getNextMatch } from "@/data/schedule";
+import { type ScheduleMatch, getNextMatch } from "@/data/schedule";
 import { Language } from "@/types";
 import { useLiveMatches, useStandings, findLiveScore, GroupStanding, StandingEntry } from "@/lib/liveData";
 import { useMergedSchedule } from "@/lib/useMergedSchedule";
@@ -11,59 +10,6 @@ interface Props {
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
-
-/* ── Merge ESPN live data over local schedule ── */
-ScheduleMatch[] {
-  if (espn.length === 0) return local;
-  const used = new Set<number>();
-  const result: ScheduleMatch[] = [];
-
-  for (const m of local) {
-    if (m.group !== null) { result.push(m); continue; }
-
-    let idx = espn.findIndex((e, i) =>
-      !used.has(i) && e.stage === m.stage && e.date === m.date && e.time === m.time
-    );
-    if (idx === -1) idx = espn.findIndex((e, i) =>
-      !used.has(i) && e.stage === m.stage && e.date === m.date && e.venue === m.venue
-    );
-    if (idx === -1) idx = espn.findIndex((e, i) =>
-      !used.has(i) && e.stage === m.stage && e.date === m.date
-    );
-
-    if (idx !== -1) {
-      used.add(idx);
-      const e = espn[idx];
-      result.push({
-        ...m,
-        team1: e.team1, team2: e.team2,
-        team1Flag: e.team1Flag, team2Flag: e.team2Flag,
-        status: e.status,
-        ...(e.isFinal ? { isFinal: true } : {}),
-      });
-    } else {
-      result.push(m);
-    }
-  }
-
-  // Add any ESPN matches not in local schedule
-  for (let i = 0; i < espn.length; i++) {
-    if (used.has(i)) continue;
-    const e = espn[i];
-    result.push({
-      id: `espn-${e.date}-${e.time}`,
-      date: e.date, time: e.time, timeET: e.timeET,
-      group: null,
-      team1: e.team1, team2: e.team2,
-      team1Flag: e.team1Flag, team2Flag: e.team2Flag,
-      venue: e.venue, city: e.city,
-      stage: e.stage, status: e.status,
-      isFinal: e.isFinal,
-    });
-  }
-
-  return result;
-}
 
 const SCHEDULE_TEXT: Record<Language, {
   all: string; groupStage: string; roundOf32: string; roundOf16: string;
@@ -278,16 +224,12 @@ export default function SchedulePage({ onPredict, language }: Props) {
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<"schedule" | "standings">("schedule");
 
-  /* ── ESPN knockout data ── */
-const matchList = useMergedSchedule();
-const espnLoaded = true;
+  const matchList = useMergedSchedule();
+  const espnLoaded = true;
 
   const { matches: liveMatches } = useLiveMatches();
   const { groups: standingGroups, loading: standingsLoading, error: standingsError } = useStandings();
 
-  /* ── Fetch ESPN data on mount + every 5 min ── */
-  
-  /* ── Countdown ── */
   useEffect(() => {
     if (!nextMatch) return;
     const tick = () => {
@@ -359,7 +301,6 @@ const espnLoaded = true;
   return (
     <div style={{ background: "#0a0a1a", minHeight: "60vh", paddingBottom: "60px", direction: isRTL ? "rtl" : "ltr" }}>
 
-      {/* ── COUNTDOWN ── */}
       {nextMatch && countdown && (
         <div style={{
           background: "linear-gradient(135deg, #071330 0%, #0d1e4a 100%)",
@@ -446,7 +387,6 @@ const espnLoaded = true;
         </div>
       )}
 
-      {/* ── FILTERS ── */}
       <div style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "16px" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "10px" }}>
 
@@ -507,12 +447,10 @@ const espnLoaded = true;
         </div>
       </div>
 
-      {/* ── STANDINGS VIEW ── */}
       {viewMode === "standings" && (
         <StandingsView groups={standingGroups} loading={standingsLoading} error={standingsError} language={language} />
       )}
 
-      {/* ── MATCH LIST ── */}
       {viewMode === "schedule" && (
       <div style={{ maxWidth: "600px", margin: "0 auto", padding: "24px 16px 0" }}>
         {dates.length === 0 ? (
@@ -566,7 +504,6 @@ const espnLoaded = true;
                           opacity: isCompleted ? 0.55 : 1,
                         }}
                       >
-                        {/* Top row */}
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
                           <div style={{
                             fontSize: "11px", fontWeight: 700, color: isFinal ? "#d4af37" : "rgba(255,255,255,0.40)",
@@ -604,7 +541,6 @@ const espnLoaded = true;
                           </div>
                         </div>
 
-                        {/* Teams row */}
                         {(() => {
                           const hasScore = ls && ls.score1 !== null && ls.score2 !== null;
                           return (
@@ -633,12 +569,10 @@ const espnLoaded = true;
                           );
                         })()}
 
-                        {/* Venue */}
                         <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", fontFamily: "'Poppins', sans-serif", marginBottom: "12px", textAlign: "center" }}>
                           📍 {m.venue}, {m.city}
                         </div>
 
-                        {/* Predict button */}
                         {!isCompleted && (
                           <button
                             type="button"
