@@ -1,4 +1,4 @@
-const ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer";
+const API_PROXY = "/api/espn";
 
 export interface EspnKnockoutMatch {
   date: string;
@@ -74,7 +74,7 @@ function fixName(name: string): string {
   return NAME_FIX[name] || name;
 }
 
-/* ── Stage helpers — ORDER MATTERS: check more specific first ── */
+/* ── Stage helpers ── */
 function normalizeStage(name: string): string {
   const l = name.toLowerCase();
   if (l.includes("third place") || l.includes("third-place")) return "Third Place";
@@ -121,71 +121,68 @@ function toET24h(iso: string): string {
   } catch { return ""; }
 }
 
-/* ── Main fetch — fifa.world is the WORKING slug ── */
+/* ── Main fetch — calls OUR proxy, not ESPN directly ── */
 export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
-  const slugs = [
-    "fifa.world",            // ✅ VERIFIED WORKING
-    "fifa.worldcup",         // fallback
-    "fifa.worldcup.2026",    // fallback
-  ];
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
 
-  for (const slug of slugs) {
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(API_PROXY, { signal: controller.signal });
+    clearTimeout(timeout);
 
-      const res = await fetch(
-        `${ESPN_BASE}/${slug}/scoreboard?lang=en&region=us`,
-        { signal: controller.signal }
-      );
-      clearTimeout(timeout);
-
-      if (!res.ok) continue;
-      const data = await res.json();
-      if (!data.events?.length) continue;
-
-      const out: EspnKnockoutMatch[] = [];
-
-      for (const event of data.events) {
-        const comp = event.competitions?.[0];
-        if (!comp) continue;
-
-        const label = event.name || comp.name || "";
-        if (comp.group && !isKnockout(label)) continue;
-
-        const home = comp.competitors?.find((c: any) => c.homeAway === "home");
-        const away = comp.competitors?.find((c: any) => c.homeAway === "away");
-        if (!home || !away) continue;
-
-        const stage = normalizeStage(label);
-        const isFinal = stage === "Final";
-
-        out.push({
-          date: comp.date?.split("T")[0] || "",
-          time: toET24h(comp.date),
-          timeET: toET(comp.date),
-          stage,
-          team1: fixName(home.team?.displayName),
-          team2: fixName(away.team?.displayName),
-          team1Flag: toFlagEmoji(toIsoCode(home.team?.abbreviation)),
-          team2Flag: toFlagEmoji(toIsoCode(away.team?.abbreviation)),
-          status: mapStatus(comp.status?.type?.name || ""),
-          venue: comp.venue?.fullName || "",
-          city: [comp.venue?.address?.city, comp.venue?.address?.state]
-            .filter(Boolean).join(", "),
-          isFinal,
-        });
-      }
-
-      if (out.length > 0) return out;
-    } catch (err) {
-      if (err instanceof DOMException && err.name === "AbortError") {
-        console.warn(`ESPN "${slug}" timed out`);
-      } else {
-        console.warn(`ESPN "${slug}" failed:`, err);
-      }
+    if (!res.ok) {
+      console.warn("ESPN proxy returned", res.status);
+      return [];
     }
-  }
 
-  return [];
+    const data = await res.json();
+
+    if (!data.events?.length) {
+      console.warn("ESPN proxy: no events");
+      return [];
+    }
+
+    const out: EspnKnockoutMatch[] = [];
+
+    for (const event of data.events) {
+      const comp = event.competitions?.[0];
+      if (!comp) continue;
+
+      const label = event.name || comp.name || "";
+      if (comp.group && !isKnockout(label)) continue;
+
+      const home = comp.competitors?.find((c: any) => c.homeAway === "home");
+      const away = comp.competitors?.find((c: any) => c.homeAway === "away");
+      if (!home || !away) continue;
+
+      const stage = normalizeStage(label);
+      const isFinal = stage === "Final";
+
+      out.push({
+        date: comp.date?.split("T")[0] || "",
+        time: toET24h(comp.date),
+        timeET: toET(comp.date),
+        stage,
+        team1: fixName(home.team?.displayName),
+        team2: fixName(away.team?.displayName),
+        team1Flag: toFlagEmoji(toIsoCode(home.team?.abbreviation)),
+        team2Flag: toFlagEmoji(toIsoCode(away.team?.abbreviation)),
+        status: mapStatus(comp.status?.type?.name || ""),
+        venue: comp.venue?.fullName || "",
+        city: [comp.venue?.address?.city, comp.venue?.address?.state]
+          .filter(Boolean).join(", "),
+        isFinal,
+      });
+    }
+
+    console.log(`ESPN proxy: fetched ${out.length} matches (${out.filter(m => m.group === undefined || true).length} knockout)`);
+    return out;
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      console.warn("ESPN proxy timed out");
+    } else {
+      console.warn("ESPN proxy failed:", err);
+    }
+    return [];
+  }
 }

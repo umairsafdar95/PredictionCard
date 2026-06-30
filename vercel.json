@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/api/espn", "destination": "/api/espn" }
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
