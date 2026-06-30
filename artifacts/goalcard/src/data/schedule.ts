@@ -127,37 +127,75 @@ const schedule: ScheduleMatch[] = [
   { id: "M071", date: "2026-06-27", time: "22:00", timeET: "10:00 PM ET", group: "J", team1: "Algeria",   team2: "Austria",    team1Flag: "🇩🇿", team2Flag: "🇦🇹", venue: "Arrowhead Stadium",      city: "Kansas City, MO",     stage: "Group Stage", status: "upcoming" },
   { id: "M072", date: "2026-06-27", time: "22:00", timeET: "10:00 PM ET", group: "J", team1: "Jordan",    team2: "Argentina",  team1Flag: "🇯🇴", team2Flag: "🇦🇷", venue: "AT&T Stadium",           city: "Arlington, TX",        stage: "Group Stage", status: "upcoming" },
 
+   // ══════════════════════════════════════════════════════
+  //  ROUND OF 32  (June 28 – July 2, 16 matches)
   // ══════════════════════════════════════════════════════
-  //  ROUND OF 32  (June 28 – July 3, TBD)
-  // ══════════════════════════════════════════════════════
-  { id: "M073", date: "2026-06-28", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "Runner-up Group A", team2: "Runner-up Group B", team1Flag: "🥈", team2Flag: "🥈", venue: "SoFi Stadium",           city: "Inglewood, CA",       stage: "Round of 32", status: "upcoming" },
-  { id: "M074", date: "2026-06-29", time: "13:00", timeET: "1:00 PM ET",  group: null, team1: "Winner Group C",    team2: "Runner-up Group F",  team1Flag: "🏆", team2Flag: "🥈", venue: "NRG Stadium",            city: "Houston, TX",         stage: "Round of 32", status: "upcoming" },
-  { id: "M075", date: "2026-06-29", time: "16:30", timeET: "4:30 PM ET",  group: null, team1: "Winner Group E",    team2: "TBD",                team1Flag: "🏆", team2Flag: "🏆", venue: "Gillette Stadium",       city: "Foxborough, MA",      stage: "Round of 32", status: "upcoming" },
-  { id: "M076", date: "2026-06-30", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "Winner Group F",    team2: "Runner-up Group C",  team1Flag: "🏆", team2Flag: "🥈", venue: "Estadio BBVA",           city: "Monterrey, Mexico",   stage: "Round of 32", status: "upcoming" },
-  { id: "M077", date: "2026-06-30", time: "13:00", timeET: "1:00 PM ET",  group: null, team1: "Runner-up Group E", team2: "TBD",                team1Flag: "🥈", team2Flag: "🏆", venue: "AT&T Stadium",           city: "Arlington, TX",       stage: "Round of 32", status: "upcoming" },
-  { id: "M078", date: "2026-06-30", time: "17:00", timeET: "5:00 PM ET",  group: null, team1: "Winner Group I",    team2: "TBD",                team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Round of 32", status: "upcoming" },
+
+  // ── JUNE 28 (SATURDAY) ──────────────────────────────
+  { id: "M073", date: "2026-06-28", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "SoFi Stadium",            city: "Inglewood, CA",       stage: "Round of 32", status: "upcoming" },
+  { id: "M074", date: "2026-06-28", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Round of 32", status: "upcoming" },
+  { id: "M075", date: "2026-06-28", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",           city: "Arlington, TX",       stage: "Round of 32", status: "upcoming" },
+
+  // ── JUNE 29 (SUNDAY) ───────────────────────────────
+  { id: "M076", date: "2026-06-29", time: "13:00", timeET: "1:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "NRG Stadium",             city: "Houston, TX",         stage: "Round of 32", status: "upcoming" },
+  { id: "M077", date: "2026-06-29", time: "16:00", timeET: "4:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Gillette Stadium",       city: "Foxborough, MA",      stage: "Round of 32", status: "upcoming" },
+  { id: "M078", date: "2026-06-29", time: "19:00", timeET: "7:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Lincoln Financial Field",city: "Philadelphia, PA",    stage: "Round of 32", status: "upcoming" },
+  { id: "M079", date: "2026-06-29", time: "22:00", timeET: "10:00 PM ET", group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Mercedes-Benz Stadium",  city: "Atlanta, GA",        stage: "Round of 32", status: "upcoming" },
+
+  // ── JUNE 30 (MONDAY) ───────────────────────────────
+  { id: "M080", date: "2026-06-30", time: "13:00", timeET: "1:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Lumen Field",            city: "Seattle, WA",         stage: "Round of 32", status: "upcoming" },
+  { id: "M081", date: "2026-06-30", time: "16:00", timeET: "4:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Levi's Stadium",         city: "Santa Clara, CA",     stage: "Round of 32", status: "upcoming" },
+  { id: "M082", date: "2026-06-30", time: "19:00", timeET: "7:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Arrowhead Stadium",      city: "Kansas City, MO",     stage: "Round of 32", status: "upcoming" },
+  { id: "M083", date: "2026-06-30", time: "22:00", timeET: "10:00 PM ET", group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Estadio Azteca",        city: "Mexico City, Mexico", stage: "Round of 32", status: "upcoming" },
+
+  // ── JULY 1 (TUESDAY) ───────────────────────────────
+  { id: "M084", date: "2026-07-01", time: "13:00", timeET: "1:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Estadio Akron",         city: "Guadalajara, Mexico", stage: "Round of 32", status: "upcoming" },
+  { id: "M085", date: "2026-07-01", time: "16:00", timeET: "4:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Estadio BBVA",          city: "Monterrey, Mexico",   stage: "Round of 32", status: "upcoming" },
+  { id: "M086", date: "2026-07-01", time: "19:00", timeET: "7:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "BMO Field",              city: "Toronto, Canada",     stage: "Round of 32", status: "upcoming" },
+  { id: "M087", date: "2026-07-01", time: "22:00", timeET: "10:00 PM ET", group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "BC Place",              city: "Vancouver, Canada",   stage: "Round of 32", status: "upcoming" },
+
+  // ── JULY 2 (WEDNESDAY) ─────────────────────────────
+  { id: "M088", date: "2026-07-02", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Hard Rock Stadium",     city: "Miami Gardens, FL",   stage: "Round of 32", status: "upcoming" },
 
   // ══════════════════════════════════════════════════════
-  //  QUARTER FINALS  (July 9 – 10)
+  //  ROUND OF 16  (July 4 – 5, 8 matches)
   // ══════════════════════════════════════════════════════
-  { id: "M097", date: "2026-07-09", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium", city: "East Rutherford, NJ", stage: "Quarter Finals", status: "upcoming" },
-  { id: "M098", date: "2026-07-10", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",    city: "Arlington, TX",       stage: "Quarter Finals", status: "upcoming" },
+
+  // ── JULY 4 (SATURDAY) ──────────────────────────────
+  { id: "M089", date: "2026-07-04", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "SoFi Stadium",            city: "Inglewood, CA",       stage: "Round of 16", status: "upcoming" },
+  { id: "M090", date: "2026-07-04", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Round of 16", status: "upcoming" },
+  { id: "M091", date: "2026-07-04", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",           city: "Arlington, TX",       stage: "Round of 16", status: "upcoming" },
+
+  // ── JULY 5 (SUNDAY) ───────────────────────────────
+  { id: "M092", date: "2026-07-05", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "NRG Stadium",             city: "Houston, TX",         stage: "Round of 16", status: "upcoming" },
+  { id: "M093", date: "2026-07-05", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Gillette Stadium",       city: "Foxborough, MA",      stage: "Round of 16", status: "upcoming" },
+  { id: "M094", date: "2026-07-05", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Lincoln Financial Field",city: "Philadelphia, PA",    stage: "Round of 16", status: "upcoming" },
+  { id: "M095", date: "2026-07-05", time: "22:00", timeET: "10:00 PM ET", group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Mercedes-Benz Stadium",  city: "Atlanta, GA",        stage: "Round of 16", status: "upcoming" },
+  { id: "M096", date: "2026-07-05", time: "23:00", timeET: "11:00 PM ET", group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Lumen Field",            city: "Seattle, WA",         stage: "Round of 16", status: "upcoming" },
 
   // ══════════════════════════════════════════════════════
-  //  SEMI FINALS  (July 14 – 15)
+  //  QUARTER FINALS  (July 9 – 10, 4 matches)
   // ══════════════════════════════════════════════════════
-  { id: "M101", date: "2026-07-14", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",    city: "Arlington, TX",       stage: "Semi Finals", status: "upcoming" },
-  { id: "M102", date: "2026-07-15", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium", city: "East Rutherford, NJ", stage: "Semi Finals", status: "upcoming" },
+  { id: "M097", date: "2026-07-09", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Quarter Finals", status: "upcoming" },
+  { id: "M098", date: "2026-07-09", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",           city: "Arlington, TX",       stage: "Quarter Finals", status: "upcoming" },
+  { id: "M099", date: "2026-07-10", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "NRG Stadium",             city: "Houston, TX",         stage: "Quarter Finals", status: "upcoming" },
+  { id: "M100", date: "2026-07-10", time: "21:00", timeET: "9:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "Gillette Stadium",       city: "Foxborough, MA",      stage: "Quarter Finals", status: "upcoming" },
 
   // ══════════════════════════════════════════════════════
-  //  THIRD PLACE  (July 18)
+  //  SEMI FINALS  (July 14 – 15, 2 matches)
   // ══════════════════════════════════════════════════════
-  { id: "M103", date: "2026-07-18", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🥉", team2Flag: "🥉", venue: "Hard Rock Stadium", city: "Miami, FL", stage: "Third Place", status: "upcoming" },
+  { id: "M101", date: "2026-07-14", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "AT&T Stadium",           city: "Arlington, TX",       stage: "Semi Finals", status: "upcoming" },
+  { id: "M102", date: "2026-07-15", time: "18:00", timeET: "6:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Semi Finals", status: "upcoming" },
 
   // ══════════════════════════════════════════════════════
-  //  THE FINAL  (July 19)
+  //  THIRD PLACE  (July 18, 1 match)
   // ══════════════════════════════════════════════════════
-  { id: "M104", date: "2026-07-19", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium", city: "East Rutherford, NJ", stage: "Final", status: "upcoming", isFinal: true },
+  { id: "M103", date: "2026-07-18", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🥉", team2Flag: "🥉", venue: "Hard Rock Stadium",     city: "Miami Gardens, FL",   stage: "Third Place", status: "upcoming" },
+
+  // ══════════════════════════════════════════════════════
+  //  THE FINAL  (July 19, 1 match)
+  // ══════════════════════════════════════════════════════
+  { id: "M104", date: "2026-07-19", time: "15:00", timeET: "3:00 PM ET",  group: null, team1: "TBD", team2: "TBD", team1Flag: "🏆", team2Flag: "🏆", venue: "MetLife Stadium",        city: "East Rutherford, NJ", stage: "Final", status: "upcoming", isFinal: true },
 ];
 
 export default schedule;

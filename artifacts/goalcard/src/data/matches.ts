@@ -11,16 +11,14 @@ export interface Match {
   group: string;
 }
 
-const matches: Match[] = schedule
-  .filter((m) => m.group !== null)
-  .map((m, i) => ({
-    id: i + 1,
-    team1: m.team1,
-    team2: m.team2,
-    date: m.date,
-    time: m.timeET,
-    group: m.group as string,
-  }));
+const matches: Match[] = schedule.map((m, i) => ({
+  id: i + 1,
+  team1: m.team1,
+  team2: m.team2,
+  date: m.date,
+  time: m.timeET,
+  group: m.group ?? "Knockout",
+}));
 
 export default matches;
 

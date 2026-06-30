@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import schedule, { ScheduleMatch, getNextMatch } from "@/data/schedule";
 import { Language } from "@/types";
 import { useLiveMatches, useStandings, findLiveScore, GroupStanding, StandingEntry } from "@/lib/liveData";
+import { fetchEspnKnockoutMatches, type EspnKnockoutMatch } from "@/services/espn";
 
 interface Props {
   onPredict: (match: ScheduleMatch) => void;
@@ -10,17 +11,74 @@ interface Props {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+/* ── Merge ESPN live data over local schedule ── */
+function mergeKnockoutData(
+  local: ScheduleMatch[],
+  espn: EspnKnockoutMatch[]
+): ScheduleMatch[] {
+  if (espn.length === 0) return local;
+  const used = new Set<number>();
+  const result: ScheduleMatch[] = [];
+
+  for (const m of local) {
+    if (m.group !== null) { result.push(m); continue; }
+
+    let idx = espn.findIndex((e, i) =>
+      !used.has(i) && e.stage === m.stage && e.date === m.date && e.time === m.time
+    );
+    if (idx === -1) idx = espn.findIndex((e, i) =>
+      !used.has(i) && e.stage === m.stage && e.date === m.date && e.venue === m.venue
+    );
+    if (idx === -1) idx = espn.findIndex((e, i) =>
+      !used.has(i) && e.stage === m.stage && e.date === m.date
+    );
+
+    if (idx !== -1) {
+      used.add(idx);
+      const e = espn[idx];
+      result.push({
+        ...m,
+        team1: e.team1, team2: e.team2,
+        team1Flag: e.team1Flag, team2Flag: e.team2Flag,
+        status: e.status,
+        ...(e.isFinal ? { isFinal: true } : {}),
+      });
+    } else {
+      result.push(m);
+    }
+  }
+
+  // Add any ESPN matches not in local schedule
+  for (let i = 0; i < espn.length; i++) {
+    if (used.has(i)) continue;
+    const e = espn[i];
+    result.push({
+      id: `espn-${e.date}-${e.time}`,
+      date: e.date, time: e.time, timeET: e.timeET,
+      group: null,
+      team1: e.team1, team2: e.team2,
+      team1Flag: e.team1Flag, team2Flag: e.team2Flag,
+      venue: e.venue, city: e.city,
+      stage: e.stage, status: e.status,
+      isFinal: e.isFinal,
+    });
+  }
+
+  return result;
+}
+
 const SCHEDULE_TEXT: Record<Language, {
-  all: string; groupStage: string; roundOf32: string; quarterFinals: string;
-  semiFinals: string; thirdPlace: string; final: string;
+  all: string; groupStage: string; roundOf32: string; roundOf16: string;
+  quarterFinals: string; semiFinals: string; thirdPlace: string; final: string;
   today: string; tomorrow: string; thisWeek: string;
   nextMatchIn: string; days: string; hrs: string; min: string; sec: string;
   liveNow: string; predictMatch: string; predictFinal: string;
   completed: string; noMatches: string; searchPlaceholder: string;
   worldCupFinal: string; group: string; liveTag: string; todayTag: string;
+  liveData: string; awaitingFixtures: string;
 }> = {
   en: {
-    all: "All", groupStage: "Group Stage", roundOf32: "Round of 32",
+    all: "All", groupStage: "Group Stage", roundOf32: "Round of 32", roundOf16: "Round of 16",
     quarterFinals: "Quarter Finals", semiFinals: "Semi Finals",
     thirdPlace: "Third Place", final: "Final",
     today: "Today", tomorrow: "Tomorrow", thisWeek: "This Week",
@@ -31,9 +89,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Search team, city...",
     worldCupFinal: "🏆 WORLD CUP FINAL 🏆", group: "Group",
     liveTag: "🔴 LIVE", todayTag: "TODAY",
+    liveData: "🟢 Live data from ESPN", awaitingFixtures: "⏳ Awaiting knockout fixtures",
   },
   ar: {
-    all: "الكل", groupStage: "دور المجموعات", roundOf32: "دور الـ32",
+    all: "الكل", groupStage: "دور المجموعات", roundOf32: "دور الـ32", roundOf16: "دور الـ16",
     quarterFinals: "ربع النهائي", semiFinals: "نصف النهائي",
     thirdPlace: "المركز الثالث", final: "النهائي",
     today: "اليوم", tomorrow: "غداً", thisWeek: "هذا الأسبوع",
@@ -44,9 +103,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "ابحث عن فريق أو مدينة...",
     worldCupFinal: "🏆 نهائي كأس العالم 🏆", group: "المجموعة",
     liveTag: "🔴 مباشر", todayTag: "اليوم",
+    liveData: "🟢 بيانات مباشرة من ESPN", awaitingFixtures: "⏳ بانتظار مباريات الإقصائي",
   },
   fr: {
-    all: "Tout", groupStage: "Phase de groupes", roundOf32: "Huitièmes de finale",
+    all: "Tout", groupStage: "Phase de groupes", roundOf32: "Huitièmes de finale", roundOf16: "Seizièmes de finale",
     quarterFinals: "Quarts de finale", semiFinals: "Demi-finales",
     thirdPlace: "3ème place", final: "Finale",
     today: "Aujourd'hui", tomorrow: "Demain", thisWeek: "Cette semaine",
@@ -57,9 +117,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Rechercher équipe, ville...",
     worldCupFinal: "🏆 FINALE DE LA COUPE DU MONDE 🏆", group: "Groupe",
     liveTag: "🔴 LIVE", todayTag: "AUJOURD'HUI",
+    liveData: "🟢 Données en direct ESPN", awaitingFixtures: "⏳ En attente des matchs éliminatoires",
   },
   pt: {
-    all: "Todos", groupStage: "Fase de Grupos", roundOf32: "Oitavas de Final",
+    all: "Todos", groupStage: "Fase de Grupos", roundOf32: "Oitavas de Final", roundOf16: "Décimas de Final",
     quarterFinals: "Quartas de Final", semiFinals: "Semifinais",
     thirdPlace: "3º Lugar", final: "Final",
     today: "Hoje", tomorrow: "Amanhã", thisWeek: "Esta Semana",
@@ -70,9 +131,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Buscar time, cidade...",
     worldCupFinal: "🏆 FINAL DA COPA DO MUNDO 🏆", group: "Grupo",
     liveTag: "🔴 AO VIVO", todayTag: "HOJE",
+    liveData: "🟢 Dados ao vivo da ESPN", awaitingFixtures: "⏳ Aguardando jogos eliminatórios",
   },
   es: {
-    all: "Todos", groupStage: "Fase de Grupos", roundOf32: "Octavos de Final",
+    all: "Todos", groupStage: "Fase de Grupos", roundOf32: "Octavos de Final", roundOf16: "Dieciseisavos de Final",
     quarterFinals: "Cuartos de Final", semiFinals: "Semifinales",
     thirdPlace: "3er Lugar", final: "Final",
     today: "Hoy", tomorrow: "Mañana", thisWeek: "Esta Semana",
@@ -83,9 +145,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Buscar equipo, ciudad...",
     worldCupFinal: "🏆 FINAL DEL MUNDIAL 🏆", group: "Grupo",
     liveTag: "🔴 EN VIVO", todayTag: "HOY",
+    liveData: "🟢 Datos en vivo de ESPN", awaitingFixtures: "⏳ Esperando partidos eliminatorios",
   },
   de: {
-    all: "Alle", groupStage: "Gruppenphase", roundOf32: "Achtelfinale",
+    all: "Alle", groupStage: "Gruppenphase", roundOf32: "Achtelfinale", roundOf16: "Sechzehntelfinale",
     quarterFinals: "Viertelfinale", semiFinals: "Halbfinale",
     thirdPlace: "Platz 3", final: "Finale",
     today: "Heute", tomorrow: "Morgen", thisWeek: "Diese Woche",
@@ -96,9 +159,10 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Team, Stadt suchen...",
     worldCupFinal: "🏆 WM FINALE 🏆", group: "Gruppe",
     liveTag: "🔴 LIVE", todayTag: "HEUTE",
+    liveData: "🟢 Live-Daten von ESPN", awaitingFixtures: "⏳ Warte auf KO-Spiele",
   },
   tr: {
-    all: "Tümü", groupStage: "Grup Aşaması", roundOf32: "Son 32",
+    all: "Tümü", groupStage: "Grup Aşaması", roundOf32: "Son 32", roundOf16: "Son 16",
     quarterFinals: "Çeyrek Final", semiFinals: "Yarı Final",
     thirdPlace: "3.'lük Maçı", final: "Final",
     today: "Bugün", tomorrow: "Yarın", thisWeek: "Bu Hafta",
@@ -109,17 +173,20 @@ const SCHEDULE_TEXT: Record<Language, {
     searchPlaceholder: "Takım, şehir ara...",
     worldCupFinal: "🏆 DÜNYA KUPASI FİNALİ 🏆", group: "Grup",
     liveTag: "🔴 CANLI", todayTag: "BUGÜN",
+    liveData: "🟢 ESPN canlı veri", awaitingFixtures: "⏳ Eleme maçları bekleniyor",
   },
 };
 
 const getStatus = (m: ScheduleMatch): "live" | "today" | "upcoming" | "completed" => {
+  if (m.status === "completed") return "completed";
+  if (m.status === "live") return "live";
   const now = new Date();
   const todayStr = now.toISOString().split("T")[0];
   const start = new Date(m.date + "T" + m.time + ":00");
   const end = new Date(start.getTime() + 2 * 3600_000);
-  if (m.status === "completed" || (m.date < todayStr && now > end)) return "completed";
   if (now >= start && now <= end) return "live";
   if (m.date === todayStr) return "today";
+  if (m.date < todayStr && now > end) return "completed";
   return "upcoming";
 };
 
@@ -201,8 +268,8 @@ export default function SchedulePage({ onPredict, language }: Props) {
   const t = SCHEDULE_TEXT[language];
   const isRTL = language === "ar";
 
-  const STAGES = [t.all, t.groupStage, t.roundOf32, t.quarterFinals, t.semiFinals, t.thirdPlace, t.final];
-  const STAGE_VALUES = ["All", "Group Stage", "Round of 32", "Quarter Finals", "Semi Finals", "Third Place", "Final"];
+  const STAGES = [t.all, t.groupStage, t.roundOf32, t.roundOf16, t.quarterFinals, t.semiFinals, t.thirdPlace, t.final];
+  const STAGE_VALUES = ["All", "Group Stage", "Round of 32", "Round of 16", "Quarter Finals", "Semi Finals", "Third Place", "Final"];
   const DATE_FILTERS = [t.all, t.today, t.tomorrow, t.thisWeek];
   const DATE_VALUES = ["All", "Today", "Tomorrow", "This Week"];
 
@@ -213,9 +280,42 @@ export default function SchedulePage({ onPredict, language }: Props) {
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<"schedule" | "standings">("schedule");
 
+  /* ── ESPN knockout data ── */
+  const [matchList, setMatchList] = useState<ScheduleMatch[]>(schedule);
+  const [espnLoaded, setEspnLoaded] = useState(false);
+
   const { matches: liveMatches } = useLiveMatches();
   const { groups: standingGroups, loading: standingsLoading, error: standingsError } = useStandings();
 
+  /* ── Fetch ESPN data on mount + every 5 min ── */
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadEspn = async () => {
+      try {
+        const espnMatches = await fetchEspnKnockoutMatches();
+        if (cancelled) return;
+        if (espnMatches.length > 0) {
+          const merged = mergeKnockoutData(schedule, espnMatches);
+          setMatchList(merged);
+          const now = new Date();
+          const next = merged
+            .filter((m) => m.status !== "completed" && new Date(m.date + "T" + m.time + ":00") > now)
+            .sort((a, b) => new Date(a.date + "T" + a.time).getTime() - new Date(b.date + "T" + b.time).getTime())[0];
+          if (next) setNextMatch(next);
+        }
+        setEspnLoaded(true);
+      } catch {
+        if (!cancelled) setEspnLoaded(true);
+      }
+    };
+
+    loadEspn();
+    const interval = setInterval(loadEspn, 5 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, []);
+
+  /* ── Countdown ── */
   useEffect(() => {
     if (!nextMatch) return;
     const tick = () => {
@@ -223,7 +323,11 @@ export default function SchedulePage({ onPredict, language }: Props) {
       const diff = start.getTime() - Date.now();
       if (diff <= 0) {
         setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0, live: true });
-        setNextMatch(getNextMatch());
+        const now = new Date();
+        const next = matchList
+          .filter((m) => m.status !== "completed" && new Date(m.date + "T" + m.time + ":00") > now)
+          .sort((a, b) => new Date(a.date + "T" + a.time).getTime() - new Date(b.date + "T" + b.time).getTime())[0];
+        setNextMatch(next);
       } else {
         setCountdown({
           days: Math.floor(diff / 86_400_000),
@@ -236,13 +340,13 @@ export default function SchedulePage({ onPredict, language }: Props) {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [nextMatch?.id]);
+  }, [nextMatch?.id, matchList.length]);
 
   const todayStr = new Date().toISOString().split("T")[0];
   const tomorrowStr = new Date(Date.now() + 86_400_000).toISOString().split("T")[0];
   const nextWeekStr = new Date(Date.now() + 7 * 86_400_000).toISOString().split("T")[0];
 
-  const filtered = schedule.filter((m) => {
+  const filtered = matchList.filter((m) => {
     if (stageFilter !== "All" && m.stage !== stageFilter) return false;
     if (dateFilter === "Today" && m.date !== todayStr) return false;
     if (dateFilter === "Tomorrow" && m.date !== tomorrowStr) return false;
@@ -260,6 +364,10 @@ export default function SchedulePage({ onPredict, language }: Props) {
   });
 
   const dates = [...new Set(filtered.map((m) => m.date))];
+
+  const hasLiveKnockout = matchList.some(
+    (m) => m.group === null && !m.team1.includes("TBD") && !m.team1.includes("Runner") && !m.team1.includes("Winner")
+  );
 
   const filterPill = (active: boolean): React.CSSProperties => ({
     display: "inline-block",
@@ -370,13 +478,11 @@ export default function SchedulePage({ onPredict, language }: Props) {
       <div style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "16px" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "10px" }}>
 
-          {/* View mode toggle */}
           <div style={{ display: "flex", gap: "6px" }}>
             <button type="button" onClick={() => setViewMode("schedule")} style={filterPill(viewMode === "schedule")}>📅 Schedule</button>
             <button type="button" onClick={() => setViewMode("standings")} style={filterPill(viewMode === "standings")}>📊 Standings</button>
           </div>
 
-          {/* Stage filter — only shown in schedule mode */}
           {viewMode === "schedule" && (
           <div style={{ display: "flex", gap: "6px", overflowX: "auto", paddingBottom: "2px" }}>
             {STAGES.map((label, i) => (
@@ -388,7 +494,6 @@ export default function SchedulePage({ onPredict, language }: Props) {
           </div>
           )}
 
-          {/* Date filter — only shown in schedule mode */}
           {viewMode === "schedule" && (
           <div style={{ display: "flex", gap: "6px" }}>
             {DATE_FILTERS.map((label, i) => (
@@ -400,7 +505,6 @@ export default function SchedulePage({ onPredict, language }: Props) {
           </div>
           )}
 
-          {/* Search — only shown in schedule mode */}
           {viewMode === "schedule" && (
           <div style={{ position: "relative" }}>
             <span style={{ position: "absolute", left: isRTL ? "auto" : "14px", right: isRTL ? "14px" : "auto", top: "50%", transform: "translateY(-50%)", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
@@ -421,6 +525,12 @@ export default function SchedulePage({ onPredict, language }: Props) {
               }}
             />
           </div>
+          )}
+
+          {espnLoaded && (
+            <div style={{ fontSize: "10px", color: "rgba(34,197,94,0.5)", fontFamily: "'Poppins', sans-serif", textAlign: "center", marginTop: "2px" }}>
+              {hasLiveKnockout ? t.liveData : t.awaitingFixtures}
+            </div>
           )}
         </div>
       </div>
