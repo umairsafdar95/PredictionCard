@@ -450,7 +450,10 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeTab, setActiveTab] = useState<"predict" | "schedule">("predict");
   const [loadedMatch, setLoadedMatch] = useState<{ team1: string; team2: string; team1Flag: string; team2Flag: string } | null>(null);
-  const todayMatches = getTodaysMatches().slice(0, 3);
+  const matchList = useMergedSchedule();
+const todayMatches = matchList
+  .filter((m) => m.date === todayET)
+  .slice(0, 3);
   const { matches: liveMatches } = useLiveMatches();
 
   const getETNow = () => new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
@@ -461,11 +464,11 @@ export default function FormPage({ formState, setFormState, onGenerate, challeng
   }, []);
 
   const todayET = `${nowET.getFullYear()}-${String(nowET.getMonth() + 1).padStart(2, "0")}-${String(nowET.getDate()).padStart(2, "0")}`;
-  const todayScheduleMatches = schedule.filter((m) => m.date === todayET);
-  const dashboardMatches = todayScheduleMatches.length > 0
-    ? todayScheduleMatches
-    : schedule.filter((m) => m.date > todayET).slice(0, 4);
-  const dashboardIsToday = todayScheduleMatches.length > 0;
+  const todayScheduleMatches = matchList.filter((m) => m.date === todayET);
+const dashboardMatches = todayScheduleMatches.length > 0
+  ? todayScheduleMatches
+  : matchList.filter((m) => m.date > todayET).slice(0, 4);
+const dashboardIsToday = todayScheduleMatches.length > 0;
 
   const t1 = getTeam(team1);
   const t2 = getTeam(team2);
