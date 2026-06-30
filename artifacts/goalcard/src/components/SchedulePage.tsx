@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import schedule, { ScheduleMatch, getNextMatch } from "@/data/schedule";
 import { Language } from "@/types";
 import { useLiveMatches, useStandings, findLiveScore, GroupStanding, StandingEntry } from "@/lib/liveData";
-import { fetchEspnKnockoutMatches, type EspnKnockoutMatch } from "@/services/espn";
+import { fetchEspnKnockoutMatches, type EspnKnockoutMatch } from "@/lib/espn";
 
 interface Props {
   onPredict: (match: ScheduleMatch) => void;
