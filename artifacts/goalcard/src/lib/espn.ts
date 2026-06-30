@@ -1,4 +1,12 @@
-const API_PROXY = "/api/espn";
+/* ── ESPN API URL ── */
+const ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?lang=en&region=us";
+
+/* ── CORS proxies (try in order) ── */
+const PROXIES = [
+  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url: string) => `https://api.codetabs.com/v1/proxy?quest=${url}`,
+];
 
 export interface EspnKnockoutMatch {
   date: string;
@@ -42,7 +50,7 @@ function toFlagEmoji(code: string): string {
   return "🏆";
 }
 
-/* ── ESPN 3-letter abbrev → ISO 2-letter ── */
+/* ── ESPN 3-letter → ISO 2-letter ── */
 const ABBREV: Record<string, string> = {
   USA:"us",MEX:"mx",CAN:"ca",BRA:"br",ARG:"ar",FRA:"fr",ESP:"es",
   ENG:"gb-eng",GER:"de",POR:"pt",NED:"nl",BEL:"be",URU:"uy",COL:"co",
@@ -58,7 +66,7 @@ function toIsoCode(abbrev: string): string {
   return ABBREV[abbrev?.toUpperCase()] || abbrev?.toLowerCase() || "";
 }
 
-/* ── Fix ESPN names → our local team names ── */
+/* ── Fix ESPN names → local names ── */
 const NAME_FIX: Record<string, string> = {
   "USA":"United States","US":"United States",
   "Korea Republic":"South Korea",
@@ -121,24 +129,34 @@ function toET24h(iso: string): string {
   } catch { return ""; }
 }
 
-/* ── Main fetch — calls OUR proxy, not ESPN directly ── */
+/* ── Fetch with CORS proxy fallback ── */
+async function fetchWithProxy(url: string): Promise<Response> {
+  // Try each proxy until one works
+  for (let i = 0; i < PROXIES.length; i++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      const res = await fetch(PROXIES[i](url), { signal: controller.signal });
+      clearTimeout(timeout);
+      if (res.ok) {
+        console.log(`✅ CORS proxy ${i + 1} succeeded`);
+        return res;
+      }
+    } catch (err) {
+      console.warn(`❌ CORS proxy ${i + 1} failed:`, err instanceof Error ? err.message : err);
+    }
+  }
+  throw new Error("All CORS proxies failed");
+}
+
+/* ── Main fetch ── */
 export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
-
-    const res = await fetch(API_PROXY, { signal: controller.signal });
-    clearTimeout(timeout);
-
-    if (!res.ok) {
-      console.warn("ESPN proxy returned", res.status);
-      return [];
-    }
-
+    const res = await fetchWithProxy(ESPN_URL);
     const data = await res.json();
 
     if (!data.events?.length) {
-      console.warn("ESPN proxy: no events");
+      console.warn("ESPN: no events in response");
       return [];
     }
 
@@ -175,14 +193,10 @@ export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
       });
     }
 
-    console.log(`ESPN proxy: fetched ${out.length} matches (${out.filter(m => m.group === undefined || true).length} knockout)`);
+    console.log(`📡 ESPN: ${out.length} knockout matches fetched`);
     return out;
   } catch (err) {
-    if (err instanceof DOMException && err.name === "AbortError") {
-      console.warn("ESPN proxy timed out");
-    } else {
-      console.warn("ESPN proxy failed:", err);
-    }
+    console.warn("ESPN fetch failed:", err);
     return [];
   }
 }

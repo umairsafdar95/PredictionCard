@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import schedule, { ScheduleMatch, getNextMatch } from "@/data/schedule";
+import { type ScheduleMatch } from "@/data/schedule";
+import { getNextMatch } from "@/data/schedule";
 import { Language } from "@/types";
 import { useLiveMatches, useStandings, findLiveScore, GroupStanding, StandingEntry } from "@/lib/liveData";
-import { fetchEspnKnockoutMatches, type EspnKnockoutMatch } from "@/lib/espn";
+import { useMergedSchedule } from "@/lib/useMergedSchedule";
 
 interface Props {
   onPredict: (match: ScheduleMatch) => void;
@@ -12,10 +13,7 @@ interface Props {
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /* ── Merge ESPN live data over local schedule ── */
-function mergeKnockoutData(
-  local: ScheduleMatch[],
-  espn: EspnKnockoutMatch[]
-): ScheduleMatch[] {
+ScheduleMatch[] {
   if (espn.length === 0) return local;
   const used = new Set<number>();
   const result: ScheduleMatch[] = [];
@@ -281,40 +279,14 @@ export default function SchedulePage({ onPredict, language }: Props) {
   const [viewMode, setViewMode] = useState<"schedule" | "standings">("schedule");
 
   /* ── ESPN knockout data ── */
-  const [matchList, setMatchList] = useState<ScheduleMatch[]>(schedule);
-  const [espnLoaded, setEspnLoaded] = useState(false);
+const matchList = useMergedSchedule();
+const espnLoaded = true;
 
   const { matches: liveMatches } = useLiveMatches();
   const { groups: standingGroups, loading: standingsLoading, error: standingsError } = useStandings();
 
   /* ── Fetch ESPN data on mount + every 5 min ── */
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadEspn = async () => {
-      try {
-        const espnMatches = await fetchEspnKnockoutMatches();
-        if (cancelled) return;
-        if (espnMatches.length > 0) {
-          const merged = mergeKnockoutData(schedule, espnMatches);
-          setMatchList(merged);
-          const now = new Date();
-          const next = merged
-            .filter((m) => m.status !== "completed" && new Date(m.date + "T" + m.time + ":00") > now)
-            .sort((a, b) => new Date(a.date + "T" + a.time).getTime() - new Date(b.date + "T" + b.time).getTime())[0];
-          if (next) setNextMatch(next);
-        }
-        setEspnLoaded(true);
-      } catch {
-        if (!cancelled) setEspnLoaded(true);
-      }
-    };
-
-    loadEspn();
-    const interval = setInterval(loadEspn, 5 * 60 * 1000);
-    return () => { cancelled = true; clearInterval(interval); };
-  }, []);
-
+  
   /* ── Countdown ── */
   useEffect(() => {
     if (!nextMatch) return;

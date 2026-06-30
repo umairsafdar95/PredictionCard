@@ -3,8 +3,9 @@ import { FormState, Theme, Language } from "@/types";
 import teams, { getTeam } from "@/data/teams";
 import { getTodaysMatches, type Match } from "@/data/matches";
 import SchedulePage from "@/components/SchedulePage";
-import schedule, { type ScheduleMatch } from "@/data/schedule";
+import { type ScheduleMatch } from "@/data/matches";
 import { useLiveMatches, findLiveScore } from "@/lib/liveData";
+import { useMergedSchedule } from "@/lib/useMergedSchedule";
 
 interface FormPageProps {
   formState: FormState;
