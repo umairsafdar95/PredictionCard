@@ -1,20 +1,10 @@
 /* ─────────────────────────────────────────────────────────────────
-   espn.ts — fetches all FIFA World Cup 2026 knockout matches
-   Covers Round of 32 through the Final (June 27 – July 19)
+   espn.ts — fetches FIFA World Cup 2026 knockout matches
+   Calls ESPN directly — no CORS proxy needed (ESPN allows all origins)
 ───────────────────────────────────────────────────────────────── */
 
 const ESPN_BASE =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
-
-/* CORS proxies — tried in order until one succeeds */
-const PROXIES = [
-  (url: string) =>
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url: string) =>
-    `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  (url: string) =>
-    `https://api.codetabs.com/v1/proxy?quest=${url}`,
-];
 
 export interface EspnKnockoutMatch {
   date: string;
@@ -31,7 +21,7 @@ export interface EspnKnockoutMatch {
   isFinal: boolean;
 }
 
-/* ── Flag emoji ─────────────────────────────────────────────── */
+/* ── Flags ── */
 const FLAGS: Record<string, string> = {
   "us":"🇺🇸","mx":"🇲🇽","ca":"🇨🇦","br":"🇧🇷","ar":"🇦🇷","fr":"🇫🇷",
   "es":"🇪🇸","de":"🇩🇪","pt":"🇵🇹","nl":"🇳🇱","be":"🇧🇪","uy":"🇺🇾",
@@ -58,7 +48,7 @@ function toFlagEmoji(code: string): string {
   return "🏆";
 }
 
-/* ── ESPN abbreviation → ISO code ── */
+/* ── Abbreviation → ISO ── */
 const ABBREV: Record<string, string> = {
   USA:"us",MEX:"mx",CAN:"ca",BRA:"br",ARG:"ar",FRA:"fr",ESP:"es",
   ENG:"gb-eng",GER:"de",POR:"pt",NED:"nl",BEL:"be",URU:"uy",COL:"co",
@@ -74,19 +64,18 @@ function toIsoCode(abbrev: string): string {
   return ABBREV[abbrev?.toUpperCase()] || abbrev?.toLowerCase() || "";
 }
 
-/* ── Name normalization ── */
+/* ── Name fixes — ESPN name → your schedule name ── */
 const NAME_FIX: Record<string, string> = {
-  "USA":                     "United States",
-  "US":                      "United States",
-  "Korea Republic":          "South Korea",
-  "Côte d'Ivoire":           "Ivory Coast",
-  "Cote d'Ivoire":           "Ivory Coast",
-  "Congo DR":                "DR Congo",
-  "Czech Republic":          "Czechia",
-  "Bosnia-Herzegovina":      "Bosnia & Herzegovina",
-  "Bosnia and Herzegovina":  "Bosnia & Herzegovina",
-  "Curaçao":                 "Curacao",
-  "Türkiye":                 "Turkey",
+  "USA":                    "United States",
+  "Korea Republic":         "South Korea",
+  "Côte d'Ivoire":          "Ivory Coast",
+  "Cote d'Ivoire":          "Ivory Coast",
+  "Congo DR":               "DR Congo",
+  "Czech Republic":         "Czechia",
+  "Bosnia-Herzegovina":     "Bosnia & Herzegovina",
+  "Bosnia and Herzegovina": "Bosnia & Herzegovina",
+  "Curaçao":                "Curacao",
+  "Türkiye":                "Turkey",
 };
 
 const TBD_PATTERN = /^(tbd|winner|loser|runner.?up|1st|2nd|match\s*\d)/i;
@@ -96,46 +85,49 @@ function fixName(name: string): string {
   return NAME_FIX[name] ?? name;
 }
 
-/* ── Stage normalization ── */
+/* ── Stage detection ── */
 const VALID_STAGES = new Set([
-  "Round of 32", "Round of 16",
-  "Quarter Finals", "Semi Finals",
-  "Third Place", "Final",
+  "Round of 32","Round of 16",
+  "Quarter Finals","Semi Finals",
+  "Third Place","Final",
 ]);
 
 function normalizeStage(text: string): string {
   if (!text) return "";
   const l = text.toLowerCase();
-  if (l.includes("third") || l.includes("3rd place") ||
-      l.includes("3rd-place"))
+  if (l.includes("third") || l.includes("3rd"))
     return "Third Place";
-  if (l.includes("final") &&
-      !l.includes("semi") &&
-      !l.includes("quarter") &&
-      !l.includes("32") &&
+  if (l.includes("final") && !l.includes("semi") &&
+      !l.includes("quarter") && !l.includes("32") &&
       !l.includes("16"))
     return "Final";
-  if (l.includes("semi")) return "Semi Finals";
+  if (l.includes("semi"))    return "Semi Finals";
   if (l.includes("quarter")) return "Quarter Finals";
-  if (l.includes("rd of 16") || l.includes("round of 16") ||
-      l.includes("last 16") || l.includes("r16") ||
-      l.includes("round-of-16") || l.includes("rd-of-16"))
-    return "Round of 16";
-  if (l.includes("round of 32") || l.includes("rd of 32") ||
-      l.includes("last 32") || l.includes("round-of-32") ||
-      l.includes("rd-of-32"))
-    return "Round of 32";
+  if (l.includes("16"))      return "Round of 16";
+  if (l.includes("32"))      return "Round of 32";
   return "";
 }
 
-function mapStatus(raw: string): "upcoming" | "live" | "completed" {
+function mapStatus(raw: string): "upcoming"|"live"|"completed" {
   const r = raw.toUpperCase();
   if (["IN_PROGRESS","HALFTIME","SECOND_HALF","EXTRA_TIME","PENALTY"]
       .some(s => r.includes(s))) return "live";
-  if (["FULL_TIME","FINAL","STATUS_FINAL","POSTPONED",
-       "CANCELLED","ABANDONED"]
+  if (["FULL_TIME","FINAL","STATUS_FINAL","POSTPONED","CANCELLED"]
       .some(s => r.includes(s))) return "completed";
   return "upcoming";
+}
+
+/* ── Time helpers — always use ET timezone ── */
+function toETDate(iso: string): string {
+  // Converts UTC ISO string to ET date YYYY-MM-DD
+  // Fixes the midnight UTC = previous-day ET issue
+  try {
+    return new Date(iso).toLocaleDateString("en-CA", {
+      timeZone: "America/New_York",
+    });
+  } catch {
+    return iso.split("T")[0] ?? "";
+  }
 }
 
 function toET(iso: string): string {
@@ -157,109 +149,88 @@ function toET24h(iso: string): string {
   } catch { return ""; }
 }
 
-/* ── Generate every date in the knockout window ── */
-function knockoutDateStrings(): string[] {
+/* ── Date range: June 27 through July 19 ── */
+function knockoutDates(): string[] {
   const out: string[] = [];
-  const start = new Date("2026-06-27T00:00:00Z");
-  const stop  = new Date("2026-07-20T00:00:00Z");
-  const cur   = new Date(start);
-  while (cur < stop) {
-    out.push(cur.toISOString().slice(0, 10).replace(/-/g, ""));
+  const cur = new Date("2026-06-27T00:00:00Z");
+  const end = new Date("2026-07-20T00:00:00Z");
+  while (cur < end) {
+    out.push(cur.toISOString().slice(0,10).replace(/-/g,""));
     cur.setUTCDate(cur.getUTCDate() + 1);
   }
   return out;
 }
 
-/* ── CORS proxy fetch ── */
-async function fetchWithProxy(url: string): Promise<Response> {
-  for (let i = 0; i < PROXIES.length; i++) {
-    try {
-      const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 8_000);
-      const res = await fetch(PROXIES[i](url), { signal: ctrl.signal });
-      clearTimeout(t);
-      if (res.ok) return res;
-      console.warn(`Proxy ${i + 1} returned ${res.status}`);
-    } catch (err) {
-      console.warn(
-        `Proxy ${i + 1} failed:`,
-        err instanceof Error ? err.message : err
-      );
-    }
-  }
-  throw new Error("All CORS proxies failed");
-}
-
-/* ── Parse ESPN events ── */
+/* ── Parse events from one scoreboard response ── */
 function parseKnockoutEvents(data: unknown): EspnKnockoutMatch[] {
   const events = (
-    (data as Record<string, unknown>)?.events as unknown[]
+    (data as Record<string,unknown>)?.events as unknown[]
   ) ?? [];
   const out: EspnKnockoutMatch[] = [];
 
   for (const ev of events) {
     try {
-      const e    = ev as Record<string, unknown>;
+      const e    = ev as Record<string,unknown>;
       const comp = (
         (e.competitions as unknown[])?.[0] ?? {}
-      ) as Record<string, unknown>;
+      ) as Record<string,unknown>;
 
       /*
-        STAGE DETECTION — ESPN notes[] is always empty for World Cup.
-        The stage is stored in two reliable places:
-          1. comp.altGameNote  →  "FIFA World Cup, Round of 32"
-          2. event.season.slug →  "round-of-32"
-        We read altGameNote first, then fall back to season slug.
+        STAGE DETECTION
+        ESPN's notes[] array is always empty for World Cup 2026.
+        The correct field is comp.altGameNote:
+          "FIFA World Cup, Round of 32"
+          "FIFA World Cup, Quarterfinals"
+          "FIFA World Cup, Semifinals"
+          "FIFA World Cup, Final"
+        We split on comma and take the second part.
+        Fallback: event.season.slug = "round-of-32"
       */
-      const altNote = (comp.altGameNote as string) ?? "";
+      const altNote    = (comp.altGameNote as string) ?? "";
       const seasonSlug = (
-        (e.season as Record<string, unknown>)?.slug as string
+        (e.season as Record<string,unknown>)?.slug as string
       ) ?? "";
 
       let stageText = "";
       if (altNote.includes(",")) {
-        // "FIFA World Cup, Round of 32" → "Round of 32"
         stageText = altNote.split(",")[1].trim();
       } else if (altNote) {
         stageText = altNote;
       } else {
-        // "round-of-32" → "round of 32" → normalizeStage handles it
         stageText = seasonSlug.replace(/-/g, " ");
       }
 
       const stage = normalizeStage(stageText);
-
-      // Skip if not a known knockout stage
       if (!VALID_STAGES.has(stage)) continue;
 
       const competitors = (comp.competitors as unknown[]) ?? [];
       const home = (
         competitors.find(
-          (c) => (c as Record<string, unknown>).homeAway === "home"
+          c => (c as Record<string,unknown>).homeAway === "home"
         ) ?? competitors[0]
-      ) as Record<string, unknown>;
+      ) as Record<string,unknown>;
       const away = (
         competitors.find(
-          (c) => (c as Record<string, unknown>).homeAway === "away"
+          c => (c as Record<string,unknown>).homeAway === "away"
         ) ?? competitors[1]
-      ) as Record<string, unknown>;
+      ) as Record<string,unknown>;
       if (!home || !away) continue;
 
-      const homeTeam = (home.team ?? {}) as Record<string, unknown>;
-      const awayTeam = (away.team ?? {}) as Record<string, unknown>;
+      const homeTeam   = (home.team ?? {}) as Record<string,unknown>;
+      const awayTeam   = (away.team ?? {}) as Record<string,unknown>;
       const statusType = (
-        (comp.status as Record<string, unknown>)?.type ?? {}
-      ) as Record<string, unknown>;
+        (comp.status as Record<string,unknown>)?.type ?? {}
+      ) as Record<string,unknown>;
       const statusName = (statusType.name as string) ?? "";
-      const matchDate  = (comp.date as string) ??
-                         (e.date as string) ?? "";
-      const venueObj   = (comp.venue ?? {}) as Record<string, unknown>;
-      const addrObj    = (venueObj.address ?? {}) as Record<string, unknown>;
+      const matchISO   = (comp.date as string) ?? (e.date as string) ?? "";
+      const venueObj   = (comp.venue ?? {}) as Record<string,unknown>;
+      const addrObj    = (venueObj.address ?? {}) as Record<string,unknown>;
 
       out.push({
-        date:      matchDate.split("T")[0] ?? "",
-        time:      toET24h(matchDate),
-        timeET:    toET(matchDate),
+        // Use ET date — fixes midnight UTC being wrong day issue
+        date:      toETDate(matchISO),
+        time:      toET24h(matchISO),
+        timeET:    toET(matchISO),
         stage,
         team1:     fixName((homeTeam.displayName as string) ?? ""),
         team2:     fixName((awayTeam.displayName as string) ?? ""),
@@ -272,26 +243,30 @@ function parseKnockoutEvents(data: unknown): EspnKnockoutMatch[] {
         status:    mapStatus(statusName),
         venue:     (venueObj.fullName as string) ?? "",
         city: [addrObj.city, addrObj.state]
-          .filter(Boolean)
-          .join(", "),
-        isFinal: stage === "Final",
+               .filter(Boolean).join(", "),
+        isFinal:   stage === "Final",
       });
-    } catch {
-      // skip malformed events silently
-    }
+    } catch { /* skip malformed */ }
   }
   return out;
 }
 
 /* ── Main export ── */
 export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
-  const dates = knockoutDateStrings(); // June 27 – July 19
+  const dates = knockoutDates();
 
+  /*
+    Call ESPN DIRECTLY — no CORS proxy needed.
+    ESPN sets access-control-allow-origin: * on their scoreboard API.
+    The CORS proxy approach was causing failures because third-party
+    proxy services (allorigins.win, corsproxy.io) are unreliable.
+    liveData.ts already calls ESPN directly successfully — same approach here.
+  */
   const results = await Promise.allSettled(
-    dates.map((d) =>
-      fetchWithProxy(
-        `${ESPN_BASE}?lang=en&region=us&dates=${d}&limit=20`
-      ).then((r) => r.json())
+    dates.map(d =>
+      fetch(`${ESPN_BASE}?lang=en&region=us&dates=${d}&limit=20`, {
+        signal: AbortSignal.timeout(8_000),
+      }).then(r => r.json())
     )
   );
 
@@ -310,9 +285,9 @@ export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
   }
 
   console.log(
-    `📡 ESPN knockout fetch: ${all.length} matches found`,
+    `📡 ESPN: ${all.length} knockout matches fetched`,
     all.filter(m => m.team1 !== "TBD")
-       .map(m => `${m.team1} vs ${m.team2} (${m.stage})`)
+       .map(m => `${m.team1} vs ${m.team2} (${m.stage} ${m.date})`)
   );
 
   return all;
