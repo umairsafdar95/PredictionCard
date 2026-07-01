@@ -1,11 +1,19 @@
-/* ── ESPN API URL ── */
-const ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?lang=en&region=us";
+/* ─────────────────────────────────────────────────────────────────
+   espn.ts — fetches all FIFA World Cup 2026 knockout matches
+   Covers Round of 32 through the Final (June 27 – July 19)
+───────────────────────────────────────────────────────────────── */
 
-/* ── CORS proxies (try in order) ── */
+const ESPN_BASE =
+  "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+
+/* CORS proxies — tried in order until one succeeds */
 const PROXIES = [
-  (url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-  (url: string) => `https://api.codetabs.com/v1/proxy?quest=${url}`,
+  (url: string) =>
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url: string) =>
+    `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url: string) =>
+    `https://api.codetabs.com/v1/proxy?quest=${url}`,
 ];
 
 export interface EspnKnockoutMatch {
@@ -23,7 +31,7 @@ export interface EspnKnockoutMatch {
   isFinal: boolean;
 }
 
-/* ── Flag emoji from ISO code ── */
+/* ── Flag emoji ─────────────────────────────────────────────── */
 const FLAGS: Record<string, string> = {
   "us":"🇺🇸","mx":"🇲🇽","ca":"🇨🇦","br":"🇧🇷","ar":"🇦🇷","fr":"🇫🇷",
   "es":"🇪🇸","de":"🇩🇪","pt":"🇵🇹","nl":"🇳🇱","be":"🇧🇪","uy":"🇺🇾",
@@ -50,7 +58,7 @@ function toFlagEmoji(code: string): string {
   return "🏆";
 }
 
-/* ── ESPN 3-letter → ISO 2-letter ── */
+/* ── ESPN abbreviation → ISO code ── */
 const ABBREV: Record<string, string> = {
   USA:"us",MEX:"mx",CAN:"ca",BRA:"br",ARG:"ar",FRA:"fr",ESP:"es",
   ENG:"gb-eng",GER:"de",POR:"pt",NED:"nl",BEL:"be",URU:"uy",COL:"co",
@@ -66,47 +74,67 @@ function toIsoCode(abbrev: string): string {
   return ABBREV[abbrev?.toUpperCase()] || abbrev?.toLowerCase() || "";
 }
 
-/* ── Fix ESPN names → local names ── */
+/* ── Name normalization ── */
 const NAME_FIX: Record<string, string> = {
-  "USA":"United States","US":"United States",
-  "Korea Republic":"South Korea",
-  "Côte d'Ivoire":"Ivory Coast","Cote d'Ivoire":"Ivory Coast",
-  "Congo DR":"DR Congo",
-  "Czech Republic":"Czechia",
-  "Bosnia-Herzegovina":"Bosnia & Herzegovina",
-  "Curaçao":"Curacao",
+  "USA":                     "United States",
+  "US":                      "United States",
+  "Korea Republic":          "South Korea",
+  "Côte d'Ivoire":           "Ivory Coast",
+  "Cote d'Ivoire":           "Ivory Coast",
+  "Congo DR":                "DR Congo",
+  "Czech Republic":          "Czechia",
+  "Bosnia-Herzegovina":      "Bosnia & Herzegovina",
+  "Bosnia and Herzegovina":  "Bosnia & Herzegovina",
+  "Curaçao":                 "Curacao",
+  "Türkiye":                 "Turkey",
 };
 
+const TBD_PATTERN = /^(tbd|winner|loser|runner.?up|1st|2nd|match\s*\d)/i;
+
 function fixName(name: string): string {
-  if (!name) return "TBD";
-  return NAME_FIX[name] || name;
+  if (!name || TBD_PATTERN.test(name.trim())) return "TBD";
+  return NAME_FIX[name] ?? name;
 }
 
-/* ── Stage helpers ── */
-function normalizeStage(name: string): string {
-  const l = name.toLowerCase();
-  if (l.includes("third place") || l.includes("third-place")) return "Third Place";
+/* ── Stage normalization ── */
+const VALID_STAGES = new Set([
+  "Round of 32", "Round of 16",
+  "Quarter Finals", "Semi Finals",
+  "Third Place", "Final",
+]);
+
+function normalizeStage(text: string): string {
+  if (!text) return "";
+  const l = text.toLowerCase();
+  if (l.includes("third") || l.includes("3rd place") ||
+      l.includes("3rd-place"))
+    return "Third Place";
+  if (l.includes("final") &&
+      !l.includes("semi") &&
+      !l.includes("quarter") &&
+      !l.includes("32") &&
+      !l.includes("16"))
+    return "Final";
   if (l.includes("semi")) return "Semi Finals";
   if (l.includes("quarter")) return "Quarter Finals";
-  if (l.includes("round of 16") || l.includes("eight finals") || l.includes("round of sixteen")) return "Round of 16";
-  if (l.includes("round of 32") || l.includes("round of thirty") || l.includes("sixteen finals")) return "Round of 32";
-  if (l.includes("final") || l.includes("championship")) return "Final";
-  return name;
-}
-
-function isKnockout(name: string): boolean {
-  const l = name.toLowerCase();
-  return [
-    "round of 32","round of 16","round of thirty","round of sixteen",
-    "eight finals","sixteen finals","quarter","semi",
-    "third place","third-place","final","championship",
-  ].some(k => l.includes(k));
+  if (l.includes("rd of 16") || l.includes("round of 16") ||
+      l.includes("last 16") || l.includes("r16") ||
+      l.includes("round-of-16") || l.includes("rd-of-16"))
+    return "Round of 16";
+  if (l.includes("round of 32") || l.includes("rd of 32") ||
+      l.includes("last 32") || l.includes("round-of-32") ||
+      l.includes("rd-of-32"))
+    return "Round of 32";
+  return "";
 }
 
 function mapStatus(raw: string): "upcoming" | "live" | "completed" {
-  if (["IN_PROGRESS","HALFTIME","SECOND_HALF","EXTRA_TIME","PENALTY_SHOOTOUT","PENALTY"]
-      .some(s => raw.includes(s))) return "live";
-  if (["FULL_TIME","POSTPONED","CANCELLED","ABANDONED"].some(s => raw.includes(s))) return "completed";
+  const r = raw.toUpperCase();
+  if (["IN_PROGRESS","HALFTIME","SECOND_HALF","EXTRA_TIME","PENALTY"]
+      .some(s => r.includes(s))) return "live";
+  if (["FULL_TIME","FINAL","STATUS_FINAL","POSTPONED",
+       "CANCELLED","ABANDONED"]
+      .some(s => r.includes(s))) return "completed";
   return "upcoming";
 }
 
@@ -129,74 +157,163 @@ function toET24h(iso: string): string {
   } catch { return ""; }
 }
 
-/* ── Fetch with CORS proxy fallback ── */
+/* ── Generate every date in the knockout window ── */
+function knockoutDateStrings(): string[] {
+  const out: string[] = [];
+  const start = new Date("2026-06-27T00:00:00Z");
+  const stop  = new Date("2026-07-20T00:00:00Z");
+  const cur   = new Date(start);
+  while (cur < stop) {
+    out.push(cur.toISOString().slice(0, 10).replace(/-/g, ""));
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+  return out;
+}
+
+/* ── CORS proxy fetch ── */
 async function fetchWithProxy(url: string): Promise<Response> {
-  // Try each proxy until one works
   for (let i = 0; i < PROXIES.length; i++) {
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 8000);
-      const res = await fetch(PROXIES[i](url), { signal: controller.signal });
-      clearTimeout(timeout);
-      if (res.ok) {
-        console.log(`✅ CORS proxy ${i + 1} succeeded`);
-        return res;
-      }
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 8_000);
+      const res = await fetch(PROXIES[i](url), { signal: ctrl.signal });
+      clearTimeout(t);
+      if (res.ok) return res;
+      console.warn(`Proxy ${i + 1} returned ${res.status}`);
     } catch (err) {
-      console.warn(`❌ CORS proxy ${i + 1} failed:`, err instanceof Error ? err.message : err);
+      console.warn(
+        `Proxy ${i + 1} failed:`,
+        err instanceof Error ? err.message : err
+      );
     }
   }
   throw new Error("All CORS proxies failed");
 }
 
-/* ── Main fetch ── */
-export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
-  try {
-    const res = await fetchWithProxy(ESPN_URL);
-    const data = await res.json();
+/* ── Parse ESPN events ── */
+function parseKnockoutEvents(data: unknown): EspnKnockoutMatch[] {
+  const events = (
+    (data as Record<string, unknown>)?.events as unknown[]
+  ) ?? [];
+  const out: EspnKnockoutMatch[] = [];
 
-    if (!data.events?.length) {
-      console.warn("ESPN: no events in response");
-      return [];
-    }
+  for (const ev of events) {
+    try {
+      const e    = ev as Record<string, unknown>;
+      const comp = (
+        (e.competitions as unknown[])?.[0] ?? {}
+      ) as Record<string, unknown>;
 
-    const out: EspnKnockoutMatch[] = [];
+      /*
+        STAGE DETECTION — ESPN notes[] is always empty for World Cup.
+        The stage is stored in two reliable places:
+          1. comp.altGameNote  →  "FIFA World Cup, Round of 32"
+          2. event.season.slug →  "round-of-32"
+        We read altGameNote first, then fall back to season slug.
+      */
+      const altNote = (comp.altGameNote as string) ?? "";
+      const seasonSlug = (
+        (e.season as Record<string, unknown>)?.slug as string
+      ) ?? "";
 
-    for (const event of data.events) {
-      const comp = event.competitions?.[0];
-      if (!comp) continue;
+      let stageText = "";
+      if (altNote.includes(",")) {
+        // "FIFA World Cup, Round of 32" → "Round of 32"
+        stageText = altNote.split(",")[1].trim();
+      } else if (altNote) {
+        stageText = altNote;
+      } else {
+        // "round-of-32" → "round of 32" → normalizeStage handles it
+        stageText = seasonSlug.replace(/-/g, " ");
+      }
 
-      const label = event.name || comp.name || "";
-      if (comp.group && !isKnockout(label)) continue;
+      const stage = normalizeStage(stageText);
 
-      const home = comp.competitors?.find((c: any) => c.homeAway === "home");
-      const away = comp.competitors?.find((c: any) => c.homeAway === "away");
+      // Skip if not a known knockout stage
+      if (!VALID_STAGES.has(stage)) continue;
+
+      const competitors = (comp.competitors as unknown[]) ?? [];
+      const home = (
+        competitors.find(
+          (c) => (c as Record<string, unknown>).homeAway === "home"
+        ) ?? competitors[0]
+      ) as Record<string, unknown>;
+      const away = (
+        competitors.find(
+          (c) => (c as Record<string, unknown>).homeAway === "away"
+        ) ?? competitors[1]
+      ) as Record<string, unknown>;
       if (!home || !away) continue;
 
-      const stage = normalizeStage(label);
-      const isFinal = stage === "Final";
+      const homeTeam = (home.team ?? {}) as Record<string, unknown>;
+      const awayTeam = (away.team ?? {}) as Record<string, unknown>;
+      const statusType = (
+        (comp.status as Record<string, unknown>)?.type ?? {}
+      ) as Record<string, unknown>;
+      const statusName = (statusType.name as string) ?? "";
+      const matchDate  = (comp.date as string) ??
+                         (e.date as string) ?? "";
+      const venueObj   = (comp.venue ?? {}) as Record<string, unknown>;
+      const addrObj    = (venueObj.address ?? {}) as Record<string, unknown>;
 
       out.push({
-        date: comp.date?.split("T")[0] || "",
-        time: toET24h(comp.date),
-        timeET: toET(comp.date),
+        date:      matchDate.split("T")[0] ?? "",
+        time:      toET24h(matchDate),
+        timeET:    toET(matchDate),
         stage,
-        team1: fixName(home.team?.displayName),
-        team2: fixName(away.team?.displayName),
-        team1Flag: toFlagEmoji(toIsoCode(home.team?.abbreviation)),
-        team2Flag: toFlagEmoji(toIsoCode(away.team?.abbreviation)),
-        status: mapStatus(comp.status?.type?.name || ""),
-        venue: comp.venue?.fullName || "",
-        city: [comp.venue?.address?.city, comp.venue?.address?.state]
-          .filter(Boolean).join(", "),
-        isFinal,
+        team1:     fixName((homeTeam.displayName as string) ?? ""),
+        team2:     fixName((awayTeam.displayName as string) ?? ""),
+        team1Flag: toFlagEmoji(
+          toIsoCode((homeTeam.abbreviation as string) ?? "")
+        ),
+        team2Flag: toFlagEmoji(
+          toIsoCode((awayTeam.abbreviation as string) ?? "")
+        ),
+        status:    mapStatus(statusName),
+        venue:     (venueObj.fullName as string) ?? "",
+        city: [addrObj.city, addrObj.state]
+          .filter(Boolean)
+          .join(", "),
+        isFinal: stage === "Final",
       });
+    } catch {
+      // skip malformed events silently
     }
-
-    console.log(`📡 ESPN: ${out.length} knockout matches fetched`);
-    return out;
-  } catch (err) {
-    console.warn("ESPN fetch failed:", err);
-    return [];
   }
+  return out;
+}
+
+/* ── Main export ── */
+export async function fetchEspnKnockoutMatches(): Promise<EspnKnockoutMatch[]> {
+  const dates = knockoutDateStrings(); // June 27 – July 19
+
+  const results = await Promise.allSettled(
+    dates.map((d) =>
+      fetchWithProxy(
+        `${ESPN_BASE}?lang=en&region=us&dates=${d}&limit=20`
+      ).then((r) => r.json())
+    )
+  );
+
+  const all: EspnKnockoutMatch[] = [];
+  const seen = new Set<string>();
+
+  for (const result of results) {
+    if (result.status !== "fulfilled") continue;
+    for (const match of parseKnockoutEvents(result.value)) {
+      const key = `${match.date}|${match.team1}|${match.team2}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        all.push(match);
+      }
+    }
+  }
+
+  console.log(
+    `📡 ESPN knockout fetch: ${all.length} matches found`,
+    all.filter(m => m.team1 !== "TBD")
+       .map(m => `${m.team1} vs ${m.team2} (${m.stage})`)
+  );
+
+  return all;
 }
